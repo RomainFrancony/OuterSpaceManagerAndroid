@@ -10,11 +10,7 @@ import java.lang.reflect.Field;
 
 public abstract class Helpers {
 
-    /**
-     * Show snackbar with animation
-     * @param snackbar
-     */
-    public static void showSnackbarWithAnimation(Snackbar snackbar){
+    public static void showSnackbarWithAnimation(Snackbar snackbar) {
         try {
             Field mAccessibilityManagerField = BaseTransientBottomBar.class.getDeclaredField("mAccessibilityManager");
             mAccessibilityManagerField.setAccessible(true);
@@ -27,6 +23,10 @@ public abstract class Helpers {
         } catch (Exception e) {
             Log.d("Snackbar", "Reflection error: " + e.toString());
         }
+    }
+
+    public static String secondToHumanReadableTime(int second) {
+        return String.format("%dm %02ds", second / 60, second % 60);
     }
 
 }

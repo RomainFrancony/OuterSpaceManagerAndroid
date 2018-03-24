@@ -182,11 +182,6 @@ public class Building {
         return this.getTimeToBuildByLevel() * this.getLevel() + this.getTimeToBuildLevel0();
     }
 
-    public String getHumanReadableTimeToBuild() {
-
-        return String.format("%dm %02ds", this.getTimeToBuild() / 60, this.getTimeToBuild() % 60);
-    }
-
     public long getBuildingEndTime() {
         return buildingEndTime;
     }
