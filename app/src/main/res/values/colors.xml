@@ -8,4 +8,5 @@
     <color name="colorDanger">#E53935</color>
     <color name="colorGray">#A6A1BA</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorGrayLight">#d6d6d6</color>
 </resources>

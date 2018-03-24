@@ -4,10 +4,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="nav.home">Home</string>
+    <string name="nav.buildings">Buildings</string>
+    <string name="nav.spaceyard">Spaceyard</string>
+    <string name="nav.search">Searches</string>
+    <string name="nav.logout">Logout</string>
 
-    <string name="logout">Logout</string>
     <string name="title_activity_login">Login</string>
-
     <string name="prompt_email">Email</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
