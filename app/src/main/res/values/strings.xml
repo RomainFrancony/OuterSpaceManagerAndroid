@@ -6,6 +6,16 @@
 
 
     <string name="logout">Logout</string>
+    <string name="title_activity_login">Login</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_login">Login</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_credentials">Username or password invalid</string>
+    <string name="error_network">Can\'t connect to server, please try again later.</string>
 
 
 </resources>

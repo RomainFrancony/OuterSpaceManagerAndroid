@@ -1,0 +1,32 @@
+package com.francony.romain.outerspacemanager.model;
+
+
+public class UserScore {
+    private long points;
+    private String username;
+
+    public UserScore(long points, String username) {
+        this.points = points;
+        this.username = username;
+    }
+
+    public long getPoints() {
+        return points;
+    }
+
+    public String getPointsText() {
+        return String.valueOf(this.points);
+    }
+
+    public void setPoints(long points) {
+        this.points = points;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+}
