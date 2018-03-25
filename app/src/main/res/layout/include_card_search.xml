@@ -17,10 +17,10 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ship_name"
+                android:id="@+id/search_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chasseur lourd"
+                android:text="Recherche robotique"
                 android:theme="@style/AppTheme.H2" />
 
             <TextView
@@ -28,121 +28,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="x 15"
+                android:text="Level 5"
                 android:theme="@style/AppTheme.TitleSubtext" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="100">
-            <!-- Life -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_life" />
-
-                <TextView
-                    android:id="@+id/ship_life"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="60"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Shield -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_shield" />
-
-                <TextView
-                    android:id="@+id/ship_shield"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="15"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-            <!-- Attack -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_attack" />
-
-                <TextView
-                    android:id="@+id/ship_attack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="90 - 110"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Speed -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_speed" />
-
-                <TextView
-                    android:id="@+id/ship_speed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="850"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:orientation="horizontal"
             android:weightSum="99">
             <!-- Gas -->
@@ -162,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="250"
+                    android:text="150"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
 
@@ -185,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="300"
+                    android:text="650"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -207,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="30"
+                    android:text="60"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -222,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/action.build"
+                android:text="@string/action.upgrade"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:pb_colorComplete="@color/colorAccent"
@@ -230,7 +122,7 @@
                 app:pb_colorNormal="@color/colorAccent"
                 app:pb_colorPressed="@color/colorAccent"
                 app:pb_colorProgress="@color/colorAccent"
-                app:pb_textProgress="@string/action.build_progress" />
+                app:pb_textProgress="@string/action.search_progress" />
         </LinearLayout>
 
         <LinearLayout

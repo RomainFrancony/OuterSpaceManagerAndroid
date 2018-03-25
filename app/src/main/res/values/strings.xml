@@ -20,12 +20,15 @@
     <string name="action.sign_in">Sign in</string>
     <string name="action.login">Login</string>
     <string name="action.build">Build</string>
+    <string name="action.search_start">Search</string>
+    <string name="action.upgrade">Upgrade</string>
 
 
     <string name="error.field_required">This field is required</string>
     <string name="error.credentials">Username or password invalid</string>
     <string name="error.network">Can\'t connect to server, please try again later.</string>
     <string name="action.build_progress">Building</string>
+    <string name="action.search_progress">Searching</string>
 
 
 </resources>
