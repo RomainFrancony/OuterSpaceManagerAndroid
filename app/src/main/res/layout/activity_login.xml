@@ -35,7 +35,7 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/prompt.email"
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
 
@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusedByDefault="false"
-                    android:hint="@string/prompt_username"
+                    android:hint="@string/prompt.username"
                     android:inputType="textPersonName" />
             </android.support.design.widget.TextInputLayout>
 
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusedByDefault="false"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/prompt.password"
                     android:inputType="textPassword" />
             </android.support.design.widget.TextInputLayout>
 
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:padding="16dp"
-                android:text="@string/action_login"
+                android:text="@string/action.login"
                 android:textSize="16sp" />
 
             <Button
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@string/action_sign_in" />
+                android:text="@string/action.sign_in" />
 
             <Button
                 android:id="@+id/sign_in_button"
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:padding="16dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action.sign_in"
                 android:textSize="16sp"
                 android:visibility="gone" />
 
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="@string/error_credentials"
+                android:text="@string/error.credentials"
                 android:textAlignment="center"
                 android:textColor="@color/colorDanger"
                 android:visibility="invisible" />
