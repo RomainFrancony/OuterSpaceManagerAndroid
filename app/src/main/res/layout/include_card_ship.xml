@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ship_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chasseur lourd"
+                android:theme="@style/AppTheme.H2" />
+
+            <TextView
+                android:id="@+id/ship_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="x 15"
+                android:theme="@style/AppTheme.TitleSubtext" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100"
+            android:orientation="horizontal">
+            <!-- Life -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_life" />
+
+                <TextView
+                    android:id="@+id/ship_life"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="60"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Shield -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_shield" />
+
+                <TextView
+                    android:id="@+id/ship_shield"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="15"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:weightSum="100"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Attack -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_attack" />
+
+                <TextView
+                    android:id="@+id/ship_attack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="90 - 110"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Speed -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_speed" />
+
+                <TextView
+                    android:id="@+id/ship_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="850"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="32dp"
+            android:weightSum="99"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Gas -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_gas" />
+
+                <TextView
+                    android:id="@+id/ship_gas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="250"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Mineral -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mineral" />
+
+                <TextView
+                    android:id="@+id/ship_mineral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="300"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_time" />
+
+                <TextView
+                    android:id="@+id/ship_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="30"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/ship_build"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:text="@string/action.build"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+        </LinearLayout>
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

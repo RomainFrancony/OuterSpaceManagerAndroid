@@ -1,14 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorGrayLight"
     android:padding="8dp"
+    android:orientation="vertical"
     tools:context="com.francony.romain.outerspacemanager.fragment.HomeFragment">
 
     <include
+        android:layout_marginBottom="16dp"
         layout="@layout/include_card_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</FrameLayout>
+    <include
+        layout="@layout/include_card_ship"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

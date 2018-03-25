@@ -19,6 +19,7 @@
     <string name="prompt.password">Password</string>
     <string name="action.sign_in">Sign in</string>
     <string name="action.login">Login</string>
+    <string name="action.build">Build</string>
 
 
     <string name="error.field_required">This field is required</string>
