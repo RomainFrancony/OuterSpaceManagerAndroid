@@ -24,7 +24,7 @@
                 android:theme="@style/AppTheme.H2" />
 
             <TextView
-                android:id="@+id/ship_quantity"
+                android:id="@+id/search_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -50,7 +50,7 @@
                     android:src="@drawable/ic_gas" />
 
                 <TextView
-                    android:id="@+id/ship_gas"
+                    android:id="@+id/search_gas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
@@ -73,7 +73,7 @@
                     android:src="@drawable/ic_mineral" />
 
                 <TextView
-                    android:id="@+id/ship_mineral"
+                    android:id="@+id/search_mineral"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
@@ -95,7 +95,7 @@
                     android:src="@drawable/ic_time" />
 
                 <TextView
-                    android:id="@+id/ship_time"
+                    android:id="@+id/search_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
