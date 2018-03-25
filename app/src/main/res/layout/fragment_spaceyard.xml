@@ -3,15 +3,14 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@color/colorGrayLight"
+    android:padding="8dp"
     tools:context="com.francony.romain.outerspacemanager.fragment.SpaceyardFragment">
 
-    <ImageView
-        android:src="@drawable/ic_mineral"
-        android:layout_width="240dp"
-        android:layout_height="240dp" />
-    <ImageView
-        android:src="@drawable/ic_speed"
-        android:layout_width="240dp"
-        android:layout_height="240dp" />
+
+    <include
+        layout="@layout/include_card_ship"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
