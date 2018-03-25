@@ -36,5 +36,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.5.0'
     compile 'com.xw.repo:bubbleseekbar:3.16-lite'
+    compile 'com.hkm:hkmprocessbuttons:1.2.4'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
 }

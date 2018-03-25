@@ -213,13 +213,26 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/ship_build"
-            android:layout_marginTop="16dp"
-            style="@style/Widget.AppCompat.Button.Colored"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:text="@string/action.build"
-            android:layout_height="wrap_content" />
+            android:padding="4dp"
+            android:layout_height="wrap_content">
+
+            <com.hkm.ui.processbutton.iml.SubmitProcessButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                app:pb_colorNormal="@color/colorAccent"
+                app:pb_colorComplete="@color/colorAccent"
+                app:pb_colorDisabled="@color/colorAccentDark"
+                app:pb_colorProgress="@color/colorAccent"
+                app:pb_colorPressed="@color/colorAccent"
+                android:text="@string/action.build"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:pb_textProgress="@string/action.build_progress" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
