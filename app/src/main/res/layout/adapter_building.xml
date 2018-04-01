@@ -18,8 +18,8 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="144dp"
-                android:background="@color/colorGray" />
+                android:layout_height="200dp    "
+                imageUrl="@{building.getImageUrl()}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="Level 6"
+                        android:text="@{String.format(@string/item_level,(building.getLevel()))}"
                         android:theme="@style/AppTheme.TitleSubtext" />
                 </LinearLayout>
 
@@ -72,7 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="150"
+                            android:text="@{String.valueOf(building.getGasCost())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
 
@@ -95,7 +95,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="650"
+                            android:text="@{String.valueOf(building.getMineralCost())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -117,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="60"
+                            android:text="@{com.francony.romain.outerspacemanager.helpers.Helpers.secondToHumanReadableTime(building.getTimeToBuild())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>

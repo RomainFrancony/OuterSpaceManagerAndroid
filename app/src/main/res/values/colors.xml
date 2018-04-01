@@ -7,6 +7,7 @@
     <color name="colorAccentDark">#42838f</color>
     <color name="colorDanger">#E53935</color>
     <color name="colorGray">#A6A1BA</color>
+    <color name="colorGrayTransparent">#55A6A1BA</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorDark">#333333</color>
     <color name="colorGrayLight">#D4D4D4</color>

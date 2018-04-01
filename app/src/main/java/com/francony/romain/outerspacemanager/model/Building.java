@@ -1,5 +1,9 @@
 package com.francony.romain.outerspacemanager.model;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+import com.francony.romain.outerspacemanager.helpers.Helpers;
+
 public class Building {
     private int level;
     private int amountOfEffectByLevel;
@@ -154,7 +158,7 @@ public class Building {
         return this.getGasCostByLevel() * this.getLevel() + this.getGasCostLevel0();
     }
 
-    public int getMineralsCost() {
+    public int getMineralCost() {
         return this.getMineralCostByLevel() * this.getLevel() + this.getMineralCostLevel0();
     }
 
@@ -188,5 +192,11 @@ public class Building {
 
     public void setBuildingEndTime(long buildingEndTime) {
         this.buildingEndTime = buildingEndTime;
+    }
+
+
+    @BindingAdapter("imageUrl")
+    public static void loadImage(ImageView view, String url) {
+        Helpers.loadExternalImageWithAnimation(view,url);
     }
 }

@@ -12,6 +12,7 @@
 
     <string name="user.score">PTS</string>
     <string name="user.modifier">x %1$d</string>
+    <string name="item.level">Level %1$d</string>
 
     <string name="title.activity_login">Login</string>
     <string name="prompt.email">Email</string>

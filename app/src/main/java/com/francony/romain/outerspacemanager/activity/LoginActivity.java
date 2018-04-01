@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        this.checkUserLogin();
+
         this.etEmail = findViewById(R.id.email_input);
         this.etUsername = findViewById(R.id.username_input);
         this.etPassword = findViewById(R.id.password_input);
@@ -177,6 +179,14 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
+    }
+
+
+    private void checkUserLogin(){
+        if(SharedPreferencesHelper.getToken(getApplicationContext()) != null){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

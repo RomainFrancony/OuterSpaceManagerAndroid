@@ -11,19 +11,33 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
+import com.francony.romain.outerspacemanager.activity.LoginActivity;
 import com.francony.romain.outerspacemanager.adapter.BuildingAdapter;
+import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
+import com.francony.romain.outerspacemanager.response.BuildingsResponse;
+import com.francony.romain.outerspacemanager.response.UserResponse;
+import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
+import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class BuildingsFragment extends Fragment {
+    private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
+
     private RecyclerView rvBuildings;
     private LinearLayoutManager rvLayoutManager;
+    private ArrayList<Building> buildings = new ArrayList<>();
+    private BuildingAdapter buildingAdapter = new BuildingAdapter(this.buildings);
 
 
     public BuildingsFragment() {
@@ -40,20 +54,33 @@ public class BuildingsFragment extends Fragment {
         this.rvBuildings.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvBuildings.setLayoutManager(rvLayoutManager);
-
-        ArrayList<Building> buildings = new ArrayList<>();
-        Building b1 = new Building();
-        b1.setName("Hello");
-        Building b2 = new Building();
-        b2.setName("World");
-        Building b3 = new Building();
-        b3.setName("Yolo");
-
-        buildings.add(b1);
-        buildings.add(b2);
-        buildings.add(b3);
-        rvBuildings.setAdapter(new BuildingAdapter(buildings));
+        rvBuildings.setAdapter(this.buildingAdapter);
+        this.getBuildings();
         return v;
     }
 
+    public void getBuildings() {
+        Call<BuildingsResponse> request = this.service.buildingList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
+
+        request.enqueue(new Callback<BuildingsResponse>() {
+
+            @Override
+            public void onResponse(Call<BuildingsResponse> call, Response<BuildingsResponse> response) {
+                // Error
+                if (response.code() != 200) {
+                    Toast.makeText(getActivity().getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                BuildingsFragment.this.buildings.addAll(response.body().getBuildings());
+                BuildingsFragment.this.buildingAdapter.notifyDataSetChanged();
+            }
+
+            // Network error
+            @Override
+            public void onFailure(Call<BuildingsResponse> call, Throwable t) {
+                Toast.makeText(getActivity().getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
