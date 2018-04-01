@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
@@ -34,6 +35,7 @@ import retrofit2.Response;
 public class BuildingsFragment extends Fragment {
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
+    private RelativeLayout laLoader;
     private RecyclerView rvBuildings;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Building> buildings = new ArrayList<>();
@@ -50,6 +52,7 @@ public class BuildingsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_buildings, container, false);
 
 
+        this.laLoader = v.findViewById(R.id.layout_loader);
         this.rvBuildings = v.findViewById(R.id.buildings_rv);
         this.rvBuildings.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -73,6 +76,8 @@ public class BuildingsFragment extends Fragment {
                 }
 
                 BuildingsFragment.this.buildings.addAll(response.body().getBuildings());
+                BuildingsFragment.this.laLoader.setVisibility(View.GONE);
+                BuildingsFragment.this.rvBuildings.setVisibility(View.VISIBLE);
                 BuildingsFragment.this.buildingAdapter.notifyDataSetChanged();
             }
 

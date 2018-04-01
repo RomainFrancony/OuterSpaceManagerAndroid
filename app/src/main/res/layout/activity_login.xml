@@ -115,7 +115,7 @@
 
     <include
         android:visibility="gone"
-        layout="@layout/include_loader_overlay"
+        layout="@layout/include_loader_overlay_colored"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
