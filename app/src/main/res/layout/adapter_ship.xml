@@ -1,268 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="ship"
+            type="com.francony.romain.outerspacemanager.model.Ship" />
+    </data>
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:layout_margin="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            <TextView
-                android:id="@+id/ship_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chasseur lourd"
-                android:theme="@style/AppTheme.H2" />
-
-            <TextView
-                android:id="@+id/ship_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="x 15"
-                android:theme="@style/AppTheme.TitleSubtext" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="100">
-            <!-- Life -->
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_life" />
-
-                <TextView
-                    android:id="@+id/ship_life"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="60"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Shield -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_shield" />
-
-                <TextView
-                    android:id="@+id/ship_shield"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="15"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-            <!-- Attack -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_attack" />
-
-                <TextView
-                    android:id="@+id/ship_attack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="90 - 110"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Speed -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_speed" />
-
-                <TextView
-                    android:id="@+id/ship_speed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="850"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:orientation="horizontal"
-            android:weightSum="99">
-            <!-- Gas -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_gas" />
-
-                <TextView
-                    android:id="@+id/ship_gas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="250"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Mineral -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_mineral" />
-
-                <TextView
-                    android:id="@+id/ship_mineral"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="300"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Time -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_time" />
-
-                <TextView
-                    android:id="@+id/ship_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="30"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp">
-
-            <com.hkm.ui.processbutton.iml.SubmitProcessButton
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/action.build"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                app:pb_colorComplete="@color/colorAccent"
-                app:pb_colorDisabled="@color/colorAccentDark"
-                app:pb_colorNormal="@color/colorAccent"
-                app:pb_colorPressed="@color/colorAccent"
-                app:pb_colorProgress="@color/colorAccent"
-                app:pb_textProgress="@string/action.build_progress" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:gravity="center_vertical"
-            android:paddingBottom="18dp"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:paddingTop="16dp">
-
-            <com.xw.repo.BubbleSeekBar
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:bsb_max="100"
-                app:bsb_min="1"
-                app:bsb_thumb_radius="8dp"
-                app:bsb_track_color="#1A000000" />
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal">
 
-            <ImageButton
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="48dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="16dp"
-                android:background="@color/colorAccent"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:outlineProvider="bounds"
-                android:src="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/ship_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{ship.getName()}"
+                    android:theme="@style/AppTheme.H2" />
+
+                <TextView
+                    android:id="@+id/ship_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="x 15"
+                    android:theme="@style/AppTheme.TitleSubtext" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100">
+                <!-- Life -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_life" />
+
+                    <TextView
+                        android:id="@+id/ship_life"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getLife().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- Shield -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_shield" />
+
+                    <TextView
+                        android:id="@+id/ship_shield"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getShield().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:weightSum="100">
+                <!-- Attack -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_attack" />
+
+                    <TextView
+                        android:id="@+id/ship_attack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getMinAttack().toString() + ` - ` + ship.getMaxAttack().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- Speed -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_speed" />
+
+                    <TextView
+                        android:id="@+id/ship_speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getSpeed().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                android:weightSum="99">
+                <!-- Gas -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_gas" />
+
+                    <TextView
+                        android:id="@+id/ship_gas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getGasCost().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- Mineral -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_mineral" />
+
+                    <TextView
+                        android:id="@+id/ship_mineral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getMineralCost().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- Time -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_time" />
+
+                    <TextView
+                        android:id="@+id/ship_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{ship.getTimeToBuild().toString()}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp">
+
+                <com.hkm.ui.processbutton.iml.SubmitProcessButton
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action.build"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:pb_colorComplete="@color/colorAccent"
+                    app:pb_colorDisabled="@color/colorAccentDark"
+                    app:pb_colorNormal="@color/colorAccent"
+                    app:pb_colorPressed="@color/colorAccent"
+                    app:pb_colorProgress="@color/colorAccent"
+                    app:pb_textProgress="@string/action.build_progress" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:gravity="center_vertical"
+                android:paddingBottom="18dp"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:paddingTop="16dp">
+
+                <com.xw.repo.BubbleSeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:bsb_max="100"
+                    app:bsb_min="1"
+                    app:bsb_thumb_radius="8dp"
+                    app:bsb_track_color="#1A000000" />
+
+                <ImageButton
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="48dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/colorAccent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:outlineProvider="bounds"
+                    android:src="@drawable/ic_check" />
+            </LinearLayout>
+
+
         </LinearLayout>
-
-
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</layout>
