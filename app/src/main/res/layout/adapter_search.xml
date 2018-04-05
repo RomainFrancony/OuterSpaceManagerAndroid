@@ -131,18 +131,21 @@
             android:clipToPadding="false"
             android:gravity="center_vertical"
             android:paddingBottom="18dp"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
             android:paddingTop="16dp">
 
-            <com.xw.repo.BubbleSeekBar
+            <com.warkiz.widget.IndicatorSeekBar
+                android:layout_marginStart="-8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:bsb_max="100"
-                app:bsb_min="1"
-                app:bsb_thumb_radius="8dp"
-                app:bsb_track_color="#1A000000" />
+                app:isb_max="100"
+                app:isb_min="1"
+                app:isb_progress="1"
+                app:isb_indicator_color="@color/colorAccent"
+                app:isb_indicator_type="circular_bubble"
+                app:isb_thumb_color="@color/colorAccent"
+                app:isb_track_progress_bar_color="@color/colorAccent"
+                app:isb_show_indicator="true" />
 
             <ImageButton
                 style="@style/Widget.AppCompat.Button.Colored"
