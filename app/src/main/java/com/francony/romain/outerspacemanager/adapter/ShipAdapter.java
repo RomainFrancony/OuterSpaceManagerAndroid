@@ -3,7 +3,9 @@ package com.francony.romain.outerspacemanager.adapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.AdapterShipBinding;
@@ -53,6 +55,17 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
         }
 
         public void bind(final Ship ship, SpaceyardFragment spaceyardFragment){
+
+            Button buildButton = binding.getRoot().findViewById(R.id.ship_build_button);
+            buildButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.setWillBuild(true);
+                }
+            });
+
+
+
             IndicatorSeekBar indicatorSeekBar = binding.getRoot().findViewById(R.id.ship_quantity_seekbar);
 
 
@@ -77,6 +90,7 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
 
             ship.setAmount(1);
             binding.setShip(ship);
+            binding.setWillBuild(false);
             binding.setSpaceyardFragment(spaceyardFragment);
             binding.executePendingBindings();
         }

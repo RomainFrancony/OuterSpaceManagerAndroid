@@ -2,10 +2,19 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.francony.romain.outerspacemanager.helpers.Helpers"/>
+
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
+        <import type="android.view.View" />
+
         <variable
             name="spaceyardFragment"
             type="com.francony.romain.outerspacemanager.fragment.SpaceyardFragment" />
+
+        <variable
+            name="willBuild"
+            type="Boolean" />
+
         <variable
             name="ship"
             type="com.francony.romain.outerspacemanager.model.Ship" />
@@ -40,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{ ship.amount > 1 ? String.format(@string/item_quantity, ship.amount) : null}"
+                    android:text="@{ ship.amount > 1 || willBuild ? String.format(@string/item_quantity, ship.amount) : null}"
                     android:theme="@style/AppTheme.TitleSubtext" />
             </LinearLayout>
 
@@ -230,11 +239,13 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/ship_build_button"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="@string/action.build"
-                    android:layout_height="wrap_content" />
+                    android:visibility="@{willBuild ? View.GONE : View.VISIBLE}" />
             </LinearLayout>
 
             <LinearLayout
@@ -243,22 +254,23 @@
                 android:clipToPadding="false"
                 android:gravity="center_vertical"
                 android:paddingBottom="18dp"
-                android:paddingTop="16dp">
+                android:paddingTop="16dp"
+                android:visibility="@{willBuild ? View.VISIBLE : View.GONE}">
 
                 <com.warkiz.widget.IndicatorSeekBar
                     android:id="@+id/ship_quantity_seekbar"
-                    android:layout_marginStart="-8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="-8dp"
                     android:layout_weight="1"
+                    app:isb_indicator_color="@color/colorAccent"
+                    app:isb_indicator_type="circular_bubble"
                     app:isb_max="100"
                     app:isb_min="1"
                     app:isb_progress="1"
-                    app:isb_indicator_color="@color/colorAccent"
-                    app:isb_indicator_type="circular_bubble"
+                    app:isb_show_indicator="true"
                     app:isb_thumb_color="@color/colorAccent"
-                    app:isb_track_progress_bar_color="@color/colorAccent"
-                    app:isb_show_indicator="true" />
+                    app:isb_track_progress_bar_color="@color/colorAccent" />
 
                 <ImageButton
                     style="@style/Widget.AppCompat.Button.Colored"
@@ -266,8 +278,8 @@
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
                     android:background="@color/colorAccent"
-                    android:onClick="@{() -> spaceyardFragment.startConstruction(ship)}"
                     android:foreground="?android:attr/selectableItemBackground"
+                    android:onClick="@{() -> spaceyardFragment.startConstruction(ship)}"
                     android:outlineProvider="bounds"
                     android:src="@drawable/ic_check" />
             </LinearLayout>
