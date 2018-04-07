@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class SearchesFragment extends Fragment {
     private RecyclerView rvShips;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Search> searches = new ArrayList<>();
-    private SearchAdapter searchAdapter = new SearchAdapter(this.searches);
+    private SearchAdapter searchAdapter = new SearchAdapter(this.searches, this);
 
 
     public SearchesFragment() {
@@ -91,6 +92,16 @@ public class SearchesFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+
+
+    public void startSearch(Search search){
+        Log.wtf("ah",search.getName());
+    }
+
+    public void test(){
+        Log.wtf("ah","z");
     }
 
 }

@@ -2,20 +2,29 @@ package com.francony.romain.outerspacemanager.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.AdapterSearchBinding;
+import com.francony.romain.outerspacemanager.fragment.SearchesFragment;
 import com.francony.romain.outerspacemanager.model.Search;
+import com.hkm.ui.processbutton.iml.ActionProcessButton;
+import com.hkm.ui.processbutton.iml.SubmitProcessButton;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdapterViewHolder> {
     private ArrayList<Search> searchesDataset;
+    private SearchesFragment searchesFragment;
 
-    public SearchAdapter(ArrayList<Search> searches) {
+    public SearchAdapter(ArrayList<Search> searches, SearchesFragment searchesFragment) {
         this.searchesDataset = searches;
+        this.searchesFragment = searchesFragment;
     }
 
 
@@ -30,7 +39,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
     @Override
     public void onBindViewHolder(SearchAdapterViewHolder holder, int position) {
         Search search = this.searchesDataset.get(position);
-        holder.bind(search);
+        holder.bind(search, this.searchesFragment);
     }
 
     @Override
@@ -48,7 +57,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
             this.binding = binding;
         }
 
-        public void bind(Search search ){
+        public void bind(final Search search , final SearchesFragment searchesFragment){
+
+            // Button event handling, can't do it via databinding because we need to build it before
+            final SubmitProcessButton mBtnAction = binding.getRoot().findViewById(R.id.search_action_button);
+            mBtnAction.build();
+
+            // Already building
+            if(search.getBuilding()){
+                // TODO get time remaining
+                mBtnAction.setProgress(50);
+            }
+            //TODO click handlers
+
+
+
             binding.setSearch(search);
             binding.executePendingBindings();
         }

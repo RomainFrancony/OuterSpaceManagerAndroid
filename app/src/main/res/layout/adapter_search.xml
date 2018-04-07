@@ -4,7 +4,6 @@
     <data>
 
         <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
-
         <variable
             name="search"
             type="com.francony.romain.outerspacemanager.model.Search" />
@@ -123,6 +122,7 @@
 
                 <com.hkm.ui.processbutton.iml.SubmitProcessButton
                     android:layout_width="match_parent"
+                    android:id="@+id/search_action_button"
                     android:layout_height="40dp"
                     android:layout_marginTop="24dp"
                     android:text="@string/action.search_start"
@@ -132,6 +132,7 @@
                     app:pb_colorDisabled="@color/colorAccentDark"
                     app:pb_colorNormal="@color/colorAccent"
                     app:pb_colorPressed="@color/colorAccent"
+                    app:pb_colorBorder="@color/colorAccent"
                     app:pb_colorProgress="@color/colorAccent"
                     app:pb_textProgress="@string/action.search_progress" />
             </LinearLayout>
