@@ -56,12 +56,12 @@ public class SpaceyardFragment extends Fragment {
         rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvShips.setLayoutManager(rvLayoutManager);
         rvShips.setAdapter(this.shipAdapter);
-        this.getBuildings();
+        this.getShips();
         return v;
     }
 
 
-    public void getBuildings() {
+    public void getShips() {
         Call<SpaceyardResponse> request = this.service.spaceyardList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
 
         request.enqueue(new Callback<SpaceyardResponse>() {

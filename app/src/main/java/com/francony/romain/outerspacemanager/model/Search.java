@@ -120,4 +120,16 @@ public class Search {
     public void setSearchId(Integer searchId) {
         this.searchId = searchId;
     }
+
+    public int getGasCost() {
+        return this.getGasCostByLevel() * this.getLevel() + this.getGasCostLevel0();
+    }
+
+    public int getMineralCost() {
+        return this.getMineralCostByLevel() * this.getLevel() + this.getMineralCostLevel0();
+    }
+
+    public int getTimeToBuild() {
+        return this.getTimeToBuildByLevel() * this.getLevel() + this.getTimeToBuildLevel0();
+    }
 }

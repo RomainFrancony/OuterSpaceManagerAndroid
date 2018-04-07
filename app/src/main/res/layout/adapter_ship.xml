@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers"/>
         <variable
             name="ship"
             type="com.francony.romain.outerspacemanager.model.Ship" />
@@ -216,7 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getTimeToBuild().toString()}"
+                        android:text="@{Helpers.secondToHumanReadableTime(ship.getTimeToBuild() )}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>

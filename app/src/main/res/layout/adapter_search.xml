@@ -1,163 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
+        <variable
+            name="search"
+            type="com.francony.romain.outerspacemanager.model.Search" />
+    </data>
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:layout_margin="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            <TextView
-                android:id="@+id/search_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recherche robotique"
-                android:theme="@style/AppTheme.H2" />
-
-            <TextView
-                android:id="@+id/search_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="Level 5"
-                android:theme="@style/AppTheme.TitleSubtext" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="99">
-            <!-- Gas -->
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_gas" />
-
-                <TextView
-                    android:id="@+id/search_gas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="150"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Mineral -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_mineral" />
-
-                <TextView
-                    android:id="@+id/search_mineral"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="650"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Time -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="33"
-                android:gravity="center_vertical|start">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_time" />
-
-                <TextView
-                    android:id="@+id/search_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="60"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp">
-
-            <com.hkm.ui.processbutton.iml.SubmitProcessButton
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/action.upgrade"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                app:pb_colorComplete="@color/colorAccent"
-                app:pb_colorDisabled="@color/colorAccentDark"
-                app:pb_colorNormal="@color/colorAccent"
-                app:pb_colorPressed="@color/colorAccent"
-                app:pb_colorProgress="@color/colorAccent"
-                app:pb_textProgress="@string/action.search_progress" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:gravity="center_vertical"
-            android:paddingBottom="18dp"
-            android:paddingTop="16dp">
-
-            <com.warkiz.widget.IndicatorSeekBar
-                android:layout_marginStart="-8dp"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:isb_max="100"
-                app:isb_min="1"
-                app:isb_progress="1"
-                app:isb_indicator_color="@color/colorAccent"
-                app:isb_indicator_type="circular_bubble"
-                app:isb_thumb_color="@color/colorAccent"
-                app:isb_track_progress_bar_color="@color/colorAccent"
-                app:isb_show_indicator="true" />
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal">
 
-            <ImageButton
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="48dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="16dp"
-                android:background="@color/colorAccent"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:outlineProvider="bounds"
-                android:src="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/search_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{search.getName()}"
+                    android:theme="@style/AppTheme.H2" />
+
+                <TextView
+                    android:id="@+id/search_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{String.format(@string/item_level,(search.getLevel()))}"
+                    android:theme="@style/AppTheme.TitleSubtext" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="99">
+                <!-- Gas -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_gas" />
+
+                    <TextView
+                        android:id="@+id/search_gas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{String.valueOf(search.getGasCost())}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!-- Mineral -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_mineral" />
+
+                    <TextView
+                        android:id="@+id/search_mineral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{String.valueOf(search.getMineralCost())}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- Time -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="33"
+                    android:gravity="center_vertical|start">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_time" />
+
+                    <TextView
+                        android:id="@+id/search_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{Helpers.secondToHumanReadableTime(search.getTimeToBuild())}"
+                        android:textColor="@color/colorDark"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp">
+
+                <com.hkm.ui.processbutton.iml.SubmitProcessButton
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/action.search_start"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:pb_colorComplete="@color/colorAccent"
+                    app:pb_colorDisabled="@color/colorAccentDark"
+                    app:pb_colorNormal="@color/colorAccent"
+                    app:pb_colorPressed="@color/colorAccent"
+                    app:pb_colorProgress="@color/colorAccent"
+                    app:pb_textProgress="@string/action.search_progress" />
+            </LinearLayout>
+
+
         </LinearLayout>
-
-
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</layout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers"/>
         <variable
             name="building"
             type="com.francony.romain.outerspacemanager.model.Building" />
@@ -117,7 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{com.francony.romain.outerspacemanager.helpers.Helpers.secondToHumanReadableTime(building.getTimeToBuild())}"
+                            android:text="@{Helpers.secondToHumanReadableTime(building.getTimeToBuild())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>
