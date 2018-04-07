@@ -1,8 +1,12 @@
 package com.francony.romain.outerspacemanager.model;
 
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 
-public class Ship {
+import com.francony.romain.outerspacemanager.BR;
+
+public class Ship extends BaseObservable {
     private Integer gasCost;
     private Integer life;
     private Integer maxAttack;
@@ -16,12 +20,14 @@ public class Ship {
     private Integer amount;
     private Integer timeToBuild;
 
+    @Bindable
     public Integer getGasCost() {
         return gasCost;
     }
 
     public void setGasCost(Integer gasCost) {
         this.gasCost = gasCost;
+        notifyPropertyChanged(BR.gasCost);
     }
 
     public Integer getLife() {
@@ -48,12 +54,14 @@ public class Ship {
         this.minAttack = minAttack;
     }
 
+    @Bindable
     public Integer getMineralCost() {
         return mineralCost;
     }
 
     public void setMineralCost(Integer mineralCost) {
         this.mineralCost = mineralCost;
+        notifyPropertyChanged(BR.mineralCost);
     }
 
     public String getName() {
@@ -96,19 +104,23 @@ public class Ship {
         this.speed = speed;
     }
 
+    @Bindable
     public Integer getTimeToBuild() {
         return timeToBuild;
     }
 
     public void setTimeToBuild(Integer timeToBuild) {
         this.timeToBuild = timeToBuild;
+        notifyPropertyChanged(BR.timeToBuild);
     }
 
+    @Bindable
     public Integer getAmount() {
         return amount;
     }
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+        notifyPropertyChanged(BR.amount);
     }
 }

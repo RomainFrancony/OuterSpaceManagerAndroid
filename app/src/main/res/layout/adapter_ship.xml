@@ -32,7 +32,7 @@
                     android:id="@+id/ship_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{ship.getName()}"
+                    android:text="@{ship.name}"
                     android:theme="@style/AppTheme.H2" />
 
                 <TextView
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{ ship.getAmount() > 1 ? String.format(@string/item_quantity, ship.getAmount()) : null}"
+                    android:text="@{ ship.amount > 1 ? String.format(@string/item_quantity, ship.amount) : null}"
                     android:theme="@style/AppTheme.TitleSubtext" />
             </LinearLayout>
 
@@ -174,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(ship.getGasCost() * ship.getAmount())}"
+                        android:text="@{String.valueOf(ship.getGasCost() * ship.amount)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -197,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(ship.getMineralCost() * ship.getAmount())}"
+                        android:text="@{String.valueOf(ship.getMineralCost() * ship.amount)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>

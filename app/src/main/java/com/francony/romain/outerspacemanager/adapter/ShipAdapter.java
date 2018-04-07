@@ -60,9 +60,8 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
 
                 @Override
                 public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
-                    // TODO pass it to fragment ? make ship observable so we don't need to rebind the whole object
+                    // TODO pass it to fragment ?
                     ship.setAmount(progress);
-                    binding.setShip(ship);
                 }
                 @Override
                 public void onSectionChanged(IndicatorSeekBar seekBar, int thumbPosOnTick, String textBelowTick, boolean fromUserTouch) {
