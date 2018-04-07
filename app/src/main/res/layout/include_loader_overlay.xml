@@ -3,7 +3,6 @@
     android:id="@+id/layout_loader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLoader"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center">
@@ -11,6 +10,6 @@
     <ProgressBar
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:indeterminateTint="@color/colorGrayLight"
+        android:indeterminateTint="@color/colorAccent"
         android:indeterminate="true" />
 </RelativeLayout>

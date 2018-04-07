@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class SpaceyardFragment extends Fragment {
     private RecyclerView rvShips;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Ship> ships = new ArrayList<>();
-    private ShipAdapter shipAdapter = new ShipAdapter(this.ships);
+    private ShipAdapter shipAdapter = new ShipAdapter(this.ships,this);
 
 
     public SpaceyardFragment() {
@@ -88,4 +89,11 @@ public class SpaceyardFragment extends Fragment {
         });
     }
 
+    public void startConstruction(Ship ship){
+        Log.wtf("ah","construct");
+    }
+
+    public void test(){
+        Log.wtf("ah","test");
+    }
 }

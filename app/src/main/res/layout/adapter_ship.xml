@@ -4,6 +4,9 @@
     <data>
         <import type="com.francony.romain.outerspacemanager.helpers.Helpers"/>
         <variable
+            name="spaceyardFragment"
+            type="com.francony.romain.outerspacemanager.fragment.SpaceyardFragment" />
+        <variable
             name="ship"
             type="com.francony.romain.outerspacemanager.model.Ship" />
     </data>
@@ -37,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="x 15"
+                    android:text="@{ ship.getAmount() > 1 ? String.format(@string/item_quantity, ship.getAmount()) : null}"
                     android:theme="@style/AppTheme.TitleSubtext" />
             </LinearLayout>
 
@@ -171,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getGasCost().toString()}"
+                        android:text="@{String.valueOf(ship.getGasCost() * ship.getAmount())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -194,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getMineralCost().toString()}"
+                        android:text="@{String.valueOf(ship.getMineralCost() * ship.getAmount())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -224,22 +227,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp">
+                android:layout_height="wrap_content">
 
-                <com.hkm.ui.processbutton.iml.SubmitProcessButton
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                <Button
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
                     android:text="@string/action.build"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    app:pb_colorComplete="@color/colorAccent"
-                    app:pb_colorDisabled="@color/colorAccentDark"
-                    app:pb_colorNormal="@color/colorAccent"
-                    app:pb_colorPressed="@color/colorAccent"
-                    app:pb_colorProgress="@color/colorAccent"
-                    app:pb_textProgress="@string/action.build_progress" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -251,6 +246,7 @@
                 android:paddingTop="16dp">
 
                 <com.warkiz.widget.IndicatorSeekBar
+                    android:id="@+id/ship_quantity_seekbar"
                     android:layout_marginStart="-8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -270,6 +266,7 @@
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
                     android:background="@color/colorAccent"
+                    android:onClick="@{() -> spaceyardFragment.startConstruction(ship)}"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:outlineProvider="bounds"
                     android:src="@drawable/ic_check" />
