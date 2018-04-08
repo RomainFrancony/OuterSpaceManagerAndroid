@@ -8,16 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="spaceyardFragment"
-            type="com.francony.romain.outerspacemanager.fragment.SpaceyardFragment" />
-
-        <variable
-            name="willBuild"
-            type="Boolean" />
-
-        <variable
-            name="ship"
-            type="com.francony.romain.outerspacemanager.model.Ship" />
+            name="shipViewModel"
+            type="com.francony.romain.outerspacemanager.viewModel.ShipViewModel" />
     </data>
 
     <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,7 +33,7 @@
                     android:id="@+id/ship_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{ship.name}"
+                    android:text="@{shipViewModel.ship.name}"
                     android:theme="@style/AppTheme.H2" />
 
                 <TextView
@@ -49,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{ ship.amount > 1 || willBuild ? String.format(@string/item_quantity, ship.amount) : null}"
+                    android:text="@{ shipViewModel.ship.amount > 1 || shipViewModel.willBuild ? String.format(@string/item_quantity, shipViewModel.ship.amount) : null}"
                     android:theme="@style/AppTheme.TitleSubtext" />
             </LinearLayout>
 
@@ -75,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getLife().toString()}"
+                        android:text="@{shipViewModel.ship.getLife().toString()}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -98,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getShield().toString()}"
+                        android:text="@{shipViewModel.ship.getShield().toString()}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -129,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getMinAttack().toString() + ` - ` + ship.getMaxAttack().toString()}"
+                        android:text="@{shipViewModel.ship.getMinAttack().toString() + ` - ` + shipViewModel.ship.getMaxAttack().toString()}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -152,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{ship.getSpeed().toString()}"
+                        android:text="@{shipViewModel.ship.getSpeed().toString()}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -183,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(ship.getGasCost() * ship.amount)}"
+                        android:text="@{String.valueOf(shipViewModel.ship.getGasCost() * shipViewModel.ship.amount)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -206,7 +198,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(ship.getMineralCost() * ship.amount)}"
+                        android:text="@{String.valueOf(shipViewModel.ship.getMineralCost() * shipViewModel.ship.amount)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -228,7 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{Helpers.secondToHumanReadableTime(ship.getTimeToBuild() )}"
+                        android:text="@{Helpers.secondToHumanReadableTime(shipViewModel.ship.getTimeToBuild() )}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -236,26 +228,29 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="@{shipViewModel.willBuild ? View.GONE : View.VISIBLE}">
 
                 <Button
-                    android:id="@+id/ship_build_button"
                     style="@style/Widget.AppCompat.Button.Colored"
+                    android:onClick="@{() -> shipViewModel.setWillBuild(true)}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/action.build"
-                    android:visibility="@{willBuild ? View.GONE : View.VISIBLE}" />
+                    android:layout_marginBottom="11dp"
+                    android:layout_marginTop="11dp"
+                    android:text="@string/action.build" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:clipToPadding="false"
                 android:gravity="center_vertical"
                 android:paddingBottom="18dp"
                 android:paddingTop="16dp"
-                android:visibility="@{willBuild ? View.VISIBLE : View.GONE}">
+                android:visibility="@{shipViewModel.willBuild ? View.VISIBLE : View.GONE}">
 
                 <com.warkiz.widget.IndicatorSeekBar
                     android:id="@+id/ship_quantity_seekbar"
@@ -277,11 +272,30 @@
                     android:layout_width="48dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="16dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/background_corner_radius"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:onClick="@{() -> spaceyardFragment.startConstruction(ship)}"
+                    android:onClick="@{() -> shipViewModel.startConstruction()}"
                     android:outlineProvider="bounds"
-                    android:src="@drawable/ic_check" />
+                    android:src="@drawable/ic_check"
+                    android:visibility="@{shipViewModel.shipBuildLoading ? View.GONE : View.VISIBLE}" />
+
+                <LinearLayout
+                    android:layout_width="48dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/background_corner_radius"
+                    android:elevation="2dp"
+                    android:outlineProvider="bounds"
+                    android:padding="4dp"
+                    android:visibility="@{shipViewModel.shipBuildLoading ? View.VISIBLE : View.GONE}">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/colorWhite" />
+                </LinearLayout>
+
             </LinearLayout>
 
 

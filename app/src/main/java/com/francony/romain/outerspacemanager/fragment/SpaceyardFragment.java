@@ -37,7 +37,7 @@ public class SpaceyardFragment extends Fragment {
     private RecyclerView rvShips;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Ship> ships = new ArrayList<>();
-    private ShipAdapter shipAdapter = new ShipAdapter(this.ships,this);
+    private ShipAdapter shipAdapter;
 
 
     public SpaceyardFragment() {
@@ -50,13 +50,14 @@ public class SpaceyardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_spaceyard, container, false);
 
-
+        // Set recycler view
         this.laLoader = v.findViewById(R.id.layout_loader);
         this.rvShips = v.findViewById(R.id.ships_rv);
         this.rvShips.setHasFixedSize(true);
-        rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        rvShips.setLayoutManager(rvLayoutManager);
-        rvShips.setAdapter(this.shipAdapter);
+        this.rvLayoutManager = new LinearLayoutManager(getContext());
+        this.rvShips.setLayoutManager(rvLayoutManager);
+        this.shipAdapter = new ShipAdapter(this.ships,this.getContext());
+        this.rvShips.setAdapter(this.shipAdapter);
         this.getShips();
         return v;
     }
@@ -87,13 +88,5 @@ public class SpaceyardFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public void startConstruction(Ship ship){
-        Log.wtf("ah","construct");
-    }
-
-    public void test(){
-        Log.wtf("ah","test");
     }
 }

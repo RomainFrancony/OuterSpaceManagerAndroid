@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -13,7 +18,7 @@
                       <PersistentState>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="divider_vertical_simple" />
+                            <entry key="outputName" value="background_corner_radius" />
                             <entry key="sourceFile" value="C:\Users\Romain" />
                           </map>
                         </option>

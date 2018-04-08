@@ -15,6 +15,9 @@
     <string name="item.level">Level %1$d</string>
     <string name="item.quantity">x %1$d</string>
 
+
+    <string name="ship.ordered">%1$d %2$s in construction</string>
+
     <string name="title.activity_login">Login</string>
     <string name="prompt.email">Email</string>
     <string name="prompt.username">Username</string>
