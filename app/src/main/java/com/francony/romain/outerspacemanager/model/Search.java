@@ -1,8 +1,11 @@
 package com.francony.romain.outerspacemanager.model;
 
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import com.francony.romain.outerspacemanager.BR;
 
-public class Search {
+public class Search extends BaseObservable{
     private Integer searchId;
     private Integer amountOfEffectByLevel;
     private Integer amountOfEffectLevel0;
@@ -33,12 +36,14 @@ public class Search {
         this.amountOfEffectLevel0 = amountOfEffectLevel0;
     }
 
+    @Bindable
     public Boolean getBuilding() {
         return building;
     }
 
     public void setBuilding(Boolean building) {
         this.building = building;
+        notifyPropertyChanged(BR.building);
     }
 
     public String getEffect() {
@@ -65,12 +70,14 @@ public class Search {
         this.gasCostLevel0 = gasCostLevel0;
     }
 
+    @Bindable
     public Integer getLevel() {
         return level;
     }
 
     public void setLevel(Integer level) {
         this.level = level;
+        notifyPropertyChanged(BR.level);
     }
 
     public Integer getMineralCostByLevel() {

@@ -18,6 +18,8 @@ import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.warkiz.widget.IndicatorSeekBar;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -78,13 +80,19 @@ public class ShipViewModel extends BaseObservable {
         request.enqueue(new Callback<ShipBuildingResponse>() {
             @Override
             public void onResponse(Call<ShipBuildingResponse> call, Response<ShipBuildingResponse> response) {
+                ShipViewModel.this.indicatorSeekBar.setEnabled(true);
+                ShipViewModel.this.setShipBuildLoading(false);
+
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                ShipViewModel.this.ship.setAmount(1);
                 ShipViewModel.this.setWillBuild(false);
+                ShipViewModel.this.indicatorSeekBar.setProgress(1); // Can't do it via databinding (don't know why but it doesn't work)
                 Snackbar snackbar = Snackbar.make(view, context.getResources().getString(R.string.ship_ordered, ship.getAmount(), ship.getName()), Snackbar.LENGTH_LONG);
                 Helpers.showSnackbarWithAnimation(snackbar);
-                ShipViewModel.this.setShipBuildLoading(false);
-                ShipViewModel.this.ship.setAmount(1);
-                ShipViewModel.this.indicatorSeekBar.setEnabled(true);
-                ShipViewModel.this.indicatorSeekBar.setProgress(1); // Can't do it via databinding (don't know why but it doesn't work)
             }
 
             // Network error
@@ -92,6 +100,7 @@ public class ShipViewModel extends BaseObservable {
             public void onFailure(Call<ShipBuildingResponse> call, Throwable t) {
                 Toast.makeText(context, R.string.error_network, Toast.LENGTH_LONG).show();
                 ShipViewModel.this.setShipBuildLoading(false);
+                ShipViewModel.this.indicatorSeekBar.setEnabled(true);
             }
         });
     }

@@ -41,7 +41,7 @@ public class SearchesFragment extends Fragment {
     private RecyclerView rvShips;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Search> searches = new ArrayList<>();
-    private SearchAdapter searchAdapter = new SearchAdapter(this.searches, this);
+    private SearchAdapter searchAdapter;
 
 
     public SearchesFragment() {
@@ -57,9 +57,10 @@ public class SearchesFragment extends Fragment {
         this.laLoader = v.findViewById(R.id.layout_loader);
         this.rvShips = v.findViewById(R.id.searches_rv);
         this.rvShips.setHasFixedSize(true);
-        rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        rvShips.setLayoutManager(rvLayoutManager);
-        rvShips.setAdapter(this.searchAdapter);
+        this.rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        this.rvShips.setLayoutManager(rvLayoutManager);
+        this.searchAdapter = new SearchAdapter(this.searches, getContext());
+        this.rvShips.setAdapter(this.searchAdapter);
         this.getSearches();
         return v;
     }

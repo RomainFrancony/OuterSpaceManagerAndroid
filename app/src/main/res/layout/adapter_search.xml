@@ -5,8 +5,8 @@
 
         <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
         <variable
-            name="search"
-            type="com.francony.romain.outerspacemanager.model.Search" />
+            name="searchViewModel"
+            type="com.francony.romain.outerspacemanager.viewModel.SearchViewModel" />
     </data>
 
     <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -30,7 +30,7 @@
                     android:id="@+id/search_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{search.getName()}"
+                    android:text="@{searchViewModel.search.name}"
                     android:theme="@style/AppTheme.H2" />
 
                 <TextView
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{String.format(@string/item_level,(search.getLevel()))}"
+                    android:text="@{String.format(@string/item_level,(searchViewModel.search.level))}"
                     android:theme="@style/AppTheme.TitleSubtext" />
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(search.getGasCost())}"
+                        android:text="@{String.valueOf(searchViewModel.search.getGasCost())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(search.getMineralCost())}"
+                        android:text="@{String.valueOf(searchViewModel.search.getMineralCost())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -109,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{Helpers.secondToHumanReadableTime(search.getTimeToBuild())}"
+                        android:text="@{Helpers.secondToHumanReadableTime(searchViewModel.search.getTimeToBuild())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>

@@ -9,14 +9,19 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.francony.romain.outerspacemanager.R;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Field;
 import java.time.LocalTime;
+
+import retrofit2.Response;
 
 public abstract class Helpers {
 
@@ -52,6 +57,16 @@ public abstract class Helpers {
                         .placeholder(new ColorDrawable(ContextCompat.getColor(context, R.color.colorGrayTransparent))).centerCrop())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(view);
+    }
+
+
+    public static String getResponseErrorMessage(Response response){
+        try {
+            JSONObject jObjError = new JSONObject(response.errorBody().string());
+            return jObjError.getString("message");
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
 }

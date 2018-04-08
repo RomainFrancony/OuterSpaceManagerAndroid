@@ -1,5 +1,6 @@
 package com.francony.romain.outerspacemanager.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.AdapterSearchBinding;
 import com.francony.romain.outerspacemanager.fragment.SearchesFragment;
 import com.francony.romain.outerspacemanager.model.Search;
+import com.francony.romain.outerspacemanager.viewModel.SearchViewModel;
 import com.hkm.ui.processbutton.iml.ActionProcessButton;
 import com.hkm.ui.processbutton.iml.SubmitProcessButton;
 
@@ -20,11 +22,11 @@ import java.util.TimerTask;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdapterViewHolder> {
     private ArrayList<Search> searchesDataset;
-    private SearchesFragment searchesFragment;
+    private Context context;
 
-    public SearchAdapter(ArrayList<Search> searches, SearchesFragment searchesFragment) {
+    public SearchAdapter(ArrayList<Search> searches, Context context) {
         this.searchesDataset = searches;
-        this.searchesFragment = searchesFragment;
+        this.context = context;
     }
 
 
@@ -39,7 +41,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
     @Override
     public void onBindViewHolder(SearchAdapterViewHolder holder, int position) {
         Search search = this.searchesDataset.get(position);
-        holder.bind(search, this.searchesFragment);
+        holder.bind(search, this.context);
     }
 
     @Override
@@ -57,22 +59,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
             this.binding = binding;
         }
 
-        public void bind(final Search search , final SearchesFragment searchesFragment){
+        public void bind(final Search search , final Context context){
 
-            // Button event handling, can't do it via databinding because we need to build it before
-            final SubmitProcessButton mBtnAction = binding.getRoot().findViewById(R.id.search_action_button);
-            mBtnAction.build();
-
-            // Already building
-            if(search.getBuilding()){
-                // TODO get time remaining
-                mBtnAction.setProgress(50);
-            }
-            //TODO click handlers
-
-
-
-            binding.setSearch(search);
+            SearchViewModel searchViewModel = new SearchViewModel(search,binding.getRoot(),context);
+            binding.setSearchViewModel(searchViewModel);
             binding.executePendingBindings();
         }
     }
