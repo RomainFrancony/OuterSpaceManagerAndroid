@@ -2,7 +2,7 @@ package com.francony.romain.outerspacemanager.fragment;
 
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
+import com.francony.romain.outerspacemanager.viewModel.ShipViewModel;
 
 import java.util.ArrayList;
 
@@ -48,18 +49,18 @@ public class FleetFragment extends Fragment {
 
         // Set recycler view
         this.laLoader = v.findViewById(R.id.layout_loader);
-        this.rvShips = v.findViewById(R.id.ships_rv);
+        this.rvShips = v.findViewById(R.id.fleet_rv);
         this.rvShips.setHasFixedSize(true);
         this.rvLayoutManager = new LinearLayoutManager(getContext());
         this.rvShips.setLayoutManager(rvLayoutManager);
-        this.shipAdapter = new ShipAdapter(this.ships,this.getContext());
+        this.shipAdapter = new ShipAdapter(this.ships,this.getContext(), ShipViewModel.VIEW);
         this.rvShips.setAdapter(this.shipAdapter);
         this.getShips();
         return v;
     }
 
     public void getShips() {
-        Call<SpaceyardResponse> request = this.service.spaceyardList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
+        Call<SpaceyardResponse> request = this.service.fleetList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
 
         request.enqueue(new Callback<SpaceyardResponse>() {
 
@@ -84,5 +85,6 @@ public class FleetFragment extends Fragment {
             }
         });
     }
+
 
 }

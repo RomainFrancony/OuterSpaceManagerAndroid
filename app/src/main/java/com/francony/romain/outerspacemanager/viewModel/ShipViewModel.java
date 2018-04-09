@@ -5,7 +5,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.BR;
@@ -27,10 +26,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ShipViewModel extends BaseObservable {
+    public static final int BUILD = 0;
+    public static final int VIEW = 1;
+    public static final int SELECT = 2;
+
+
     private Ship ship;
     private View view;
     private Context context;
     private IndicatorSeekBar indicatorSeekBar;
+    private int cardType;
 
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
@@ -38,11 +43,14 @@ public class ShipViewModel extends BaseObservable {
     private Boolean shipBuildLoading = false;
 
 
-    public ShipViewModel(final Ship ship, View view, Context context) {
+    public ShipViewModel(final Ship ship, View view, Context context, int cardType) {
         this.ship = ship;
-        this.ship.setAmount(1);
+        if(this.ship.getAmount() == null){
+            this.ship.setAmount(1);
+        }
         this.view = view;
         this.context = context;
+        this.cardType = cardType;
 
 
         // Set the progress handler here because there is no attribute for setting it in xml
@@ -88,11 +96,11 @@ public class ShipViewModel extends BaseObservable {
                     return;
                 }
 
-                ShipViewModel.this.ship.setAmount(1);
                 ShipViewModel.this.setWillBuild(false);
                 ShipViewModel.this.indicatorSeekBar.setProgress(1); // Can't do it via databinding (don't know why but it doesn't work)
                 Snackbar snackbar = Snackbar.make(view, context.getResources().getString(R.string.ship_ordered, ship.getAmount(), ship.getName()), Snackbar.LENGTH_LONG);
                 Helpers.showSnackbarWithAnimation(snackbar);
+                ShipViewModel.this.ship.setAmount(1);
             }
 
             // Network error
@@ -132,5 +140,13 @@ public class ShipViewModel extends BaseObservable {
 
     public void setShip(Ship ship) {
         this.ship = ship;
+    }
+
+    public int getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(int cardType) {
+        this.cardType = cardType;
     }
 }

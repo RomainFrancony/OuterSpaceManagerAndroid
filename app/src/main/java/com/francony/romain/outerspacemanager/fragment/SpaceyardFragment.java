@@ -20,6 +20,7 @@ import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
+import com.francony.romain.outerspacemanager.viewModel.ShipViewModel;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class SpaceyardFragment extends Fragment {
         this.rvShips.setHasFixedSize(true);
         this.rvLayoutManager = new LinearLayoutManager(getContext());
         this.rvShips.setLayoutManager(rvLayoutManager);
-        this.shipAdapter = new ShipAdapter(this.ships,this.getContext());
+        this.shipAdapter = new ShipAdapter(this.ships,this.getContext(), ShipViewModel.BUILD);
         this.rvShips.setAdapter(this.shipAdapter);
         this.getShips();
         return v;

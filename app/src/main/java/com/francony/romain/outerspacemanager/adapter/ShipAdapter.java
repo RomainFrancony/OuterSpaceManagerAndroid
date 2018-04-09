@@ -16,10 +16,12 @@ import java.util.ArrayList;
 public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterViewHolder> {
     private ArrayList<Ship> shipsDataset;
     private Context context;
+    private int cardType;
 
-    public ShipAdapter(ArrayList<Ship> ships, Context context) {
+    public ShipAdapter(ArrayList<Ship> ships, Context context, int cardType) {
         this.shipsDataset = ships;
         this.context = context;
+        this.cardType = cardType;
     }
 
 
@@ -43,7 +45,6 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
     }
 
 
-
     public class ShipAdapterViewHolder extends RecyclerView.ViewHolder {
         private final AdapterShipBinding binding;
 
@@ -52,8 +53,8 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
             this.binding = binding;
         }
 
-        public void bind(final Ship ship, Context context){
-            ShipViewModel shipViewModel = new ShipViewModel(ship,binding.getRoot(),context);
+        public void bind(final Ship ship, Context context) {
+            ShipViewModel shipViewModel = new ShipViewModel(ship, binding.getRoot(), context, cardType);
             binding.setShipViewModel(shipViewModel);
             binding.executePendingBindings();
         }

@@ -1,20 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGrayLight"
-    android:orientation="vertical"
-    tools:context="com.francony.romain.outerspacemanager.fragment.HomeFragment">
+    android:background="@color/colorGrayLight">
 
-    <fragment
-        android:id="@+id/fragment_userInfo"
-        android:name="com.francony.romain.outerspacemanager.fragment.UserInfoFragment"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.francony.romain.outerspacemanager.fragment.HomeFragment">
 
-    <fragment
-        android:id="@+id/fragment_fleet"
-        android:name="com.francony.romain.outerspacemanager.fragment.FleetFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        <fragment
+            android:id="@+id/fragment_userInfo"
+            android:name="com.francony.romain.outerspacemanager.fragment.UserInfoFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <fragment
+            android:id="@+id/fragment_fleet"
+            android:name="com.francony.romain.outerspacemanager.fragment.FleetFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

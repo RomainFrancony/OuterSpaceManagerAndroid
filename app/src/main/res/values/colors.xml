@@ -11,5 +11,6 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorDark">#333333</color>
     <color name="colorGrayLight">#D4D4D4</color>
+    <color name="colorGrayDark">#465a5e</color>
     <color name="colorLoader">#56000000</color>
 </resources>
