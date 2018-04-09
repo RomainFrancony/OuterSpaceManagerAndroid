@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorGrayLight"
-    android:padding="8dp"
     android:orientation="vertical"
+    android:padding="8dp"
     tools:context="com.francony.romain.outerspacemanager.fragment.HomeFragment">
 
-    <include
-        android:layout_marginBottom="16dp"
-        layout="@layout/include_card_user"
+    <fragment
+        android:id="@+id/fragment_userInfo"
+        android:name="com.francony.romain.outerspacemanager.fragment.UserInfoFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
