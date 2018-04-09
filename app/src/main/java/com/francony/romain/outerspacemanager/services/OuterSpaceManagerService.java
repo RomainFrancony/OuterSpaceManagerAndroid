@@ -10,6 +10,7 @@ import com.francony.romain.outerspacemanager.response.ShipBuildingResponse;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 import com.francony.romain.outerspacemanager.response.UserResponse;
+import com.francony.romain.outerspacemanager.response.reports.ReportListResponse;
 
 import java.util.HashMap;
 
@@ -53,4 +54,8 @@ public interface OuterSpaceManagerService {
 
     @POST("searches/create/{id}")
     Call<ActionResponse> searchBuild(@Header("x-access-token") String token, @Path("id") int id);
+
+
+    @GET("users/{from}/{limit}")
+    Call<ReportListResponse> reportsList(@Header("x-access-token") String token, @Path("from") Integer from, @Path("limit") Integer limit);
 }

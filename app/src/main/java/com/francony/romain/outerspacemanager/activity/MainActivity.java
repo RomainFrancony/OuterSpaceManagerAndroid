@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.francony.romain.outerspacemanager.fragment.AttacksFragment;
 import com.francony.romain.outerspacemanager.fragment.BuildingsFragment;
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.fragment.HomeFragment;
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentClass = SpaceyardFragment.class;
         } else if (id == R.id.nav_search) {
             fragmentClass = SearchesFragment.class;
+        } else if (id == R.id.nav_attacks) {
+            fragmentClass = AttacksFragment.class;
         }else if (id == R.id.nav_logout) {
             this.logout();
             this.drawer.closeDrawer(GravityCompat.START);
