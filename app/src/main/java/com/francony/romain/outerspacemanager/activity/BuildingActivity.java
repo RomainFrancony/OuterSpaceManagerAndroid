@@ -12,16 +12,28 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.ActivityBuildingBinding;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
+import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
+import com.francony.romain.outerspacemanager.response.ActionResponse;
+import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
+import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
+import com.francony.romain.outerspacemanager.viewModel.SearchViewModel;
 import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BuildingActivity extends AppCompatActivity {
     public Building building;
     private ActivityBuildingBinding binding;
+
+    private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -61,6 +73,25 @@ public class BuildingActivity extends AppCompatActivity {
     }
 
     public void startBuild(){
+        Call<ActionResponse> request = BuildingActivity.this.service.buildingBuild(SharedPreferencesHelper.getToken(getApplicationContext()), BuildingActivity.this.building.getBuildingId());
+
+        request.enqueue(new Callback<ActionResponse>() {
+            @Override
+            public void onResponse(Call<ActionResponse> call, Response<ActionResponse> response) {
+                // Error
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                BuildingActivity.this.building.setBuilding(true);
+            }
+            // Network error
+            @Override
+            public void onFailure(Call<ActionResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
