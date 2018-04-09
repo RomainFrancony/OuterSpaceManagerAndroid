@@ -24,6 +24,12 @@ public class BuildingActivity extends AppCompatActivity {
     private ActivityBuildingBinding binding;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        finishAfterTransition();
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_building);
