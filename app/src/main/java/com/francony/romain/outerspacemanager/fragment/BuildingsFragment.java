@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.activity.LoginActivity;
 import com.francony.romain.outerspacemanager.adapter.BuildingAdapter;
+import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
 import com.francony.romain.outerspacemanager.response.BuildingsResponse;
@@ -39,7 +40,7 @@ public class BuildingsFragment extends Fragment {
     private RecyclerView rvBuildings;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Building> buildings = new ArrayList<>();
-    private BuildingAdapter buildingAdapter = new BuildingAdapter(this.buildings);
+    private BuildingAdapter buildingAdapter;
 
 
     public BuildingsFragment() {
@@ -57,6 +58,7 @@ public class BuildingsFragment extends Fragment {
         this.rvBuildings.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvBuildings.setLayoutManager(rvLayoutManager);
+        this.buildingAdapter = new BuildingAdapter(this.buildings, this);
         rvBuildings.setAdapter(this.buildingAdapter);
         this.getBuildings();
         return v;
@@ -70,8 +72,8 @@ public class BuildingsFragment extends Fragment {
             @Override
             public void onResponse(Call<BuildingsResponse> call, Response<BuildingsResponse> response) {
                 // Error
-                if (response.code() != 200) {
-                    Toast.makeText(getActivity().getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
 

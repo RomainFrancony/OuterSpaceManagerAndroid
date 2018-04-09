@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
+import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
@@ -71,8 +72,8 @@ public class SpaceyardFragment extends Fragment {
             @Override
             public void onResponse(Call<SpaceyardResponse> call, Response<SpaceyardResponse> response) {
                 // Error
-                if (response.code() != 200) {
-                    Toast.makeText(getActivity().getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
 

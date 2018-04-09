@@ -14,6 +14,8 @@
     <string name="user.modifier">x %1$d</string>
     <string name="item.level">Level %1$d</string>
     <string name="item.quantity">x %1$d</string>
+    <string name="item.cost">Cost</string>
+    <string name="item.maxLevel">LEVEL MAX</string>
 
 
     <string name="ship.ordered">%1$d %2$s in construction</string>
@@ -34,6 +36,11 @@
     <string name="error.network">Can\'t connect to server, please try again later.</string>
     <string name="action.build_progress">Building</string>
     <string name="action.search_progress">Searching</string>
+
+
+    <string name="effect.speed_building">Building speed</string>
+    <string name="effect.speed_fleet">Fleet speed</string>
+    <string name="effect">Effect</string>
 
 
 </resources>

@@ -1,10 +1,16 @@
 package com.francony.romain.outerspacemanager.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.widget.ImageView;
+
+import com.francony.romain.outerspacemanager.BR;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 
-public class Building {
+public class Building extends BaseObservable {
+    public static int MAX_LEVEL = 30;
+
     private int level;
     private int amountOfEffectByLevel;
     private int amountOfEffectLevel0;
@@ -26,12 +32,14 @@ public class Building {
     private int timeToBuildByLevel;
     private int timeToBuildLevel0;
 
+    @Bindable
     public int getLevel() {
         return level;
     }
 
     public void setLevel(int level) {
         this.level = level;
+        notifyPropertyChanged(BR.level);
     }
 
     public int getAmountOfEffectByLevel() {

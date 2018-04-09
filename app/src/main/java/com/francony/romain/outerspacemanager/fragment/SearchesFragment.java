@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.adapter.SearchAdapter;
 import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
+import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Search;
 import com.francony.romain.outerspacemanager.model.Ship;
@@ -76,8 +77,8 @@ public class SearchesFragment extends Fragment {
             @Override
             public void onResponse(Call<SearchesResponse> call, Response<SearchesResponse> response) {
                 // Error
-                if (response.code() != 200) {
-                    Toast.makeText(getActivity().getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
 

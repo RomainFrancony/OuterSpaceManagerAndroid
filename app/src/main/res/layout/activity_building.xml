@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+        <import type="com.francony.romain.outerspacemanager.model.Building" />
+        <import type="android.view.View" />
+        <variable
+            name="buildingActivityViewModel"
+            type="com.francony.romain.outerspacemanager.activity.BuildingActivity" />
+    </data>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/building_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.francony.romain.outerspacemanager.activity.BuildingActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:toolbarId="@+id/toolbar">
+
+            <ImageView
+                imageUrl="@{buildingActivityViewModel.building.imageUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:transitionName="building"
+                app:layout_collapseMode="parallax" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:subtitle="@{String.format(@string/item_level,(buildingActivityViewModel.building.level))}"
+                app:title="@{buildingActivityViewModel.building.name}"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:visibility="@{buildingActivityViewModel.building.level == Building.MAX_LEVEL ? View.GONE : View.VISIBLE }"
+            android:text="@string/item.cost"
+            android:layout_marginBottom="12dp"
+            style="@style/AppTheme.H2"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:visibility="@{buildingActivityViewModel.building.level == Building.MAX_LEVEL ? View.GONE : View.VISIBLE }"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="28dp"
+            android:weightSum="99">
+            <!-- Gas -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_gas" />
+
+                <TextView
+                    android:id="@+id/building_gas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@{String.valueOf(buildingActivityViewModel.building.getGasCost())}"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <!-- Mineral -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mineral" />
+
+                <TextView
+                    android:id="@+id/building_mineral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@{String.valueOf(buildingActivityViewModel.building.getMineralCost())}"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Time -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="33"
+                android:gravity="center_vertical|start">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_time" />
+
+                <TextView
+                    android:id="@+id/building_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@{Helpers.secondToHumanReadableTime(buildingActivityViewModel.building.getTimeToBuild())}"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="@{buildingActivityViewModel.building.effect.empty ? View.GONE : View.VISIBLE}"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/effect"
+                style="@style/AppTheme.H2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:text="@{buildingActivityViewModel.getEffectString()}"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="24dp"
+            android:enabled="@{buildingActivityViewModel.building.level != Building.MAX_LEVEL }"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:text="@{@{buildingActivityViewModel.building.level == Building.MAX_LEVEL ? @string/item_maxLevel : @string/action_build } }"
+            android:onClick="@{() -> buildingActivityViewModel.startBuild()}"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+</layout>
