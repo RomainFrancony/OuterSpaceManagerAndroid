@@ -49,17 +49,20 @@ public class AttacksFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
 
+        this.getReports();
+
         return v;
     }
 
 
-    public void getReports() {
+    private void getReports() {
 
         Call<ReportListResponse> request = this.service.reportsList(SharedPreferencesHelper.getToken(getContext()), 0, 20);
         request.enqueue(new Callback<ReportListResponse>() {
             @Override
             public void onResponse(Call<ReportListResponse> call, Response<ReportListResponse> response) {
                 AttacksFragment.this.reportList = response.body().getReports();
+                AttacksFragment.this.reportsFragment.setReports(AttacksFragment.this.reportList);
             }
 
             // Network error
@@ -75,16 +78,25 @@ public class AttacksFragment extends Fragment {
 
 
 
+    public ArrayList<Report> getReportList() {
+        return reportList;
+    }
 
 
-
+    private BuildingsFragment buildingsFragment;
+    private ReportsFragment reportsFragment;
 
     private void setViewPager(ViewPager viewPager) {
+        buildingsFragment = new BuildingsFragment();
+        reportsFragment = new ReportsFragment();
+
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new BuildingsFragment(), getString(R.string.attacks_in_progress));
-        adapter.addFragment(new ReportsFragment(), getString(R.string.attacks_completed));
+        adapter.addFragment(buildingsFragment, getString(R.string.attacks_in_progress));
+        adapter.addFragment(reportsFragment, getString(R.string.attacks_completed));
         viewPager.setAdapter(adapter);
     }
+
 
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
