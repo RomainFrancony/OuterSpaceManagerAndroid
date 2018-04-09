@@ -2,9 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="24dp"
     android:background="@color/colorGrayLight"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
+    android:paddingTop="24dp"
     tools:context="com.francony.romain.outerspacemanager.fragment.SpaceyardFragment">
 
     <TextView
@@ -12,17 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/fleet"
         android:textAllCaps="true"
         android:textColor="@color/colorGrayDark"
-        android:textSize="16sp"
-        android:layout_marginStart="8dp"
-        android:text="@string/fleet" />
+        android:textSize="16sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fleet_rv"
         android:layout_width="match_parent"
-        android:nestedScrollingEnabled="false"
         android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false"
         android:scrollbars="none"
         android:visibility="gone" />
 
