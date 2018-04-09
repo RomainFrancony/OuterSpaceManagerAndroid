@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorGrayLight"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context="com.francony.romain.outerspacemanager.fragment.HomeFragment">
 
     <fragment
@@ -13,4 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <fragment
+        android:id="@+id/fragment_fleet"
+        android:name="com.francony.romain.outerspacemanager.fragment.FleetFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
