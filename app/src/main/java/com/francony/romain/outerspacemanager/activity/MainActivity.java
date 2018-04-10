@@ -19,9 +19,12 @@ import com.francony.romain.outerspacemanager.fragment.HomeFragment;
 import com.francony.romain.outerspacemanager.fragment.SearchesFragment;
 import com.francony.romain.outerspacemanager.fragment.SpaceyardFragment;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +38,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Drawer
         this.drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, this.drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, this.drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         this.drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        this.navigationView = findViewById(R.id.nav_view);
+        this.navigationView.setNavigationItemSelectedListener(this);
 
 
         // Initial fragment content
@@ -61,8 +63,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+            // Cancel back button if clicked when on other fragment than home
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+            for (Fragment fragment : fragments) {
+                if (fragment instanceof HomeFragment) {
+                    super.onBackPressed();
+                    return;
+                }
+            }
+            // Initial fragment content
+            this.displayInitialFragment();
         }
+    }
+
+
+    private void displayInitialFragment(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = null;
+        try {
+            fragment = HomeFragment.class.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).commit();
+        this.navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
@@ -82,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentClass = SearchesFragment.class;
         } else if (id == R.id.nav_attacks) {
             fragmentClass = AttacksFragment.class;
-        }else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
             this.logout();
             this.drawer.closeDrawer(GravityCompat.START);
             return true;
@@ -99,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Don't update the fragment if it's the same a the current one
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_content);
-        if(currentFragment.getClass() == fragmentClass){
+        if (currentFragment.getClass() == fragmentClass) {
             this.drawer.closeDrawer(GravityCompat.START);
             return true;
         }

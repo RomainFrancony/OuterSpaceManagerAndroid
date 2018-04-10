@@ -5,7 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class OuterSpaceManagerServiceFactory {
-    private static String API_URL = "https://outer-space-manager.herokuapp.com/api/v1/";
+    private static String API_URL = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
 
     public static OuterSpaceManagerService create() {
         Retrofit retrofit = new Retrofit.Builder()
