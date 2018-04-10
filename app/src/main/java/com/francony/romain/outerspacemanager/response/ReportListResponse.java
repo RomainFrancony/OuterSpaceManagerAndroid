@@ -5,7 +5,7 @@ import com.francony.romain.outerspacemanager.model.Report;
 import java.util.ArrayList;
 
 public class ReportListResponse {
-    private ArrayList<Report> reports = null;
+    private ArrayList<Report> reports = new ArrayList<>();
 
     public ArrayList<Report> getReports() {
         return reports;

@@ -95,15 +95,4 @@ public class SearchesFragment extends Fragment {
             }
         });
     }
-
-
-
-    public void startSearch(Search search){
-        Log.wtf("ah",search.getName());
-    }
-
-    public void test(){
-        Log.wtf("ah","z");
-    }
-
 }

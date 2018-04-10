@@ -114,8 +114,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 LoginActivity.this.laLoader.setVisibility(View.GONE);
                 // Error
-                if (response.code() != 200) {
-                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
                 LoginActivity.this.launchApp(response);
@@ -174,19 +174,23 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void launchApp(Response<UserResponse> response){
+    private void launchApp(Response<UserResponse> response) {
         SharedPreferencesHelper.setToken(getApplicationContext(), response.body().getToken());
         SharedPreferencesHelper.setTokenexpiration(getApplicationContext(), response.body().getExpires());
-
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
 
-    private void checkUserLogin(){
-        if(SharedPreferencesHelper.getToken(getApplicationContext()) != null){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+    private void checkUserLogin() {
+        if (SharedPreferencesHelper.getToken(getApplicationContext()) != null && SharedPreferencesHelper.getTokenExpiration(getApplicationContext()) > System.currentTimeMillis() / 1000) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            this.finish();
+        }else{
+            SharedPreferencesHelper.clearToken(getApplicationContext());
+            SharedPreferencesHelper.clearTokenExpiration(getApplicationContext());
         }
     }
 

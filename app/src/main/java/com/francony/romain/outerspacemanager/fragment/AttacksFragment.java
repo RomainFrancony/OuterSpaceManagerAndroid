@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class AttacksFragment extends Fragment {
             @Override
             public void onResponse(Call<ReportListResponse> call, Response<ReportListResponse> response) {
                 AttacksFragment.this.reportList = response.body().getReports();
-                AttacksFragment.this.reportsFragment.setReports(AttacksFragment.this.reportList);
+                AttacksFragment.this.reportsFragment.setReports(response.body().getReports());
             }
 
             // Network error
