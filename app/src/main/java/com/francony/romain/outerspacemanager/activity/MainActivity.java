@@ -22,9 +22,10 @@ import com.francony.romain.outerspacemanager.fragment.SpaceyardFragment;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static final int SPACEYARD_DRAWER_INDEX = 3;
 
     private DrawerLayout drawer;
-    private NavigationView navigationView;
+    public NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void displayInitialFragment(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = null;
-        try {
-            fragment = HomeFragment.class.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).commit();
+        this.navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         this.navigationView.getMenu().getItem(0).setChecked(true);
     }
 
