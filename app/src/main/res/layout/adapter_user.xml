@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="userViewModel"
+            type="com.francony.romain.outerspacemanager.viewModel.UserViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@{String.valueOf(userViewModel.userScore.position + 1)}"
+                android:textAlignment="center"
+                android:textColor="@{userViewModel.getUserColor()}"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{userViewModel.userScore.username}"
+                    android:textColor="@color/colorDark"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@{String.valueOf(userViewModel.userScore.points)}"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:adjustViewBounds="false"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:cropToPadding="false"
+                android:onClick="@{() -> userViewModel.startAttackActivity()}"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_attack" />
+        </LinearLayout>
+
+        <!-- Divider (don't use ItemDecorator because we need the divider to be tranlated and start only on the text and it's complicated for nothing with it) -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:src="@drawable/horizontal_divider" />
+    </LinearLayout>
+</layout>

@@ -10,9 +10,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
+import com.francony.romain.outerspacemanager.fragment.GalaxyFragment;
 import com.francony.romain.outerspacemanager.fragment.AttacksFragment;
 import com.francony.romain.outerspacemanager.fragment.BuildingsFragment;
 import com.francony.romain.outerspacemanager.R;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void displayInitialFragment(){
+    private void displayInitialFragment() {
         this.navigationView.getMenu().performIdentifierAction(R.id.nav_home, 0);
         this.navigationView.getMenu().getItem(0).setChecked(true);
     }
@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentClass = SearchesFragment.class;
         } else if (id == R.id.nav_attacks) {
             fragmentClass = AttacksFragment.class;
+        } else if (id == R.id.nav_galaxy) {
+            fragmentClass = GalaxyFragment.class;
         } else if (id == R.id.nav_logout) {
             this.logout();
             this.drawer.closeDrawer(GravityCompat.START);
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void logout() {
         SharedPreferencesHelper.clearToken(getApplicationContext());
         SharedPreferencesHelper.clearTokenExpiration(getApplicationContext());
-        Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
+        Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(loginIntent);
         this.finish();
     }

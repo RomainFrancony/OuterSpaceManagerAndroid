@@ -13,4 +13,7 @@
     <color name="colorGrayLight">#D4D4D4</color>
     <color name="colorGrayDark">#465a5e</color>
     <color name="colorLoader">#56000000</color>
+    <color name="colorGold">#fdb23b</color>
+    <color name="colorSilver">#b9b7b5</color>
+    <color name="colorBronze">#d78c36</color>
 </resources>

@@ -4,6 +4,7 @@ package com.francony.romain.outerspacemanager.model;
 public class UserScore {
     private long points;
     private String username;
+    private int position;
 
     public UserScore(long points, String username) {
         this.points = points;
@@ -28,5 +29,13 @@ public class UserScore {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

@@ -49,6 +49,7 @@
 
     <string name="fleet.no_fleet">You don\'t have any fleet yet. You can order ship it the spaceyard for attacking other players and gain resources.</string>
     <string name="fleet.got_to_spaceyard">Go to spaceyard</string>
+    <string name="nav.galaxy">Galaxy</string>
 
 
 

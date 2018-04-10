@@ -19,6 +19,9 @@
         <item
             android:id="@+id/nav_attacks"
             android:title="@string/nav.attacks"/>
+        <item
+            android:id="@+id/nav_galaxy"
+            android:title="@string/nav.galaxy"/>
     </group>
 
     <item>

@@ -6,11 +6,11 @@ import com.francony.romain.outerspacemanager.model.UserScore;
 
 import java.util.ArrayList;
 
-public class Scoreboard {
+public class ScoreboardResponse {
     private ArrayList<UserScore> users;
     private int size;
 
-    public Scoreboard(ArrayList<UserScore> users, int size) {
+    public ScoreboardResponse(ArrayList<UserScore> users, int size) {
         this.users = users;
         this.size = size;
     }

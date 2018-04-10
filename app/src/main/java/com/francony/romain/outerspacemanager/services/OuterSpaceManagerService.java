@@ -4,7 +4,7 @@ package com.francony.romain.outerspacemanager.services;
 import com.francony.romain.outerspacemanager.model.User;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
 import com.francony.romain.outerspacemanager.response.BuildingsResponse;
-import com.francony.romain.outerspacemanager.response.Scoreboard;
+import com.francony.romain.outerspacemanager.response.ScoreboardResponse;
 import com.francony.romain.outerspacemanager.response.SearchesResponse;
 import com.francony.romain.outerspacemanager.response.ShipBuildingResponse;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
@@ -38,7 +38,7 @@ public interface OuterSpaceManagerService {
     Call<ActionResponse> buildingBuild(@Header("x-access-token") String token, @Path("id") Integer buildingId);
 
     @GET("users/{from}/{limit}")
-    Call<Scoreboard> userList(@Header("x-access-token") String token, @Path("from") Integer from, @Path("limit") Integer limit);
+    Call<ScoreboardResponse> userList(@Header("x-access-token") String token, @Path("from") Integer from, @Path("limit") Integer limit);
 
     @GET("ships")
     Call<SpaceyardResponse> spaceyardList(@Header("x-access-token") String token);
