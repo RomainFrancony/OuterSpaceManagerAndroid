@@ -68,6 +68,9 @@ public class BuildingActivity extends AppCompatActivity {
 
     public String getEffectString() {
         String packageName = getPackageName();
+        if(this.building.getEffect() == null){
+            return "";
+        }
         int resId = getResources().getIdentifier("effect." + this.building.getEffect(), "string", packageName);
         return getString(resId);
     }
