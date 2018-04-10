@@ -1,5 +1,6 @@
 package com.francony.romain.outerspacemanager.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.fragment.HomeFragment;
 import com.francony.romain.outerspacemanager.fragment.SearchesFragment;
 import com.francony.romain.outerspacemanager.fragment.SpaceyardFragment;
+import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 
 import java.util.List;
 
@@ -131,5 +133,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logout() {
+        SharedPreferencesHelper.clearToken(getApplicationContext());
+        SharedPreferencesHelper.clearTokenExpiration(getApplicationContext());
+        Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(loginIntent);
+        this.finish();
     }
 }
