@@ -7,10 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.francony.romain.outerspacemanager.R;
-import com.francony.romain.outerspacemanager.response.reports.Report;
+import com.francony.romain.outerspacemanager.model.Report;
 
 import java.util.ArrayList;
 

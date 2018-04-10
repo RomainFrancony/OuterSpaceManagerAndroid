@@ -1,6 +1,5 @@
-package com.francony.romain.outerspacemanager.response.reports;
+package com.francony.romain.outerspacemanager.model;
 
-import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 
 import java.util.List;

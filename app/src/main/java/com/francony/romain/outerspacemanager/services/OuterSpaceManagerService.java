@@ -10,7 +10,7 @@ import com.francony.romain.outerspacemanager.response.ShipBuildingResponse;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 import com.francony.romain.outerspacemanager.response.UserResponse;
-import com.francony.romain.outerspacemanager.response.reports.ReportListResponse;
+import com.francony.romain.outerspacemanager.response.ReportListResponse;
 
 import java.util.HashMap;
 

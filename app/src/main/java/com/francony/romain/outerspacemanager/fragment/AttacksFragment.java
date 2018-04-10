@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
-import com.francony.romain.outerspacemanager.response.reports.Report;
-import com.francony.romain.outerspacemanager.response.reports.ReportListResponse;
+import com.francony.romain.outerspacemanager.model.Report;
+import com.francony.romain.outerspacemanager.response.ReportListResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 

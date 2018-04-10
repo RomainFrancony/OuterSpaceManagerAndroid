@@ -1,4 +1,4 @@
-package com.francony.romain.outerspacemanager.response.reports;
+package com.francony.romain.outerspacemanager.model;
 
 import java.util.List;
 

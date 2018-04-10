@@ -1,4 +1,4 @@
-package com.francony.romain.outerspacemanager.response.reports;
+package com.francony.romain.outerspacemanager.model;
 
 public class FleetAmount {
     private Integer amount;
