@@ -33,7 +33,8 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:visibility="gone">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
