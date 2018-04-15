@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".activity.BuildingActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.AttackActivity" />
     </application>
 
 </manifest>

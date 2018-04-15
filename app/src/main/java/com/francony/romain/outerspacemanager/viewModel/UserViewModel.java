@@ -1,9 +1,11 @@
 package com.francony.romain.outerspacemanager.viewModel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import com.francony.romain.outerspacemanager.R;
+import com.francony.romain.outerspacemanager.activity.AttackActivity;
 import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
@@ -31,7 +33,8 @@ public class UserViewModel {
     }
 
     public void startAttackActivity() {
-
+        Intent attackIntent = new Intent(context, AttackActivity.class);
+        context.startActivity(attackIntent);
     }
 
 
