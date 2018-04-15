@@ -17,6 +17,7 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
     private ArrayList<Ship> shipsDataset;
     private Context context;
     private int cardType;
+    private ShipViewModel.RemoveShipListener removeShipListener;
 
     public ShipAdapter(ArrayList<Ship> ships, Context context, int cardType) {
         this.shipsDataset = ships;
@@ -55,8 +56,22 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ShipAdapterVie
 
         public void bind(final Ship ship, Context context) {
             ShipViewModel shipViewModel = new ShipViewModel(ship, binding.getRoot(), context, cardType);
+
+            if(removeShipListener != null){
+                shipViewModel.setRemoveShipListener(new ShipViewModel.RemoveShipListener() {
+                    @Override
+                    public void onRemoveShip(Ship ship) {
+                        removeShipListener.onRemoveShip(ship);
+                    }
+                });
+            }
             binding.setShipViewModel(shipViewModel);
             binding.executePendingBindings();
         }
+    }
+
+
+    public void setRemoveShipListener(ShipViewModel.RemoveShipListener removeShipListener) {
+        this.removeShipListener = removeShipListener;
     }
 }

@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
         <import type="com.francony.romain.outerspacemanager.viewModel.ShipViewModel" />
 
         <import type="android.view.View" />
@@ -18,289 +19,304 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:padding="12dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/ship_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{shipViewModel.ship.name}"
-                    android:theme="@style/AppTheme.H2" />
-
-                <TextView
-                    android:id="@+id/ship_quantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{ (shipViewModel.willBuild || shipViewModel.cardType == ShipViewModel.VIEW) ? String.format(@string/item_quantity, shipViewModel.ship.amount) : null}"
-                    android:theme="@style/AppTheme.TitleSubtext" />
-            </LinearLayout>
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:onClick="@{() -> shipViewModel.removeShip()}"
+                android:src="@drawable/ic_close_gray_24dp"
+                android:visibility="@{shipViewModel.cardType == ShipViewModel.SELECT ? View.VISIBLE : View.GONE}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="100">
-                <!-- Life -->
+                android:orientation="vertical">
+
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_life" />
-
-                    <TextView
-                        android:id="@+id/ship_life"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{shipViewModel.ship.getLife().toString()}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <!-- Shield -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_shield" />
-
-                    <TextView
-                        android:id="@+id/ship_shield"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{shipViewModel.ship.getShield().toString()}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:weightSum="100">
-                <!-- Attack -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_attack" />
-
-                    <TextView
-                        android:id="@+id/ship_attack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{shipViewModel.ship.getMinAttack().toString() + ` - ` + shipViewModel.ship.getMaxAttack().toString()}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <!-- Speed -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="50"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_speed" />
-
-                    <TextView
-                        android:id="@+id/ship_speed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{shipViewModel.ship.getSpeed().toString()}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:orientation="horizontal"
-                android:visibility="@{shipViewModel.cardType == ShipViewModel.VIEW ? View.GONE : View.VISIBLE}"
-                android:weightSum="99">
-                <!-- Gas -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="33"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_gas" />
-
-                    <TextView
-                        android:id="@+id/ship_gas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(shipViewModel.ship.getGasCost() * shipViewModel.ship.amount)}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <!-- Mineral -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="33"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_mineral" />
-
-                    <TextView
-                        android:id="@+id/ship_mineral"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(shipViewModel.ship.getMineralCost() * shipViewModel.ship.amount)}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <!-- Time -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="33"
-                    android:gravity="center_vertical|start">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_time" />
-
-                    <TextView
-                        android:id="@+id/ship_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="@{Helpers.secondToHumanReadableTime(shipViewModel.ship.getTimeToBuild() )}"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="@{(shipViewModel.willBuild || shipViewModel.cardType == ShipViewModel.VIEW) ? View.GONE : View.VISIBLE}">
-
-                <Button
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:onClick="@{() -> shipViewModel.setWillBuild(true)}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="11dp"
-                    android:layout_marginTop="11dp"
-                    android:text="@string/action.build" />
-            </LinearLayout>
+                    android:layout_marginBottom="24dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:clipToPadding="false"
-                android:gravity="center_vertical"
-                android:paddingBottom="18dp"
-                android:paddingTop="16dp"
-                android:visibility="@{shipViewModel.willBuild ? View.VISIBLE : View.GONE}">
-
-                <com.warkiz.widget.IndicatorSeekBar
-                    android:id="@+id/ship_quantity_seekbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="-8dp"
-                    android:layout_weight="1"
-                    app:isb_indicator_color="@color/colorAccent"
-                    app:isb_indicator_type="circular_bubble"
-                    app:isb_max="100"
-                    app:isb_min="1"
-                    app:isb_progress="1"
-                    app:isb_show_indicator="true"
-                    app:isb_thumb_color="@color/colorAccent"
-                    app:isb_track_progress_bar_color="@color/colorAccent" />
-
-                <ImageButton
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="48dp"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/background_corner_radius"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:onClick="@{() -> shipViewModel.startConstruction()}"
-                    android:outlineProvider="bounds"
-                    android:src="@drawable/ic_check"
-                    android:visibility="@{shipViewModel.shipBuildLoading ? View.GONE : View.VISIBLE}" />
-
-                <LinearLayout
-                    android:layout_width="48dp"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/background_corner_radius"
-                    android:elevation="2dp"
-                    android:outlineProvider="bounds"
-                    android:padding="4dp"
-                    android:visibility="@{shipViewModel.shipBuildLoading ? View.VISIBLE : View.GONE}">
-
-                    <ProgressBar
+                    <TextView
+                        android:id="@+id/ship_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:indeterminate="true"
-                        android:indeterminateTint="@color/colorWhite" />
+                        android:layout_height="wrap_content"
+                        android:text="@{shipViewModel.ship.name}"
+                        android:theme="@style/AppTheme.H2" />
+
+                    <TextView
+                        android:id="@+id/ship_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@{ (shipViewModel.willBuild || shipViewModel.cardType == ShipViewModel.VIEW || shipViewModel.cardType == ShipViewModel.SELECT) ? String.format(@string/item_quantity, shipViewModel.ship.amount) : null}"
+                        android:theme="@style/AppTheme.TitleSubtext" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+                    <!-- Life -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_life" />
+
+                        <TextView
+                            android:id="@+id/ship_life"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{shipViewModel.ship.getLife().toString()}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!-- Shield -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_shield" />
+
+                        <TextView
+                            android:id="@+id/ship_shield"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{shipViewModel.ship.getShield().toString()}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+                    <!-- Attack -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_attack" />
+
+                        <TextView
+                            android:id="@+id/ship_attack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{shipViewModel.ship.getMinAttack().toString() + ` - ` + shipViewModel.ship.getMaxAttack().toString()}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!-- Speed -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_speed" />
+
+                        <TextView
+                            android:id="@+id/ship_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{shipViewModel.ship.getSpeed().toString()}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal"
+                    android:visibility="@{shipViewModel.cardType == ShipViewModel.VIEW || shipViewModel.cardType == ShipViewModel.SELECT ? View.GONE : View.VISIBLE}"
+                    android:weightSum="99">
+                    <!-- Gas -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_gas" />
+
+                        <TextView
+                            android:id="@+id/ship_gas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{String.valueOf(shipViewModel.ship.getGasCost() * shipViewModel.ship.amount)}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!-- Mineral -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_mineral" />
+
+                        <TextView
+                            android:id="@+id/ship_mineral"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{String.valueOf(shipViewModel.ship.getMineralCost() * shipViewModel.ship.amount)}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <!-- Time -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:gravity="center_vertical|start">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_time" />
+
+                        <TextView
+                            android:id="@+id/ship_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="@{Helpers.secondToHumanReadableTime(shipViewModel.ship.getTimeToBuild() )}"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="@{(shipViewModel.willBuild || shipViewModel.cardType == ShipViewModel.VIEW || shipViewModel.cardType == ShipViewModel.SELECT) ? View.GONE : View.VISIBLE}">
+
+                    <Button
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="11dp"
+                        android:layout_marginTop="11dp"
+                        android:onClick="@{() -> shipViewModel.setWillBuild(true)}"
+                        android:text="@string/action.build" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="18dp"
+                    android:paddingTop="16dp"
+                    android:visibility="@{(shipViewModel.willBuild || shipViewModel.cardType == ShipViewModel.SELECT) ? View.VISIBLE : View.GONE}">
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/ship_quantity_seekbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="-8dp"
+                        android:layout_weight="1"
+                        app:isb_indicator_color="@color/colorAccent"
+                        app:isb_indicator_type="circular_bubble"
+                        app:isb_max="100"
+                        app:isb_min="1"
+                        app:isb_progress="1"
+                        app:isb_show_indicator="true"
+                        app:isb_thumb_color="@color/colorAccent"
+                        app:isb_track_progress_bar_color="@color/colorAccent" />
+
+                    <ImageButton
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="48dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/background_corner_radius"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{() -> shipViewModel.startConstruction()}"
+                        android:outlineProvider="bounds"
+                        android:src="@drawable/ic_check"
+                        android:visibility="@{(shipViewModel.shipBuildLoading || shipViewModel.cardType == ShipViewModel.SELECT) ? View.GONE : View.VISIBLE}" />
+
+                    <LinearLayout
+                        android:layout_width="48dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/background_corner_radius"
+                        android:elevation="2dp"
+                        android:outlineProvider="bounds"
+                        android:padding="4dp"
+                        android:visibility="@{shipViewModel.shipBuildLoading ? View.VISIBLE : View.GONE}">
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:indeterminate="true"
+                            android:indeterminateTint="@color/colorWhite" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
             </LinearLayout>
-
-
-        </LinearLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </layout>

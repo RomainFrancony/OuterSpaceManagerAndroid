@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.BR;
 import com.francony.romain.outerspacemanager.R;
+import com.francony.romain.outerspacemanager.adapter.ShipSelectorAdapter;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Ship;
@@ -36,6 +37,7 @@ public class ShipViewModel extends BaseObservable {
     private Context context;
     private IndicatorSeekBar indicatorSeekBar;
     private int cardType;
+    private RemoveShipListener removeShipListener;
 
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
@@ -45,7 +47,7 @@ public class ShipViewModel extends BaseObservable {
 
     public ShipViewModel(final Ship ship, View view, Context context, int cardType) {
         this.ship = ship;
-        if(this.ship.getAmount() == null){
+        if (this.ship.getAmount() == null) {
             this.ship.setAmount(1);
         }
         this.view = view;
@@ -53,8 +55,19 @@ public class ShipViewModel extends BaseObservable {
         this.cardType = cardType;
 
 
-        // Set the progress handler here because there is no attribute for setting it in xml
         this.indicatorSeekBar = this.view.findViewById(R.id.ship_quantity_seekbar);
+
+        if (this.cardType == ShipViewModel.SELECT) {
+            this.indicatorSeekBar.setMax(this.ship.getAmount());
+            this.indicatorSeekBar.setProgress(this.ship.getAmount());
+
+            // Hide seekbar if the use only have 1 ship
+            if (this.ship.getAmount() == 1) {
+                this.indicatorSeekBar.setVisibility(View.GONE);
+            }
+        }
+
+        // Set the progress handler here because there is no attribute for setting it in xml
         this.indicatorSeekBar.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
@@ -148,5 +161,20 @@ public class ShipViewModel extends BaseObservable {
 
     public void setCardType(int cardType) {
         this.cardType = cardType;
+    }
+
+    public void removeShip(){
+        // Reset to the actual ship amount
+        this.ship.setAmount(Math.round(this.indicatorSeekBar.getMax()));
+        if (removeShipListener != null) removeShipListener.onRemoveShip(this.ship);
+    }
+
+    public void setRemoveShipListener(ShipViewModel.RemoveShipListener removeShipListener) {
+        this.removeShipListener = removeShipListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface RemoveShipListener {
+        void onRemoveShip(Ship ship);
     }
 }

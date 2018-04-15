@@ -1,15 +1,12 @@
 package com.francony.romain.outerspacemanager.bottomSheet;
 
 import android.app.Dialog;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -17,8 +14,6 @@ import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.activity.AttackActivity;
 import com.francony.romain.outerspacemanager.adapter.ShipSelectorAdapter;
 import com.francony.romain.outerspacemanager.model.Ship;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -77,6 +72,7 @@ public class ShipSelectorBottomSheetDialogFragment extends BottomSheetDialogFrag
     }
 
     public void updateShips(ArrayList<Ship> ships) {
+        this.ships.clear();
         this.ships.addAll(ships);
 
         if (this.rvShips != null) {
