@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class GalaxyFragment extends Fragment {
+public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreListener {
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
     private RelativeLayout laLoader;
@@ -39,6 +40,8 @@ public class GalaxyFragment extends Fragment {
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<UserScore> userScores = new ArrayList<>();
     private UserAdapter userAdapter;
+    private Boolean loading = true;
+    private int page = 0;
 
 
     public GalaxyFragment() {
@@ -58,6 +61,7 @@ public class GalaxyFragment extends Fragment {
         this.rvUsers.setLayoutManager(rvLayoutManager);
         this.userAdapter = new UserAdapter(this.userScores, getContext());
         this.rvUsers.setAdapter(this.userAdapter);
+        this.userAdapter.setOnLoadMoreListener(this);
 
 
         this.getScoreboard();
@@ -65,7 +69,8 @@ public class GalaxyFragment extends Fragment {
     }
 
     private void getScoreboard() {
-        Call<ScoreboardResponse> request = this.service.userList(SharedPreferencesHelper.getToken(getContext()), 0, 20);
+        this.loading = true;
+        Call<ScoreboardResponse> request = this.service.userList(SharedPreferencesHelper.getToken(getContext()), this.page * 20, 20);
 
         request.enqueue(new Callback<ScoreboardResponse>() {
 
@@ -73,14 +78,29 @@ public class GalaxyFragment extends Fragment {
             public void onResponse(Call<ScoreboardResponse> call, Response<ScoreboardResponse> response) {
                 // Error
                 if (!response.isSuccessful()) {
+                    GalaxyFragment.this.loading = false;
                     Toast.makeText(getContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
 
+
+                // Delete loading item
+                if (!GalaxyFragment.this.userScores.isEmpty()) {
+                    GalaxyFragment.this.userScores.remove(GalaxyFragment.this.userScores.size() - 1);
+                    GalaxyFragment.this.userAdapter.notifyDataSetChanged();
+                }
+
+                // We are already on last page no need to do anything
+                if (response.body().getSize() == 0) {
+                    return;
+                }
+
                 GalaxyFragment.this.userScores.addAll(response.body().getUsers());
+                GalaxyFragment.this.userScores.add(null);
                 GalaxyFragment.this.rvUsers.setVisibility(View.VISIBLE);
                 GalaxyFragment.this.laLoader.setVisibility(View.GONE);
                 GalaxyFragment.this.userAdapter.notifyDataSetChanged();
+                GalaxyFragment.this.loading = false;
             }
 
             // Network error
@@ -91,4 +111,12 @@ public class GalaxyFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onLoadMore() {
+        if (this.loading) {
+            return;
+        }
+        this.page++;
+        this.getScoreboard();
+    }
 }
