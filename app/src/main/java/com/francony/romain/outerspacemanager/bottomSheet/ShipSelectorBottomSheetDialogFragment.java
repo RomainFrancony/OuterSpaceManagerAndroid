@@ -18,6 +18,7 @@ import com.francony.romain.outerspacemanager.adapter.ShipSelectorAdapter;
 import com.francony.romain.outerspacemanager.model.Ship;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ShipSelectorBottomSheetDialogFragment extends BottomSheetDialogFragment implements ShipSelectorAdapter.ItemClickListener {
     private ArrayList<Ship> ships = new ArrayList<>();
@@ -74,6 +75,12 @@ public class ShipSelectorBottomSheetDialogFragment extends BottomSheetDialogFrag
     }
 
     public void updateShips(ArrayList<Ship> ships) {
+        ships.sort(new Comparator<Ship>() {
+            @Override
+            public int compare(Ship o1, Ship o2) {
+                return o1.getShipId() - o2.getShipId();
+            }
+        });
         this.ships.clear();
         this.ships.addAll(ships);
 

@@ -37,11 +37,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AttackActivity extends AppCompatActivity implements View.OnClickListener, ShipViewModel.RemoveShipListener {
+public class AttackActivity extends AppCompatActivity implements ShipViewModel.RemoveShipListener, ShipAdapter.OnClickAddShipListener {
     private ShipSelectorBottomSheetDialogFragment bottomSheet;
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
     private ArrayList<Ship> ships = new ArrayList<>();
-    private CardView buttonAddShip;
     private ArrayList<Ship> selectedShips = new ArrayList<>();
     private RecyclerView rvSelectedShips;
     private LinearLayoutManager rvLayoutManager;
@@ -62,13 +61,13 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         this.rvSelectedShips.setHasFixedSize(true);
         this.rvLayoutManager = new LinearLayoutManager(getApplicationContext());
         this.rvSelectedShips.setLayoutManager(rvLayoutManager);
+        // Add a null item for the "add card"
+        this.selectedShips.add(null);
         this.selectedShipAdapter = new ShipAdapter(this.selectedShips, this.getApplicationContext(), ShipViewModel.SELECT);
         this.rvSelectedShips.setAdapter(this.selectedShipAdapter);
         this.selectedShipAdapter.setRemoveShipListener(this);
+        this.selectedShipAdapter.setOnClickAddShipListener(this);
 
-        // Button
-        this.buttonAddShip = findViewById(R.id.button_add_ship);
-        this.buttonAddShip.setOnClickListener(this);
         this.bottomSheet = new ShipSelectorBottomSheetDialogFragment();
         this.getShips();
 
@@ -83,11 +82,6 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
     public boolean onSupportNavigateUp() {
         this.finish();
         return true;
-    }
-
-    @Override
-    public void onClick(View v) {
-        this.bottomSheet.show(getSupportFragmentManager(), this.bottomSheet.getTag());
     }
 
 
@@ -125,13 +119,16 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
     public void selectShip(Ship ship) {
         this.ships.remove(ship);
         this.bottomSheet.updateShips(this.ships);
-        if (this.ships.size() == 0) {
-            this.buttonAddShip.setVisibility(View.INVISIBLE);
-        }
 
-        this.selectedShips.add(ship);
+        // Insert selected ship before the "add card"
+        this.selectedShips.add(this.selectedShips.size() - 1, ship);
         this.selectedShipAdapter.notifyItemInserted(this.selectedShips.indexOf(ship));
-        this.rvLayoutManager.requestLayout();
+
+        // Remove the "add card" if all available type of ships are selected
+        if (this.ships.size() == 0) {
+            this.selectedShips.remove(this.selectedShips.size() - 1);
+            this.selectedShipAdapter.notifyItemRemoved(this.selectedShips.size());
+        }
     }
 
 
@@ -142,7 +139,16 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         this.ships.add(ship);
         this.bottomSheet.updateShips(this.ships);
         this.selectedShipAdapter.notifyItemRemoved(index);
-        this.buttonAddShip.setVisibility(View.VISIBLE);
-        this.rvLayoutManager.requestLayout();
+
+        // Add the "add card" if the user deleted a ship when all available type were selected
+        if (this.ships.size() > 0 && this.selectedShips.get(this.selectedShips.size() - 1) != null) {
+            this.selectedShips.add(null);
+            this.selectedShipAdapter.notifyItemInserted(this.selectedShips.size() - 1);
+        }
+    }
+
+    @Override
+    public void onClickAddShip() {
+        this.bottomSheet.show(getSupportFragmentManager(), this.bottomSheet.getTag());
     }
 }
