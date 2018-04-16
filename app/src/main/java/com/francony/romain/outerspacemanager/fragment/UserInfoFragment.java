@@ -1,9 +1,11 @@
 package com.francony.romain.outerspacemanager.fragment;
 
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,9 @@ import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +29,8 @@ import retrofit2.Response;
 public class UserInfoFragment extends Fragment {
 
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
+    // Keep context as variable because we want to save user info even after the user may have quit the fragment (and we need the context to save it in shared preferences)
+    private Context context;
 
     private FragmentUserInfoBinding binding;
 
@@ -39,8 +46,15 @@ public class UserInfoFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
     private void getUserInfos() {
-        Call<UserInfoResponse> request = this.service.userInfo(SharedPreferencesHelper.getToken(getContext()));
+        Call<UserInfoResponse> request = this.service.userInfo(SharedPreferencesHelper.getToken(context));
         request.enqueue(new Callback<UserInfoResponse>() {
             @Override
             public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
@@ -50,7 +64,7 @@ public class UserInfoFragment extends Fragment {
                     return;
                 }
 
-                SharedPreferencesHelper.setUserInfos(getContext(), response.body());
+                SharedPreferencesHelper.setUserInfos(context, response.body());
 
                 // Transition
                 UserInfoFragment.this.binding.setLoadingState(false);

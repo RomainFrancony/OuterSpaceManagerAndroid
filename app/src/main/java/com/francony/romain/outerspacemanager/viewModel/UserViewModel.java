@@ -2,26 +2,31 @@ package com.francony.romain.outerspacemanager.viewModel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.activity.AttackActivity;
+import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.UserScore;
-import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
-import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
+import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 
 public class UserViewModel {
     private UserScore userScore;
     private View view;
     private Context context;
 
-    private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
     public UserViewModel(UserScore userScore, View view, Context context) {
         this.userScore = userScore;
         this.view = view;
         this.context = context;
+    }
 
+    public Boolean isCurrentUser(){
+        UserInfoResponse current = SharedPreferencesHelper.getUserInfos(this.context);
+        return current.getUsername().equals(this.userScore.getUsername());
     }
 
     public UserScore getUserScore() {
