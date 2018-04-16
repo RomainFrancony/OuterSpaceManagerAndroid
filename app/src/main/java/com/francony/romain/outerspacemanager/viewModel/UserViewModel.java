@@ -11,6 +11,7 @@ import com.francony.romain.outerspacemanager.activity.AttackActivity;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.response.UserInfoResponse;
+import com.google.gson.Gson;
 
 public class UserViewModel {
     private UserScore userScore;
@@ -39,6 +40,9 @@ public class UserViewModel {
 
     public void startAttackActivity() {
         Intent attackIntent = new Intent(context, AttackActivity.class);
+        Gson gson = new Gson();
+        String user_json = gson.toJson(this.userScore);
+        attackIntent.putExtra("user", user_json);
         context.startActivity(attackIntent);
     }
 

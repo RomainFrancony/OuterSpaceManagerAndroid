@@ -6,9 +6,19 @@
     android:background="@color/colorGrayLight"
     android:fitsSystemWindows="true">
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:backgroundTint="#EF5350"
+        android:src="@drawable/ic_attack"
+        app:borderWidth="0dp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -18,27 +28,52 @@
             android:paddingTop="24dp">
 
             <TextView
+                android:id="@+id/textview_attack_user"
                 style="@style/AppTheme.H1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Attack Michel"
                 android:textAlignment="center" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_selected_ships"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:nestedScrollingEnabled="false"
                 android:visibility="visible" />
 
-            <Button
+            <android.support.v7.widget.CardView
                 android:id="@+id/button_add_ship"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add ship" />
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginBottom="18dp"
+                        android:src="@drawable/ic_add_primary_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/attacks.add_ship"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

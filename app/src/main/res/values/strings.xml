@@ -46,6 +46,8 @@
 
     <string name="attacks.in_progress">In progress</string>
     <string name="attacks.completed">Records</string>
+    <string name="attacks.add_ship">Add ship</string>
+    <string name="attacks.user_to_attack">Attack %1$s</string>
 
     <string name="fleet.no_fleet">You don\'t have any fleet yet. You can order ship it the spaceyard for attacking other players and gain resources.</string>
     <string name="fleet.no_fleet_short">You don\'t have any fleet.</string>

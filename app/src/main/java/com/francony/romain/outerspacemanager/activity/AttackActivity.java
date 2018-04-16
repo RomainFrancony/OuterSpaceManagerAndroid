@@ -10,7 +10,9 @@ import com.francony.romain.outerspacemanager.bottomSheet.ShipSelectorBottomSheet
 import com.francony.romain.outerspacemanager.fragment.FleetFragment;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
+import com.francony.romain.outerspacemanager.model.Building;
 import com.francony.romain.outerspacemanager.model.Ship;
+import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
@@ -18,6 +20,7 @@ import com.francony.romain.outerspacemanager.viewModel.ShipViewModel;
 import com.google.gson.Gson;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +28,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,11 +41,12 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
     private ShipSelectorBottomSheetDialogFragment bottomSheet;
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
     private ArrayList<Ship> ships = new ArrayList<>();
-    private Button buttonAddShip;
+    private CardView buttonAddShip;
     private ArrayList<Ship> selectedShips = new ArrayList<>();
     private RecyclerView rvSelectedShips;
     private LinearLayoutManager rvLayoutManager;
     private ShipAdapter selectedShipAdapter;
+    private UserScore user;
 
 
     @Override
@@ -66,6 +71,12 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         this.buttonAddShip.setOnClickListener(this);
         this.bottomSheet = new ShipSelectorBottomSheetDialogFragment();
         this.getShips();
+
+        // Get extra
+        Gson gson = new Gson();
+        this.user = gson.fromJson(getIntent().getStringExtra("user"), UserScore.class);
+        TextView textView = findViewById(R.id.textview_attack_user);
+        textView.setText(String.format(getString(R.string.attacks_user_to_attack), this.user.getUsername()));
     }
 
     @Override
@@ -119,7 +130,8 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         this.selectedShips.add(ship);
-        this.selectedShipAdapter.notifyDataSetChanged();
+        this.selectedShipAdapter.notifyItemInserted(this.selectedShips.indexOf(ship));
+        this.rvLayoutManager.requestLayout();
     }
 
 
@@ -130,7 +142,7 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         this.ships.add(ship);
         this.bottomSheet.updateShips(this.ships);
         this.selectedShipAdapter.notifyItemRemoved(index);
-        this.selectedShipAdapter.notifyItemRangeChanged(index, this.selectedShips.size() - index);
         this.buttonAddShip.setVisibility(View.VISIBLE);
+        this.rvLayoutManager.requestLayout();
     }
 }
