@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +49,9 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attack);
 
+        // Toolbar conf
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Recycler view
         this.rvSelectedShips = findViewById(R.id.rv_selected_ships);
         this.rvSelectedShips.setHasFixedSize(true);
@@ -64,6 +68,11 @@ public class AttackActivity extends AppCompatActivity implements View.OnClickLis
         this.getShips();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        this.finish();
+        return true;
+    }
 
     @Override
     public void onClick(View v) {
