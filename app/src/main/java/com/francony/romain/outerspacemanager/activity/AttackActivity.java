@@ -2,6 +2,7 @@ package com.francony.romain.outerspacemanager.activity;
 
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 
 import com.francony.romain.outerspacemanager.R;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AttackActivity extends AppCompatActivity implements ShipViewModel.RemoveShipListener, ShipAdapter.OnClickAddShipListener {
+public class AttackActivity extends AppCompatActivity implements ShipViewModel.RemoveShipListener, ShipAdapter.OnClickAddShipListener, View.OnClickListener {
     private ShipSelectorBottomSheetDialogFragment bottomSheet;
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
     private ArrayList<Ship> ships = new ArrayList<>();
@@ -46,6 +47,7 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
     private LinearLayoutManager rvLayoutManager;
     private ShipAdapter selectedShipAdapter;
     private UserScore user;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -76,6 +78,11 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
         this.user = gson.fromJson(getIntent().getStringExtra("user"), UserScore.class);
         TextView textView = findViewById(R.id.textview_attack_user);
         textView.setText(String.format(getString(R.string.attacks_user_to_attack), this.user.getUsername()));
+
+        // FAB
+        this.fab = findViewById(R.id.fab_attack);
+        this.fab.setOnClickListener(this);
+        this.fab.hide();
     }
 
     @Override
@@ -117,6 +124,7 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
 
 
     public void selectShip(Ship ship) {
+        this.fab.show();
         this.ships.remove(ship);
         this.bottomSheet.updateShips(this.ships);
 
@@ -140,6 +148,11 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
         this.bottomSheet.updateShips(this.ships);
         this.selectedShipAdapter.notifyItemRemoved(index);
 
+        // Hide the fab if there are no selected ships left (only the null item "add card")
+        if(this.selectedShips.size() == 1){
+            this.fab.hide();
+        }
+
         // Add the "add card" if the user deleted a ship when all available type were selected
         if (this.ships.size() > 0 && this.selectedShips.get(this.selectedShips.size() - 1) != null) {
             this.selectedShips.add(null);
@@ -150,5 +163,10 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
     @Override
     public void onClickAddShip() {
         this.bottomSheet.show(getSupportFragmentManager(), this.bottomSheet.getTag());
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
