@@ -86,8 +86,9 @@ public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreLi
 
                 // Delete loading item
                 if (!GalaxyFragment.this.userScores.isEmpty()) {
-                    GalaxyFragment.this.userScores.remove(GalaxyFragment.this.userScores.size() - 1);
-                    GalaxyFragment.this.userAdapter.notifyDataSetChanged();
+                    int index = GalaxyFragment.this.userScores.size() - 1;
+                    GalaxyFragment.this.userScores.remove(index);
+                    GalaxyFragment.this.userAdapter.notifyItemRemoved(index);
                 }
 
                 // We are already on last page no need to do anything
@@ -95,11 +96,12 @@ public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreLi
                     return;
                 }
 
+                int initialSize =  GalaxyFragment.this.userScores.size();
                 GalaxyFragment.this.userScores.addAll(response.body().getUsers());
                 GalaxyFragment.this.userScores.add(null);
                 GalaxyFragment.this.rvUsers.setVisibility(View.VISIBLE);
                 GalaxyFragment.this.laLoader.setVisibility(View.GONE);
-                GalaxyFragment.this.userAdapter.notifyDataSetChanged();
+                GalaxyFragment.this.userAdapter.notifyItemRangeInserted(initialSize,GalaxyFragment.this.userScores.size());
                 GalaxyFragment.this.loading = false;
             }
 
