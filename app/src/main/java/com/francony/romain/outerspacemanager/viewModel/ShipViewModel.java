@@ -110,9 +110,9 @@ public class ShipViewModel extends BaseObservable {
                 }
 
                 ShipViewModel.this.setWillBuild(false);
-                ShipViewModel.this.indicatorSeekBar.setProgress(1); // Can't do it via databinding (don't know why but it doesn't work)
                 Snackbar snackbar = Snackbar.make(view, context.getResources().getString(R.string.ship_ordered, ship.getAmount(), ship.getName()), Snackbar.LENGTH_LONG);
                 Helpers.showSnackbarWithAnimation(snackbar);
+                ShipViewModel.this.indicatorSeekBar.setProgress(1); // Can't do it via databinding (don't know why but it doesn't work)
                 ShipViewModel.this.ship.setAmount(1);
             }
 
