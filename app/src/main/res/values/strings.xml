@@ -53,6 +53,7 @@
     <string name="fleet.no_fleet_short">You don\'t have any fleet.</string>
     <string name="fleet.got_to_spaceyard">Go to spaceyard</string>
     <string name="nav.galaxy">Galaxy</string>
+    <string name="attacks_started">Your fleet is on the way.</string>
 
 
 </resources>

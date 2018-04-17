@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.hkm:hkmprocessbuttons:1.2.4'
     implementation 'com.github.warkiz.widget:indicatorseekbar:1.2.9'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 }

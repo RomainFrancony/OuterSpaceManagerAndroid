@@ -26,6 +26,7 @@ import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFa
 import com.francony.romain.outerspacemanager.viewModel.ShipViewModel;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,6 +93,12 @@ public class FleetFragment extends Fragment {
                 }
 
                 FleetFragment.this.ships.addAll(response.body().getShips());
+                FleetFragment.this.ships.removeIf(new Predicate<Ship>() {
+                    @Override
+                    public boolean test(Ship ship) {
+                        return ship.getAmount() <= 0;
+                    }
+                });
                 FleetFragment.this.rvShips.setVisibility(View.VISIBLE);
                 FleetFragment.this.shipAdapter.notifyDataSetChanged();
 

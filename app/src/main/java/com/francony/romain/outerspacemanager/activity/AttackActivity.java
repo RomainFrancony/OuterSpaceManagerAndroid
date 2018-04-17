@@ -14,6 +14,7 @@ import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
 import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.model.UserScore;
+import com.francony.romain.outerspacemanager.response.ActionResponse;
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
@@ -29,10 +30,13 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Predicate;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +52,7 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
     private ShipAdapter selectedShipAdapter;
     private UserScore user;
     private FloatingActionButton fab;
+    private RelativeLayout laLoader;
 
 
     @Override
@@ -83,6 +88,10 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
         this.fab = findViewById(R.id.fab_attack);
         this.fab.setOnClickListener(this);
         this.fab.hide();
+
+        // Loader
+        this.laLoader = findViewById(R.id.layout_loader);
+        this.laLoader.setVisibility(View.GONE);
     }
 
     @Override
@@ -106,6 +115,18 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
                 }
 
                 AttackActivity.this.ships.addAll(response.body().getShips());
+                AttackActivity.this.ships.removeIf(new Predicate<Ship>() {
+                    @Override
+                    public boolean test(Ship ship) {
+                        return ship.getAmount() <= 0;
+                    }
+                });
+
+                // User doesn't have fleet
+                if(AttackActivity.this.ships.size() == 0){
+                    AttackActivity.this.finish();
+                    Toast.makeText(getApplicationContext(), R.string.fleet_no_fleet_short, Toast.LENGTH_LONG).show();
+                }
                 AttackActivity.this.bottomSheet.updateShips(AttackActivity.this.ships);
 
                 if (response.body().getSize() == 0) {
@@ -148,16 +169,22 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
         this.bottomSheet.updateShips(this.ships);
         this.selectedShipAdapter.notifyItemRemoved(index);
 
-        // Hide the fab if there are no selected ships left (only the null item "add card")
+        if(this.selectedShips.size() == 0){
+            this.fab.hide();
+            this.selectedShips.add(null);
+            this.selectedShipAdapter.notifyItemInserted(this.selectedShips.size() - 1);
+            return;
+        }
+
+        if(this.selectedShips.get(this.selectedShips.size() - 1) != null){
+            this.selectedShips.add(null);
+            this.selectedShipAdapter.notifyItemInserted(this.selectedShips.size() - 1);
+        }
+
         if(this.selectedShips.size() == 1){
             this.fab.hide();
         }
 
-        // Add the "add card" if the user deleted a ship when all available type were selected
-        if (this.ships.size() > 0 && this.selectedShips.get(this.selectedShips.size() - 1) != null) {
-            this.selectedShips.add(null);
-            this.selectedShipAdapter.notifyItemInserted(this.selectedShips.size() - 1);
-        }
     }
 
     @Override
@@ -167,6 +194,40 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
 
     @Override
     public void onClick(View v) {
+        this.laLoader.setVisibility(View.VISIBLE);
+        this.fab.hide();
 
+        int lasIndex = this.selectedShips.size() -1;
+        if(this.selectedShips.get(lasIndex) == null){
+            this.selectedShips.remove(lasIndex);
+            this.selectedShipAdapter.notifyItemRemoved(lasIndex);
+        }
+
+
+        HashMap<Object, Object> body = new HashMap<>();
+        body.put("ships", this.selectedShips);
+
+        Call<ActionResponse> request = this.service.attackPlayer(SharedPreferencesHelper.getToken(getApplicationContext()), this.user.getUsername(),body);
+
+        request.enqueue(new Callback<ActionResponse>() {
+
+            @Override
+            public void onResponse(Call<ActionResponse> call, Response<ActionResponse> response) {
+                //AttackActivity.this.laLoader.setVisibility(View.GONE);
+                // Error
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Toast.makeText(getApplicationContext(), R.string.attacks_started, Toast.LENGTH_LONG).show();
+                AttackActivity.this.finish();
+            }
+
+            // Network error
+            @Override
+            public void onFailure(Call<ActionResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
