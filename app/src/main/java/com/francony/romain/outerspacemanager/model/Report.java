@@ -18,6 +18,18 @@ public class Report {
     private String to;
     private String type;
 
+    @Override
+    public boolean equals(Object obj) {
+        Report compare = (Report) obj;
+
+        if(compare == null){
+            return  false;
+        }
+
+        return compare.getDate().equals(this.getDate()) && compare.getFrom().equals(this.getFrom()) && compare.getType().equals(this.getType());
+
+    }
+
     public ArrayList<Ship> getAttackerFleet() {
         return attackerFleet;
     }
