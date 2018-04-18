@@ -1,10 +1,10 @@
 package com.francony.romain.outerspacemanager.model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class FleetAfterBattle {
     private Integer capacity;
-    private List<FleetAmount> fleet = null;
+    private ArrayList<Ship> fleet = null;
     private Integer survivingShips;
 
     public Integer getCapacity() {
@@ -15,11 +15,11 @@ public class FleetAfterBattle {
         this.capacity = capacity;
     }
 
-    public List<FleetAmount> getFleet() {
+    public ArrayList<Ship> getFleet() {
         return fleet;
     }
 
-    public void setFleet(List<FleetAmount> fleet) {
+    public void setFleet(ArrayList<Ship> fleet) {
         this.fleet = fleet;
     }
 

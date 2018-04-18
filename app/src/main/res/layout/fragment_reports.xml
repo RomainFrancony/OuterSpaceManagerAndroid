@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/colorGrayLight"
     tools:context=".fragment.ReportsFragment">
 
 
+    <include android:layout_width="match_parent" android:layout_height="match_parent" layout="@layout/include_loader_overlay"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reports_rv"
         android:scrollbars="none"

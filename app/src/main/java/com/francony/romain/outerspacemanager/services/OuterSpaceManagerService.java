@@ -55,7 +55,7 @@ public interface OuterSpaceManagerService {
     @POST("searches/create/{id}")
     Call<ActionResponse> searchBuild(@Header("x-access-token") String token, @Path("id") int id);
 
-    @GET("users/{from}/{limit}")
+    @GET("reports/{from}/{limit}")
     Call<ReportListResponse> reportsList(@Header("x-access-token") String token, @Path("from") Integer from, @Path("limit") Integer limit);
 
     @POST("fleet/attack/{userName}")

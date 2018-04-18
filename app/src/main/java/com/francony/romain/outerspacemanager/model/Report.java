@@ -2,26 +2,27 @@ package com.francony.romain.outerspacemanager.model;
 
 import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Report {
-    private List<SpaceyardResponse> attackerFleet = null;
+    private ArrayList<Ship> attackerFleet = new ArrayList<>();
     private FleetAfterBattle attackerFleetAfterBattle;
     private Long date;
     private Long dateInv;
-    private List<Ship> defenderFleet = null;
+    private ArrayList<Ship> defenderFleet = new ArrayList<>();
     private FleetAfterBattle defenderFleetAfterBattle;
     private String from;
-    private Integer gasWon;
-    private Integer mineralsWon;
+    private float gasWon;
+    private float mineralsWon;
     private String to;
     private String type;
 
-    public List<SpaceyardResponse> getAttackerFleet() {
+    public ArrayList<Ship> getAttackerFleet() {
         return attackerFleet;
     }
 
-    public void setAttackerFleet(List<SpaceyardResponse> attackerFleet) {
+    public void setAttackerFleet(ArrayList<Ship> attackerFleet) {
         this.attackerFleet = attackerFleet;
     }
 
@@ -53,7 +54,7 @@ public class Report {
         return defenderFleet;
     }
 
-    public void setDefenderFleet(List<Ship> defenderFleet) {
+    public void setDefenderFleet(ArrayList<Ship> defenderFleet) {
         this.defenderFleet = defenderFleet;
     }
 
@@ -73,19 +74,19 @@ public class Report {
         this.from = from;
     }
 
-    public Integer getGasWon() {
+    public float getGasWon() {
         return gasWon;
     }
 
-    public void setGasWon(Integer gasWon) {
+    public void setGasWon(float gasWon) {
         this.gasWon = gasWon;
     }
 
-    public Integer getMineralsWon() {
+    public float getMineralsWon() {
         return mineralsWon;
     }
 
-    public void setMineralsWon(Integer mineralsWon) {
+    public void setMineralsWon(float mineralsWon) {
         this.mineralsWon = mineralsWon;
     }
 
