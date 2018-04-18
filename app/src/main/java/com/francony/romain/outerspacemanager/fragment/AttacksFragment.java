@@ -41,7 +41,7 @@ public class AttacksFragment extends Fragment {
     private void setViewPager(ViewPager viewPager) {
         buildingsFragment = new BuildingsFragment();
         reportsFragment = new ReportsFragment();
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(buildingsFragment, getString(R.string.attacks_in_progress));
         adapter.addFragment(reportsFragment, getString(R.string.attacks_completed));
         viewPager.setAdapter(adapter);
