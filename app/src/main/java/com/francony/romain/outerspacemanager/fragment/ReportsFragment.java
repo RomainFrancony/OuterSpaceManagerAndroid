@@ -10,10 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
+import com.francony.romain.outerspacemanager.activity.MainActivity;
 import com.francony.romain.outerspacemanager.adapter.ReportAdapter;
 import com.francony.romain.outerspacemanager.adapter.SearchAdapter;
 import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
@@ -42,6 +45,7 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private RecyclerView rvReports;
     private LinearLayoutManager rvLayoutManager;
     private ReportAdapter reportAdapter;
+    private LinearLayout laEmptyReports;
 
     public ReportsFragment() {
         // Required empty public constructor
@@ -54,6 +58,19 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         View v = inflater.inflate(R.layout.fragment_reports, container, false);
 
         this.laLoader = v.findViewById(R.id.layout_loader);
+        this.laEmptyReports = v.findViewById(R.id.reports_empty_layout);
+        Button button = this.laEmptyReports.findViewById(R.id.reports_empty_galaxy_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity) getActivity();
+                if (activity == null) {
+                    return;
+                }
+                activity.navigationView.getMenu().performIdentifierAction(R.id.nav_galaxy, 0);
+                activity.navigationView.getMenu().getItem(MainActivity.GALAXY_DRAWER_INDEX).setChecked(true);
+            }
+        });
 
         // Recycler view
         this.rvReports = v.findViewById(R.id.reports_rv);
@@ -87,6 +104,12 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 }
                 ReportsFragment.this.reports.addAll(response.body().getReports());
                 ReportsFragment.this.reportAdapter.notifyItemRangeInserted(0, response.body().getReports().size());
+
+                // Display card for empty reports
+                if (ReportsFragment.this.reports.isEmpty()) {
+                    ReportsFragment.this.laEmptyReports.setVisibility(View.VISIBLE);
+                    ReportsFragment.this.rvReports.setVisibility(View.GONE);
+                }
             }
 
             // Network error
@@ -101,6 +124,7 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
+        // We only check if the 20 first reports (max allowed by api) but is not really probable that some got 20+ reports in short time
         Call<ReportListResponse> request = this.service.reportsList(SharedPreferencesHelper.getToken(getContext()), 0, 20);
         request.enqueue(new Callback<ReportListResponse>() {
             @Override
@@ -130,6 +154,12 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 ReportsFragment.this.reports.addAll(0, refreshed);
                 ReportsFragment.this.reportAdapter.notifyItemRangeInserted(0, refreshed.size());
                 ReportsFragment.this.rvReports.scrollToPosition(0);
+
+                // Remove card for empty reports
+                if (!ReportsFragment.this.reports.isEmpty()) {
+                    ReportsFragment.this.laEmptyReports.setVisibility(View.GONE);
+                    ReportsFragment.this.rvReports.setVisibility(View.VISIBLE);
+                }
             }
 
             // Network error

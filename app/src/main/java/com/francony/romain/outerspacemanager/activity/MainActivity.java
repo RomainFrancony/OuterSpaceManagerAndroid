@@ -25,6 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final int SPACEYARD_DRAWER_INDEX = 3;
+    public static final int GALAXY_DRAWER_INDEX = 6;
 
     private DrawerLayout drawer;
     public NavigationView navigationView;
