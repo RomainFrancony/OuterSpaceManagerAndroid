@@ -35,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ReportAdapter.OnLoadMoreListener {
     private ArrayList<Report> reports = new ArrayList<>();
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
@@ -46,6 +46,8 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private LinearLayoutManager rvLayoutManager;
     private ReportAdapter reportAdapter;
     private LinearLayout laEmptyReports;
+    private int page = 0;
+    private Boolean loading = false;
 
     public ReportsFragment() {
         // Required empty public constructor
@@ -79,6 +81,7 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         this.rvReports.setLayoutManager(rvLayoutManager);
         this.reportAdapter = new ReportAdapter(this.reports, getContext());
         this.rvReports.setAdapter(this.reportAdapter);
+        this.reportAdapter.setOnLoadMoreListener(this);
 
         this.getReports();
 
@@ -91,8 +94,8 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
     private void getReports() {
-
-        Call<ReportListResponse> request = this.service.reportsList(SharedPreferencesHelper.getToken(getContext()), 0, 20);
+        this.loading = true;
+        Call<ReportListResponse> request = this.service.reportsList(SharedPreferencesHelper.getToken(getContext()), this.page * 20, 20);
         request.enqueue(new Callback<ReportListResponse>() {
             @Override
             public void onResponse(Call<ReportListResponse> call, Response<ReportListResponse> response) {
@@ -102,19 +105,32 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     Toast.makeText(getContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
-                ReportsFragment.this.reports.addAll(response.body().getReports());
-                ReportsFragment.this.reportAdapter.notifyItemRangeInserted(0, response.body().getReports().size());
+                // Delete loading item
+                if (!ReportsFragment.this.reports.isEmpty()) {
+                    int index = ReportsFragment.this.reports.size() - 1;
+                    ReportsFragment.this.reports.remove(index);
+                    ReportsFragment.this.reportAdapter.notifyItemRemoved(index);
+                }
 
-                // Display card for empty reports
-                if (ReportsFragment.this.reports.isEmpty()) {
+                // We are already on last page no need to do anything
+                if (response.body().getReports().isEmpty() && ReportsFragment.this.reports.isEmpty()) {
                     ReportsFragment.this.laEmptyReports.setVisibility(View.VISIBLE);
                     ReportsFragment.this.rvReports.setVisibility(View.GONE);
+                    return;
+                }
+
+                if(!response.body().getReports().isEmpty()){
+                    ReportsFragment.this.reports.addAll(response.body().getReports());
+                    ReportsFragment.this.reports.add(null);
+                    ReportsFragment.this.reportAdapter.notifyItemRangeInserted(0, response.body().getReports().size());
+                    ReportsFragment.this.loading = false;
                 }
             }
 
             // Network error
             @Override
             public void onFailure(Call<ReportListResponse> call, Throwable t) {
+                ReportsFragment.this.loading = false;
                 Toast.makeText(getActivity().getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
             }
         });
@@ -168,5 +184,14 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 Toast.makeText(getActivity().getApplicationContext(), R.string.error_network, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onLoadMore() {
+        if (this.loading) {
+            return;
+        }
+        this.page++;
+        this.getReports();
     }
 }

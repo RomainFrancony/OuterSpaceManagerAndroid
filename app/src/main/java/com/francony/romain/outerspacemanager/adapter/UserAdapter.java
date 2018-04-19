@@ -98,9 +98,6 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
         public UserAdapterLoadingViewHolder(View v) {
             super(v);
         }
-
-        public void bind() {
-        }
     }
 
 
