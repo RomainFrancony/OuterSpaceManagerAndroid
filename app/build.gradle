@@ -40,4 +40,7 @@ dependencies {
     implementation 'com.github.warkiz.widget:indicatorseekbar:1.2.9'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    annotationProcessor 'com.github.raizlabs.dbflow:dbflow-processor:4.2.4'
+    compile 'com.github.raizlabs.dbflow:dbflow-core:4.2.4'
+    compile 'com.github.raizlabs.dbflow:dbflow:4.2.4'
 }

@@ -1,17 +1,14 @@
 package com.francony.romain.outerspacemanager.activity;
 
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
 import com.francony.romain.outerspacemanager.bottomSheet.ShipSelectorBottomSheetDialogFragment;
-import com.francony.romain.outerspacemanager.fragment.FleetFragment;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
-import com.francony.romain.outerspacemanager.model.Building;
+import com.francony.romain.outerspacemanager.model.AttackProgress;
 import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
@@ -20,22 +17,20 @@ import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.francony.romain.outerspacemanager.viewModel.ShipViewModel;
 import com.google.gson.Gson;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import retrofit2.Call;
@@ -143,6 +138,12 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
         });
     }
 
+    private void saveAttackTime(long attackTime) {
+        ModelAdapter<AttackProgress> attackProgressAdapter = FlowManager.getModelAdapter(AttackProgress.class);
+        AttackProgress attackProgress = new AttackProgress(UUID.randomUUID(), attackTime);
+        attackProgressAdapter.insert(attackProgress);
+    }
+
 
     public void selectShip(Ship ship) {
         this.fab.show();
@@ -213,13 +214,13 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
 
             @Override
             public void onResponse(Call<ActionResponse> call, Response<ActionResponse> response) {
-                //AttackActivity.this.laLoader.setVisibility(View.GONE);
                 // Error
                 if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
                     return;
                 }
                 Toast.makeText(getApplicationContext(), R.string.attacks_started, Toast.LENGTH_LONG).show();
+                AttackActivity.this.saveAttackTime(response.body().getAttackTime());
                 AttackActivity.this.finish();
             }
 

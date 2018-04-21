@@ -35,14 +35,14 @@ public class AttacksFragment extends Fragment {
         return v;
     }
 
-    private BuildingsFragment buildingsFragment;
+    private AttackProgressFragment attackProgressFragment;
     private ReportsFragment reportsFragment;
 
     private void setViewPager(ViewPager viewPager) {
-        buildingsFragment = new BuildingsFragment();
+        attackProgressFragment = new AttackProgressFragment();
         reportsFragment = new ReportsFragment();
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(buildingsFragment, getString(R.string.attacks_in_progress));
+        adapter.addFragment(attackProgressFragment, getString(R.string.attacks_in_progress));
         adapter.addFragment(reportsFragment, getString(R.string.attacks_completed));
         viewPager.setAdapter(adapter);
     }
