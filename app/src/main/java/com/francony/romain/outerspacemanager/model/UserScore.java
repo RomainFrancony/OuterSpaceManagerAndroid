@@ -2,24 +2,24 @@ package com.francony.romain.outerspacemanager.model;
 
 
 public class UserScore {
-    private long points;
+    private double points;
     private String username;
     private int position;
 
-    public UserScore(long points, String username) {
+    public UserScore(double points, String username) {
         this.points = points;
         this.username = username;
     }
 
     public long getPoints() {
-        return points;
+        return (long)points;
     }
 
     public String getPointsText() {
         return String.valueOf(this.points);
     }
 
-    public void setPoints(long points) {
+    public void setPoints(double points) {
         this.points = points;
     }
 
