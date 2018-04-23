@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.francony.romain.outerspacemanager.R;
-import com.francony.romain.outerspacemanager.ReportActivity;
+import com.francony.romain.outerspacemanager.activity.ReportActivity;
 import com.francony.romain.outerspacemanager.databinding.AdapterReportBinding;
 import com.francony.romain.outerspacemanager.model.Report;
 import com.google.gson.Gson;

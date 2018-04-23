@@ -2,7 +2,6 @@ package com.francony.romain.outerspacemanager.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,9 +103,6 @@ public class ShipAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
-        }
-
-        public void bind() {
         }
     }
 

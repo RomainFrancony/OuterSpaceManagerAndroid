@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.francony.romain.outerspacemanager.ReportActivity">
+        tools:context="com.francony.romain.outerspacemanager.activity.ReportActivity">
 
         <TextView
             android:layout_width="match_parent"

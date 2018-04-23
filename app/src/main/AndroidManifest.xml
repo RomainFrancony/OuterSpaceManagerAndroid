@@ -32,7 +32,7 @@
             android:name=".activity.BuildingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.AttackActivity" />
-        <activity android:name=".ReportActivity" />
+        <activity android:name=".activity.ReportActivity" />
     </application>
 
 </manifest>

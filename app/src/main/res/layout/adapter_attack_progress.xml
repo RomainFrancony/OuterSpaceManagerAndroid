@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/colorWhite"
-    android:layout_height="72dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/attack_progress_textview"
+    <data>
+
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
+        <variable
+            name="attackProgress"
+            type="com.francony.romain.outerspacemanager.model.AttackProgress" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:text="AHHHHHHH"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+        android:layout_height="72dp"
+        android:orientation="vertical"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{Helpers.secondToHumanReadableTime((int)((attackProgress.attackTime - System.currentTimeMillis()) / 1000))}" />
+    </LinearLayout>
+</layout>

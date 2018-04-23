@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class AttackProgressFragment extends Fragment {
+public class AttackProgressFragment extends Fragment implements AttackProgressAdapter.OnTimerEndListener {
     private ModelAdapter<AttackProgress> attackProgressModelAdapter = FlowManager.getModelAdapter(AttackProgress.class);
 
     private ArrayList<AttackProgress> attacksProgress = new ArrayList<>();
@@ -74,6 +74,7 @@ public class AttackProgressFragment extends Fragment {
         this.rvAttackProgress.setLayoutManager(rvLayoutManager);
         this.attackProgressAdapter = new AttackProgressAdapter(this.attacksProgress, getContext());
         this.rvAttackProgress.setAdapter(this.attackProgressAdapter);
+        this.attackProgressAdapter.setOnTimerEndListener(this);
 
         this.getAttacksProgress();
         return v;
@@ -81,6 +82,23 @@ public class AttackProgressFragment extends Fragment {
 
 
     private void getAttacksProgress() {
+        AttackProgress t = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +5000);
+        this.attackProgressModelAdapter.insert(t);
+
+        AttackProgress t1 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +25000);
+        this.attackProgressModelAdapter.insert(t1);
+
+        AttackProgress t2 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +60000);
+        this.attackProgressModelAdapter.insert(t2);
+
+        AttackProgress t3 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +80000);
+        this.attackProgressModelAdapter.insert(t3);
+
+
+        AttackProgress t4 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +70000);
+        this.attackProgressModelAdapter.insert(t4);
+
+
         ArrayList<AttackProgress> attacks = (ArrayList<AttackProgress>) SQLite.select().from(AttackProgress.class).queryList();
         Timestamp current =  new Timestamp(System.currentTimeMillis());
         ArrayList<AttackProgress> toDelete = new ArrayList<>();
@@ -109,4 +127,10 @@ public class AttackProgressFragment extends Fragment {
         this.attackProgressAdapter.notifyItemRangeInserted(0, this.attacksProgress.size());
     }
 
+    @Override
+    public void onTimerEnd(AttackProgress attackProgress) {
+        int index = this.attacksProgress.indexOf(attackProgress);
+        this.attacksProgress.remove(index);
+        this.attackProgressAdapter.notifyItemRemoved(index);
+    }
 }
