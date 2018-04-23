@@ -1,16 +1,20 @@
 package com.francony.romain.outerspacemanager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.francony.romain.outerspacemanager.R;
+import com.francony.romain.outerspacemanager.ReportActivity;
 import com.francony.romain.outerspacemanager.databinding.AdapterReportBinding;
 import com.francony.romain.outerspacemanager.model.Report;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -74,17 +78,28 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
         this.recyclerView.setOnScrollChangeListener(this);
     }
 
-    public class ReportAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class ReportAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final AdapterReportBinding binding;
 
         public ReportAdapterViewHolder(AdapterReportBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.getRoot().setOnClickListener(this);
         }
 
         public void bind(final Report report) {
             binding.setReport(report);
             binding.executePendingBindings();
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            Gson gson = new Gson();
+            String report_string = gson.toJson(this.binding.getReport());
+            Intent intent = new Intent(context, ReportActivity.class);
+            intent.putExtra("report",report_string);
+            context.startActivity(intent);
         }
     }
 

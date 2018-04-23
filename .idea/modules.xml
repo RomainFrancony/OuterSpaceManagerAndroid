@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OuterSpaceManager.iml" filepath="$PROJECT_DIR$/OuterSpaceManager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" filepath="$PROJECT_DIR$/../../../../../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" />
-      <module fileurl="file:///rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" filepath="/rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" />
+      <module fileurl="file://C:\..\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\OuterSpaceManager.iml" filepath="C:\..\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\OuterSpaceManager.iml" />
+      <module fileurl="file://C:\Users\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\OuterSpaceManager.iml" filepath="C:\Users\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\OuterSpaceManager.iml" />
+      <module fileurl="file://\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\OuterSpaceManager.iml" filepath="\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\OuterSpaceManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/OuterSpaceManagerAndroid.iml" filepath="$PROJECT_DIR$/.idea/OuterSpaceManagerAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file:///rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/app/app.iml" filepath="/rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/outerspacemanagerandroid.iml" filepath="$PROJECT_DIR$/../../../../../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/outerspacemanagerandroid.iml" />
+      <module fileurl="file://\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\app\app.iml" filepath="\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\app\app.iml" />
+      <module fileurl="file://C:\..\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\outerspacemanagerandroid.iml" filepath="C:\..\rfrancony\AndroidStudioProjects\OuterSpaceManagerAndroid\outerspacemanagerandroid.iml" />
     </modules>
   </component>
 </project>

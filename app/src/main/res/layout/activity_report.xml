@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="report"
+            type="com.francony.romain.outerspacemanager.model.Report" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.francony.romain.outerspacemanager.ReportActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@{report.from}"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@{report.to}"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@{String.valueOf(report.gasWon)}"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="@{String.valueOf(report.mineralsWon)}"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>
