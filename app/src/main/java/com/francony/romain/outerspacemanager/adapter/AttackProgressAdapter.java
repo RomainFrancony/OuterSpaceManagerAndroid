@@ -25,37 +25,36 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
     private OnTimerEndListener onTimerEndListener;
     private ArrayList<AttackProgress> attackProgressDataset;
     private Context context;
+    private Timer timer;
 
     public AttackProgressAdapter(ArrayList<AttackProgress> attackProgress, final Context context) {
         this.attackProgressDataset = attackProgress;
         this.context = context;
-
-
-        final Handler mHandler = new Handler();
-        Timer mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (AttackProgress attackProgress: attackProgressDataset) {
-
-
-                            attackProgress.setAttackTime(attackProgress.getAttackTime());
-
-
-
-                            if(attackProgress.getAttackTime() - System.currentTimeMillis() <= 0 && AttackProgressAdapter.this.onTimerEndListener != null){
-                                AttackProgressAdapter.this.onTimerEndListener.onTimerEnd(attackProgress);
-                            }
-                        }
-                    }
-                });
+                AttackProgressAdapter.this.updateCountdown();
             }
         }, 0, 1000);
 
 
+    }
+
+    private void updateCountdown(){
+        ArrayList<AttackProgress> finished = new ArrayList<>();
+        for (AttackProgress attackProgress: attackProgressDataset) {
+            attackProgress.setAttackTime(attackProgress.getAttackTime());
+            if(attackProgress.getAttackTime() - System.currentTimeMillis() <= 1000){
+                finished.add(attackProgress);
+            }
+        }
+
+        if(AttackProgressAdapter.this.onTimerEndListener != null){
+            for (AttackProgress attackProgress: finished) {
+                AttackProgressAdapter.this.onTimerEndListener.onTimerEnd(attackProgress);
+            }
+        }
     }
 
 

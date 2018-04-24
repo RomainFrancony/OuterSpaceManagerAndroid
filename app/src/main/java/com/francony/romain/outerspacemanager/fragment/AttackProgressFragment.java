@@ -82,23 +82,6 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
 
 
     private void getAttacksProgress() {
-        AttackProgress t = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +5000);
-        this.attackProgressModelAdapter.insert(t);
-
-        AttackProgress t1 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +25000);
-        this.attackProgressModelAdapter.insert(t1);
-
-        AttackProgress t2 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +60000);
-        this.attackProgressModelAdapter.insert(t2);
-
-        AttackProgress t3 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +80000);
-        this.attackProgressModelAdapter.insert(t3);
-
-
-        AttackProgress t4 = new AttackProgress(UUID.randomUUID(), System.currentTimeMillis() +70000);
-        this.attackProgressModelAdapter.insert(t4);
-
-
         ArrayList<AttackProgress> attacks = (ArrayList<AttackProgress>) SQLite.select().from(AttackProgress.class).queryList();
         Timestamp current =  new Timestamp(System.currentTimeMillis());
         ArrayList<AttackProgress> toDelete = new ArrayList<>();
@@ -132,5 +115,14 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
         int index = this.attacksProgress.indexOf(attackProgress);
         this.attacksProgress.remove(index);
         this.attackProgressAdapter.notifyItemRemoved(index);
+
+        if(this.attackProgressAdapter.getItemCount() == 0 && getActivity() != null){
+            getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AttackProgressFragment.this.laEmptyAttackProgress.setVisibility(View.VISIBLE);
+            }
+        });
+        }
     }
 }
