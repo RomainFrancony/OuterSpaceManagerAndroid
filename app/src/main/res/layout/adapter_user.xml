@@ -5,6 +5,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
         <variable
             name="userViewModel"
             type="com.francony.romain.outerspacemanager.viewModel.UserViewModel" />
@@ -66,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
-                            android:text="@{String.valueOf(userViewModel.userScore.points)}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(userViewModel.userScore.points)}"
                             android:textSize="14sp" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -94,7 +96,7 @@
                     android:visibility="@{userViewModel.isCurrentUser() ? View.GONE : View.VISIBLE}" />
             </LinearLayout>
 
-            <!-- Divider (don't use ItemDecorator because we need the divider to be tranlated and start only on the text and it's complicated for nothing with it) -->
+            <!-- Divider (don't use ItemDecorator because we need the divider to be translated and start only on the text and it's complicated for nothing with it) -->
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

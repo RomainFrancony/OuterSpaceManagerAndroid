@@ -19,6 +19,7 @@ import com.francony.romain.outerspacemanager.R;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 
 import retrofit2.Response;
@@ -69,4 +70,7 @@ public abstract class Helpers {
         }
     }
 
+    public static String numberToHumanReadableNumber(float number) {
+        return new DecimalFormat("##,###.##").format(number);
+    }
 }

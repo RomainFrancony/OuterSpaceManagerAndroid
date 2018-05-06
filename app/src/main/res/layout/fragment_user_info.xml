@@ -5,6 +5,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
         <variable
             name="user"
             type="com.francony.romain.outerspacemanager.response.UserInfoResponse" />
@@ -64,7 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="@{String.valueOf(user.points)}"
+                        android:text="@{Helpers.numberToHumanReadableNumber(user.points)}"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
@@ -116,7 +118,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
-                            android:text="@{String.valueOf(user.gas)}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(user.gas)}"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -154,7 +156,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
-                            android:text="@{String.valueOf(user.minerals)}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(user.minerals)}"
                             android:textSize="18sp" />
                     </LinearLayout>
 
