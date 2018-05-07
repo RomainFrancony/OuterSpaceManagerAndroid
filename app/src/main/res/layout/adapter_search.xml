@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(searchViewModel.search.getGasCost())}"
+                        android:text="@{Helpers.numberToHumanReadableNumber(searchViewModel.search.getGasCost())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{String.valueOf(searchViewModel.search.getMineralCost())}"
+                        android:text="@{Helpers.numberToHumanReadableNumber(searchViewModel.search.getMineralCost())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -109,6 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
+                        android:singleLine="true"
                         android:text="@{Helpers.secondToHumanReadableTime(searchViewModel.search.getTimeToBuild())}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />

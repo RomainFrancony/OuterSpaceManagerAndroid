@@ -83,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{shipViewModel.ship.getLife().toString()}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(shipViewModel.ship.getLife())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
 
@@ -106,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{shipViewModel.ship.getShield().toString()}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(shipViewModel.ship.getShield())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -137,7 +137,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{shipViewModel.ship.getMinAttack().toString() + ` - ` + shipViewModel.ship.getMaxAttack().toString()}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(shipViewModel.ship.getMinAttack()) + ` - ` + Helpers.numberToHumanReadableNumber(shipViewModel.ship.getMaxAttack())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
 
@@ -160,7 +160,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{shipViewModel.ship.getSpeed().toString()}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(shipViewModel.ship.getSpeed())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -192,7 +192,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{String.valueOf(shipViewModel.ship.getGasCost() * shipViewModel.ship.amount)}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(shipViewModel.ship.getGasCost() * shipViewModel.ship.amount)}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
 
@@ -215,7 +215,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{String.valueOf(shipViewModel.ship.getMineralCost() * shipViewModel.ship.amount)}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(shipViewModel.ship.getMineralCost() * shipViewModel.ship.amount)}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>

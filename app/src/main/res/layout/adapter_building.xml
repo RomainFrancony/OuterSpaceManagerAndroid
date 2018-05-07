@@ -75,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{String.valueOf(buildingViewModel.building.getGasCost())}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(buildingViewModel.building.getGasCost())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
 
@@ -98,7 +98,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{String.valueOf(buildingViewModel.building.getMineralCost())}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(buildingViewModel.building.getMineralCost())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -120,6 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
+                            android:singleLine="true"
                             android:text="@{Helpers.secondToHumanReadableTime(buildingViewModel.building.getTimeToBuild())}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
