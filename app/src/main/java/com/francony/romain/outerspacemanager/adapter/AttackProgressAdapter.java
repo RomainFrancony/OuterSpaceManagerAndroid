@@ -1,34 +1,28 @@
 package com.francony.romain.outerspacemanager.adapter;
 
 import android.databinding.DataBindingUtil;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.AdapterAttackProgressBinding;
-import com.francony.romain.outerspacemanager.databinding.AdapterShipBinding;
-import com.francony.romain.outerspacemanager.model.AttackProgress;
+import com.francony.romain.outerspacemanager.model.Progress;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
 
 public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAdapter.AttackProgressAdapterViewHolder> {
     private OnTimerEndListener onTimerEndListener;
-    private ArrayList<AttackProgress> attackProgressDataset;
+    private ArrayList<Progress> progressDataset;
     private Context context;
     private Timer timer;
 
-    public AttackProgressAdapter(ArrayList<AttackProgress> attackProgress, final Context context) {
-        this.attackProgressDataset = attackProgress;
+    public AttackProgressAdapter(ArrayList<Progress> progresses, final Context context) {
+        this.progressDataset = progresses;
         this.context = context;
         this.timer = new Timer();
         this.timer.schedule(new TimerTask() {
@@ -42,17 +36,17 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
     }
 
     private void updateCountdown(){
-        ArrayList<AttackProgress> finished = new ArrayList<>();
-        for (AttackProgress attackProgress: attackProgressDataset) {
-            attackProgress.setAttackTime(attackProgress.getAttackTime());
-            if(attackProgress.getAttackTime() - System.currentTimeMillis() <= 1000){
-                finished.add(attackProgress);
+        ArrayList<Progress> finished = new ArrayList<>();
+        for (Progress progress : progressDataset) {
+            progress.setEndTime(progress.getEndTime());
+            if(progress.getEndTime() - System.currentTimeMillis() <= 1000){
+                finished.add(progress);
             }
         }
 
         if(AttackProgressAdapter.this.onTimerEndListener != null){
-            for (AttackProgress attackProgress: finished) {
-                AttackProgressAdapter.this.onTimerEndListener.onTimerEnd(attackProgress);
+            for (Progress progress : finished) {
+                AttackProgressAdapter.this.onTimerEndListener.onTimerEnd(progress);
             }
         }
     }
@@ -68,13 +62,13 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
 
     @Override
     public void onBindViewHolder(AttackProgressAdapterViewHolder holder, int position) {
-        AttackProgress attackProgress = this.attackProgressDataset.get(position);
-        holder.bind(attackProgress);
+        Progress progress = this.progressDataset.get(position);
+        holder.bind(progress);
     }
 
     @Override
     public int getItemCount() {
-        return attackProgressDataset.size();
+        return progressDataset.size();
     }
 
 
@@ -87,8 +81,8 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
             this.binding = binding;
         }
 
-        public void bind(AttackProgress attackProgress){
-            this.binding.setAttackProgress(attackProgress);
+        public void bind(Progress progress){
+            this.binding.setProgress(progress);
         }
     }
 
@@ -98,6 +92,6 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
     }
 
     public interface OnTimerEndListener {
-        void onTimerEnd(AttackProgress attackProgress);
+        void onTimerEnd(Progress progress);
     }
 }

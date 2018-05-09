@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import android.widget.RelativeLayout;
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.activity.MainActivity;
 import com.francony.romain.outerspacemanager.adapter.AttackProgressAdapter;
-import com.francony.romain.outerspacemanager.adapter.ReportAdapter;
-import com.francony.romain.outerspacemanager.adapter.UserAdapter;
-import com.francony.romain.outerspacemanager.model.AttackProgress;
-import com.francony.romain.outerspacemanager.model.UserScore;
+import com.francony.romain.outerspacemanager.model.Progress;
+import com.francony.romain.outerspacemanager.model.Progress_Table;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
@@ -27,14 +24,12 @@ import com.raizlabs.android.dbflow.structure.ModelAdapter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
 
 
 public class AttackProgressFragment extends Fragment implements AttackProgressAdapter.OnTimerEndListener {
-    private ModelAdapter<AttackProgress> attackProgressModelAdapter = FlowManager.getModelAdapter(AttackProgress.class);
+    private ModelAdapter<Progress> attackProgressModelAdapter = FlowManager.getModelAdapter(Progress.class);
 
-    private ArrayList<AttackProgress> attacksProgress = new ArrayList<>();
+    private ArrayList<Progress> attacksProgress = new ArrayList<>();
 
     private RelativeLayout laLoader;
     private RecyclerView rvAttackProgress;
@@ -82,12 +77,12 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
 
 
     private void getAttacksProgress() {
-        ArrayList<AttackProgress> attacks = (ArrayList<AttackProgress>) SQLite.select().from(AttackProgress.class).queryList();
+        ArrayList<Progress> attacks = (ArrayList<Progress>) SQLite.select().from(Progress.class).where(Progress_Table.type.eq(Progress.TYPE_ATTACK)).queryList();
         Timestamp current =  new Timestamp(System.currentTimeMillis());
-        ArrayList<AttackProgress> toDelete = new ArrayList<>();
+        ArrayList<Progress> toDelete = new ArrayList<>();
 
-        for (AttackProgress attack : attacks) {
-            if( attack.getAttackTime() <= current.getTime()){
+        for (Progress attack : attacks) {
+            if( attack.getEndTime() <= current.getTime()){
                 toDelete.add(attack);
             }
         }
@@ -99,10 +94,10 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
             this.laEmptyAttackProgress.setVisibility(View.VISIBLE);
         }
 
-        attacks.sort(new Comparator<AttackProgress>() {
+        attacks.sort(new Comparator<Progress>() {
             @Override
-            public int compare(AttackProgress o1, AttackProgress o2) {
-                return (int)(o1.getAttackTime() - o2.getAttackTime());
+            public int compare(Progress o1, Progress o2) {
+                return (int)(o1.getEndTime() - o2.getEndTime());
             }
         });
 
@@ -111,8 +106,8 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
     }
 
     @Override
-    public void onTimerEnd(AttackProgress attackProgress) {
-        int index = this.attacksProgress.indexOf(attackProgress);
+    public void onTimerEnd(Progress progress) {
+        int index = this.attacksProgress.indexOf(progress);
         this.attacksProgress.remove(index);
         this.attackProgressAdapter.notifyItemRemoved(index);
 

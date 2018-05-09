@@ -78,6 +78,9 @@ public class Search extends BaseObservable{
     public void setLevel(Integer level) {
         this.level = level;
         notifyPropertyChanged(BR.level);
+        notifyPropertyChanged(BR.timeToBuild);
+        notifyPropertyChanged(BR.gasCost);
+        notifyPropertyChanged(BR.mineralCost);
     }
 
     public Integer getMineralCostByLevel() {
@@ -128,14 +131,17 @@ public class Search extends BaseObservable{
         this.searchId = searchId;
     }
 
+    @Bindable
     public int getGasCost() {
         return this.getGasCostByLevel() * this.getLevel() + this.getGasCostLevel0();
     }
 
+    @Bindable
     public int getMineralCost() {
         return this.getMineralCostByLevel() * this.getLevel() + this.getMineralCostLevel0();
     }
 
+    @Bindable
     public int getTimeToBuild() {
         return this.getTimeToBuildByLevel() * this.getLevel() + this.getTimeToBuildLevel0();
     }

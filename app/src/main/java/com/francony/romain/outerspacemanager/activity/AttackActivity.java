@@ -8,7 +8,7 @@ import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
 import com.francony.romain.outerspacemanager.bottomSheet.ShipSelectorBottomSheetDialogFragment;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
-import com.francony.romain.outerspacemanager.model.AttackProgress;
+import com.francony.romain.outerspacemanager.model.Progress;
 import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
@@ -139,8 +139,8 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
     }
 
     private void saveAttackTime(long attackTime) {
-        ModelAdapter<AttackProgress> attackProgressAdapter = FlowManager.getModelAdapter(AttackProgress.class);
-        AttackProgress attackProgress = new AttackProgress(UUID.randomUUID(), attackTime);
+        ModelAdapter<Progress> attackProgressAdapter = FlowManager.getModelAdapter(Progress.class);
+        Progress attackProgress = new Progress(UUID.randomUUID(), attackTime, Progress.TYPE_ATTACK);
         attackProgressAdapter.insert(attackProgress);
     }
 

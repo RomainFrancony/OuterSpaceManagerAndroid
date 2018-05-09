@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{Helpers.numberToHumanReadableNumber(searchViewModel.search.getGasCost())}"
+                        android:text="@{Helpers.numberToHumanReadableNumber(searchViewModel.search.gasCost)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
 
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@{Helpers.numberToHumanReadableNumber(searchViewModel.search.getMineralCost())}"
+                        android:text="@{Helpers.numberToHumanReadableNumber(searchViewModel.search.mineralCost)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -110,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:singleLine="true"
-                        android:text="@{Helpers.secondToHumanReadableTime(searchViewModel.search.getTimeToBuild())}"
+                        android:text="@{Helpers.secondToHumanReadableTime(searchViewModel.search.timeToBuild)}"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -135,6 +135,7 @@
                     app:pb_colorPressed="@color/colorAccent"
                     app:pb_colorBorder="@color/colorAccent"
                     app:pb_colorProgress="@color/colorAccent"
+                    android:foreground="?attr/selectableItemBackground"
                     app:pb_textProgress="@string/action.search_progress" />
             </LinearLayout>
 

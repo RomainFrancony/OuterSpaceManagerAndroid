@@ -6,8 +6,8 @@
         <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
 
         <variable
-            name="attackProgress"
-            type="com.francony.romain.outerspacemanager.model.AttackProgress" />
+            name="progress"
+            type="com.francony.romain.outerspacemanager.model.Progress" />
     </data>
 
     <LinearLayout
@@ -19,6 +19,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{Helpers.secondToHumanReadableTime((int)((attackProgress.attackTime - System.currentTimeMillis()) / 1000))}" />
+            android:text="@{Helpers.secondToHumanReadableTime((int)((progress.endTime - System.currentTimeMillis()) / 1000))}" />
     </LinearLayout>
 </layout>

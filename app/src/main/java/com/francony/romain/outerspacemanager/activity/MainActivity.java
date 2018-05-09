@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.francony.romain.outerspacemanager.OuterSpaceManagerDatabase;
 import com.francony.romain.outerspacemanager.fragment.GalaxyFragment;
 import com.francony.romain.outerspacemanager.fragment.AttacksFragment;
 import com.francony.romain.outerspacemanager.fragment.BuildingsFragment;
@@ -20,12 +21,13 @@ import com.francony.romain.outerspacemanager.fragment.HomeFragment;
 import com.francony.romain.outerspacemanager.fragment.SearchesFragment;
 import com.francony.romain.outerspacemanager.fragment.SpaceyardFragment;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final int SPACEYARD_DRAWER_INDEX = 3;
-    public static final int GALAXY_DRAWER_INDEX = 6;
+    public static final int SPACEYARD_DRAWER_INDEX = 2;
+    public static final int GALAXY_DRAWER_INDEX = 5;
 
     private DrawerLayout drawer;
     public NavigationView navigationView;
@@ -136,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logout() {
+        FlowManager.getDatabase(OuterSpaceManagerDatabase.class).reset();
         SharedPreferencesHelper.clearToken(getApplicationContext());
         SharedPreferencesHelper.clearTokenExpiration(getApplicationContext());
         Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
