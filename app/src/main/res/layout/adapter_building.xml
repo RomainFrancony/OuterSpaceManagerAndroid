@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <import type="com.francony.romain.outerspacemanager.helpers.Helpers"/>
+
+        <import type="com.francony.romain.outerspacemanager.helpers.Helpers" />
+
+        <import type="android.view.View" />
+
         <variable
             name="buildingViewModel"
             type="com.francony.romain.outerspacemanager.viewModel.BuildingViewModel" />
     </data>
 
     <android.support.v7.widget.CardView
-        android:onClick="@{() -> buildingViewModel.startIntent()}"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:onClick="@{() -> buildingViewModel.startIntent()}">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,9 +25,18 @@
 
             <ImageView
                 android:id="@+id/building_image"
+                imageUrl="@{buildingViewModel.building.getImageUrl()}"
                 android:layout_width="match_parent"
-                android:layout_height="172dp"
-                imageUrl="@{buildingViewModel.building.getImageUrl()}" />
+                android:layout_height="172dp" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="-8dp"
+                android:layout_marginTop="-7dp"
+                android:progress="@{buildingViewModel.progressPercent}"
+                android:visibility="@{buildingViewModel.building.building ? View.VISIBLE : View.GONE}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +89,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{Helpers.numberToHumanReadableNumber(buildingViewModel.building.getGasCost())}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(buildingViewModel.building.gasCost)}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
 
@@ -98,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
-                            android:text="@{Helpers.numberToHumanReadableNumber(buildingViewModel.building.getMineralCost())}"
+                            android:text="@{Helpers.numberToHumanReadableNumber(buildingViewModel.building.mineralCost)}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -121,7 +135,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:singleLine="true"
-                            android:text="@{Helpers.secondToHumanReadableTime(buildingViewModel.building.getTimeToBuild())}"
+                            android:text="@{Helpers.secondToHumanReadableTime(buildingViewModel.building.timeToBuild)}"
                             android:textColor="@color/colorDark"
                             android:textSize="16sp" />
                     </LinearLayout>

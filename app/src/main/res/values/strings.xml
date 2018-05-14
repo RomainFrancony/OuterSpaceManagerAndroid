@@ -40,6 +40,7 @@
 
     <string name="effect.speed_building">Building speed</string>
     <string name="effect.speed_fleet">Fleet speed</string>
+    <string name="effect.mineral_modifier">Minerals modifier</string>
     <string name="effect">Effect</string>
     <string name="fleet">Fleet</string>
     <string name="nav.attacks">Attacks</string>

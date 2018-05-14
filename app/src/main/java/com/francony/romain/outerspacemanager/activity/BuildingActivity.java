@@ -19,11 +19,16 @@ import com.francony.romain.outerspacemanager.databinding.ActivityBuildingBinding
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
+import com.francony.romain.outerspacemanager.model.Progress;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.francony.romain.outerspacemanager.viewModel.SearchViewModel;
 import com.google.gson.Gson;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.ModelAdapter;
+
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +39,8 @@ public class BuildingActivity extends AppCompatActivity {
     private ActivityBuildingBinding binding;
 
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
+    private ModelAdapter<Progress> progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
+    private Progress progress;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -88,6 +95,7 @@ public class BuildingActivity extends AppCompatActivity {
                 }
 
                 BuildingActivity.this.building.setBuilding(true);
+                BuildingActivity.this.saveBuildingTime();
             }
             // Network error
             @Override
@@ -96,6 +104,12 @@ public class BuildingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void saveBuildingTime() {
+        this.progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
+        this.progress = new Progress(UUID.randomUUID(), this.building.getTimeToBuild() + (System.currentTimeMillis() / 1000), Progress.TYPE_BUILDING, this.building.getBuildingId());
+        this.progressModelAdapter.insert(this.progress);
     }
 
 }

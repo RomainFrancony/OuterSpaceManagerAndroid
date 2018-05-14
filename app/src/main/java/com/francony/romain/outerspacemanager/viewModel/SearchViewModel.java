@@ -111,7 +111,6 @@ public class SearchViewModel extends BaseObservable {
     private void updateCountdown() {
         long startTime = this.progress.getEndTime() - this.getSearch().getTimeToBuild();
         int progress = (int)(((System.currentTimeMillis()/1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
-        Log.wtf("ah", progress+"");
         this.button.setProgress(progress <= 0 ? 1 : progress);
     }
 
@@ -163,7 +162,11 @@ public class SearchViewModel extends BaseObservable {
 
             @Override
             public void run() {
-                if(SearchViewModel.this.button.getProgress() >= 100 ) {
+                if (!SearchViewModel.this.view.isAttachedToWindow()) {
+                    return;
+                }
+
+                if(SearchViewModel.this.button.getProgress() >= 100) {
                     SearchViewModel.this.button.setEnabled(true);
                     SearchViewModel.this.button.setProgress(0);
                     SearchViewModel.this.progressModelAdapter.delete(SearchViewModel.this.progress);

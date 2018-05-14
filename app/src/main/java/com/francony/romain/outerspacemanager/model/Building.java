@@ -9,14 +9,12 @@ import com.francony.romain.outerspacemanager.BR;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 
 public class Building extends BaseObservable {
-    public static int MAX_LEVEL = 30;
 
     private int level;
     private int amountOfEffectByLevel;
     private int amountOfEffectLevel0;
     private int buildingId;
 
-    private long buildingEndTime;
 
     public Building() {
     }
@@ -40,6 +38,9 @@ public class Building extends BaseObservable {
     public void setLevel(int level) {
         this.level = level;
         notifyPropertyChanged(BR.level);
+        notifyPropertyChanged(BR.timeToBuild);
+        notifyPropertyChanged(BR.gasCost);
+        notifyPropertyChanged(BR.mineralCost);
     }
 
     public int getAmountOfEffectByLevel() {
@@ -66,12 +67,14 @@ public class Building extends BaseObservable {
         this.buildingId = buildingId;
     }
 
+    @Bindable
     public boolean isBuilding() {
         return building;
     }
 
     public void setBuilding(boolean building) {
         this.building = building;
+        notifyPropertyChanged(BR.building);
     }
 
     public String getEffect() {
@@ -162,10 +165,12 @@ public class Building extends BaseObservable {
         this.timeToBuildLevel0 = timeToBuildLevel0;
     }
 
+    @Bindable
     public int getGasCost() {
         return this.getGasCostByLevel() * this.getLevel() + this.getGasCostLevel0();
     }
 
+    @Bindable
     public int getMineralCost() {
         return this.getMineralCostByLevel() * this.getLevel() + this.getMineralCostLevel0();
     }
@@ -190,17 +195,11 @@ public class Building extends BaseObservable {
                 '}';
     }
 
+    @Bindable
     public int getTimeToBuild() {
         return this.getTimeToBuildByLevel() * this.getLevel() + this.getTimeToBuildLevel0();
     }
 
-    public long getBuildingEndTime() {
-        return buildingEndTime;
-    }
-
-    public void setBuildingEndTime(long buildingEndTime) {
-        this.buildingEndTime = buildingEndTime;
-    }
 
 
     @BindingAdapter("imageUrl")

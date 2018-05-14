@@ -64,13 +64,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:visibility="@{buildingActivityViewModel.building.level == Building.MAX_LEVEL ? View.GONE : View.VISIBLE }"
             android:text="@string/item.cost"
             android:layout_marginBottom="12dp"
             style="@style/AppTheme.H2"
             android:layout_height="wrap_content" />
         <LinearLayout
-            android:visibility="@{buildingActivityViewModel.building.level == Building.MAX_LEVEL ? View.GONE : View.VISIBLE }"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -93,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="@{String.valueOf(buildingActivityViewModel.building.getGasCost())}"
+                    android:text="@{String.valueOf(buildingActivityViewModel.building.gasCost)}"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
 
@@ -116,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="@{String.valueOf(buildingActivityViewModel.building.getMineralCost())}"
+                    android:text="@{String.valueOf(buildingActivityViewModel.building.mineralCost)}"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -138,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="@{Helpers.secondToHumanReadableTime(buildingActivityViewModel.building.getTimeToBuild())}"
+                    android:text="@{Helpers.secondToHumanReadableTime(buildingActivityViewModel.building.timeToBuild)}"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -146,7 +144,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="@{buildingActivityViewModel.building.effect.empty ? View.GONE : View.VISIBLE}"
+            android:visibility="@{buildingActivityViewModel.building.effect == null ? View.GONE : View.VISIBLE}"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
@@ -165,10 +163,9 @@
 
         <Button
             android:layout_marginTop="24dp"
-            android:enabled="@{buildingActivityViewModel.building.level != Building.MAX_LEVEL }"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
-            android:text="@{@{buildingActivityViewModel.building.level == Building.MAX_LEVEL ? @string/item_maxLevel : @string/action_build } }"
+            android:text="@string/action.build"
             android:onClick="@{() -> buildingActivityViewModel.startBuild()}"
             android:layout_height="wrap_content" />
     </LinearLayout>
