@@ -156,7 +156,7 @@ public class BuildingViewModel extends BaseObservable{
         // Transition
         ImageView image = view.findViewById(R.id.building_image);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.fragment.getActivity(), image, "building");
-        this.fragment.getContext().startActivity(buildingIntent, options.toBundle());
+        this.fragment.startActivityForResult(buildingIntent, BuildingsFragment.BUILDING_ACTIVITY_REQUEST, options.toBundle());
 
     }
 

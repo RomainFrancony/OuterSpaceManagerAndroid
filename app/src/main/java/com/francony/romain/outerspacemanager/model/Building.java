@@ -201,9 +201,15 @@ public class Building extends BaseObservable {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        Building other = (Building) obj;
+
+        return other != null && this.getBuildingId() == other.getBuildingId();
+    }
 
     @BindingAdapter("imageUrl")
     public static void loadImage(ImageView view, String url) {
-        Helpers.loadExternalImageWithAnimation(view,url);
+        Helpers.loadExternalImageWithAnimation(view, url);
     }
 }

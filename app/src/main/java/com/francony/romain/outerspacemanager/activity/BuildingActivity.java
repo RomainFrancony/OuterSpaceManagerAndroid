@@ -1,5 +1,6 @@
 package com.francony.romain.outerspacemanager.activity;
 
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.ActivityBuildingBinding;
+import com.francony.romain.outerspacemanager.fragment.BuildingsFragment;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
@@ -44,8 +46,22 @@ public class BuildingActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        this.getReturnValue();
         finishAfterTransition();
         return true;
+    }
+
+    public void getReturnValue() {
+        Intent data = new Intent();
+        Gson gson = new Gson();
+        data.putExtra("building", gson.toJson(this.building));
+        setResult(RESULT_OK, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.getReturnValue();
+        super.onBackPressed();
     }
 
     @Override
@@ -69,20 +85,20 @@ public class BuildingActivity extends AppCompatActivity {
 
     @BindingAdapter("imageUrl")
     public static void loadImage(ImageView view, String url) {
-        Helpers.loadExternalImageWithAnimation(view,url);
+        Helpers.loadExternalImageWithAnimation(view, url);
     }
 
 
     public String getEffectString() {
         String packageName = getPackageName();
-        if(this.building.getEffect() == null){
+        if (this.building.getEffect() == null) {
             return "";
         }
         int resId = getResources().getIdentifier("effect." + this.building.getEffect(), "string", packageName);
         return getString(resId);
     }
 
-    public void startBuild(){
+    public void startBuild() {
         Call<ActionResponse> request = BuildingActivity.this.service.buildingBuild(SharedPreferencesHelper.getToken(getApplicationContext()), BuildingActivity.this.building.getBuildingId());
 
         request.enqueue(new Callback<ActionResponse>() {
@@ -97,6 +113,7 @@ public class BuildingActivity extends AppCompatActivity {
                 BuildingActivity.this.building.setBuilding(true);
                 BuildingActivity.this.saveBuildingTime();
             }
+
             // Network error
             @Override
             public void onFailure(Call<ActionResponse> call, Throwable t) {

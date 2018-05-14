@@ -1,12 +1,15 @@
 package com.francony.romain.outerspacemanager.fragment;
 
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,7 @@ import com.francony.romain.outerspacemanager.response.BuildingsResponse;
 import com.francony.romain.outerspacemanager.response.UserResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import retrofit2.Response;
 
 public class BuildingsFragment extends Fragment {
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
+    public static int BUILDING_ACTIVITY_REQUEST = 42;
 
     private RelativeLayout laLoader;
     private RecyclerView rvBuildings;
@@ -47,6 +52,39 @@ public class BuildingsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != BuildingsFragment.BUILDING_ACTIVITY_REQUEST) {
+            return;
+        }
+
+        // Get data
+        Building building;
+        Gson gson = new Gson();
+        String building_json = data.getStringExtra("building");
+
+        if (building_json == null) {
+            return;
+        }
+        building = gson.fromJson(building_json, Building.class);
+        if (building == null) {
+            return;
+        }
+
+        // Check if building exists in current dataset
+        int index = this.buildings.indexOf(building);
+        if (index == -1) {
+            return;
+        }
+
+        // Update the item only if the level or the building state has changed (only thing that alter the UI)
+        if (building.getLevel() == this.buildings.get(index).getLevel() && building.isBuilding() == this.buildings.get(index).isBuilding()) {
+            return;
+        }
+        this.buildings.set(index, building);
+        this.buildingAdapter.notifyItemChanged(index);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
