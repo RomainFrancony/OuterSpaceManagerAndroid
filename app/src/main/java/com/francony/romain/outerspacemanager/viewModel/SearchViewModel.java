@@ -174,7 +174,7 @@ public class SearchViewModel extends BaseObservable {
                 }
 
                 SearchViewModel.this.updateCountdown();
-                SearchViewModel.this.handler.postDelayed( this, 1000 );
+                SearchViewModel.this.handler.postDelayed( this, (SearchViewModel.this.getSearch().getTimeToBuild() / 100) * 1000 );
             }
         }, 0 );
     }
