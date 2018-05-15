@@ -4,6 +4,7 @@ package com.francony.romain.outerspacemanager.fragment;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,17 +34,34 @@ public class UserInfoFragment extends Fragment {
     private Context context;
 
     private FragmentUserInfoBinding binding;
+    private Handler handler;
 
-    public UserInfoFragment(){
+    public UserInfoFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_info,container,false);
+        this.binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_info, container, false);
 
         this.binding.setLoadingState(true);
-        this.getUserInfos();
+        this.initRefreshInfo();
         return binding.getRoot();
+    }
+
+    private void initRefreshInfo() {
+        this.handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                if (UserInfoFragment.this.getView() == null || !UserInfoFragment.this.getView().isShown()) {
+                    return;
+                }
+
+                UserInfoFragment.this.getUserInfos();
+                UserInfoFragment.this.handler.postDelayed(this, 5000);
+            }
+        }, 0);
     }
 
 
