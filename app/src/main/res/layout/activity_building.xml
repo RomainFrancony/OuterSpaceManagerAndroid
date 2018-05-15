@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="@{String.valueOf(buildingActivityViewModel.building.gasCost)}"
+                    android:text="@{Helpers.numberToHumanReadableNumber(buildingActivityViewModel.building.gasCost)}"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
 
@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="@{String.valueOf(buildingActivityViewModel.building.mineralCost)}"
+                    android:text="@{Helpers.numberToHumanReadableNumber(buildingActivityViewModel.building.mineralCost)}"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -136,6 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
+                    android:singleLine="true"
                     android:text="@{Helpers.secondToHumanReadableTime(buildingActivityViewModel.building.timeToBuild)}"
                     android:textColor="@color/colorDark"
                     android:textSize="16sp" />
@@ -161,13 +162,22 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <Button
-            android:layout_marginTop="24dp"
-            style="@style/Widget.AppCompat.Button.Colored"
+        <com.hkm.ui.processbutton.iml.SubmitProcessButton
             android:layout_width="match_parent"
+            android:id="@+id/build_action_button"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
             android:text="@string/action.build"
-            android:onClick="@{() -> buildingActivityViewModel.startBuild()}"
-            android:layout_height="wrap_content" />
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:pb_colorComplete="@color/colorAccent"
+            app:pb_colorDisabled="@color/colorAccentDark"
+            app:pb_colorNormal="@color/colorAccent"
+            app:pb_colorPressed="@color/colorAccent"
+            app:pb_colorBorder="@color/colorAccent"
+            app:pb_colorProgress="@color/colorAccent"
+            android:foreground="?attr/selectableItemBackground"
+            app:pb_textProgress="@string/action.build_progress" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

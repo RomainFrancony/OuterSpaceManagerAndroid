@@ -5,8 +5,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,19 +16,23 @@ import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.ActivityBuildingBinding;
-import com.francony.romain.outerspacemanager.fragment.BuildingsFragment;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
 import com.francony.romain.outerspacemanager.model.Progress;
+import com.francony.romain.outerspacemanager.model.Progress_Table;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.francony.romain.outerspacemanager.viewModel.SearchViewModel;
 import com.google.gson.Gson;
+import com.hkm.ui.processbutton.iml.SubmitProcessButton;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.ModelAdapter;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -43,6 +46,8 @@ public class BuildingActivity extends AppCompatActivity {
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
     private ModelAdapter<Progress> progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
     private Progress progress;
+    private Handler handler;
+    private SubmitProcessButton button;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -81,6 +86,74 @@ public class BuildingActivity extends AppCompatActivity {
         Gson gson = new Gson();
         this.building = gson.fromJson(getIntent().getStringExtra("building"), Building.class);
         this.binding.setBuildingActivityViewModel(this);
+
+        // Progress button
+        this.initButtonProgress();
+
+        this.getProgress();
+
+        // Already building
+        if (this.building.isBuilding()) {
+
+            this.button.setEnabled(false);
+            this.button.setProgress(1);
+
+            if(this.progress == null){
+                return;
+            }
+
+            this.initCountdown();
+
+        }
+    }
+
+
+    private void getProgress() {
+        ArrayList<Progress> progresses = (ArrayList<Progress>) SQLite.select().from(Progress.class)
+                .where(Progress_Table.type.eq(Progress.TYPE_BUILDING))
+                .and(Progress_Table.constructionObjectId.eq(this.building.getBuildingId()))
+                .queryList();
+
+
+
+        progresses.sort(new Comparator<Progress>() {
+            @Override
+            public int compare(Progress o1, Progress o2) {
+                return (int)(o2.getEndTime() - o1.getEndTime());
+            }
+        });
+
+        ArrayList<Progress> toDelete = new ArrayList<>();
+
+        for (Progress progress : progresses) {
+            if( progress.getEndTime() <= System.currentTimeMillis() / 1000){
+                toDelete.add(progress);
+            }
+        }
+        this.progressModelAdapter.deleteAll(toDelete);
+
+        if (progresses.isEmpty()){
+            return;
+        }
+
+        this.progress = progresses.get(0);
+    }
+
+    private void initButtonProgress() {
+        this.button = findViewById(R.id.build_action_button);
+        this.button.setOnClickNormalState(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuildingActivity.this.startBuild();
+            }
+        });
+        this.button.build();
+    }
+
+    private void updateCountdown() {
+        long startTime = this.progress.getEndTime() - this.building.getTimeToBuild();
+        int progress = (int)(((System.currentTimeMillis()/1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
+        this.button.setProgress(progress <= 0 ? 1 : progress);
     }
 
     @BindingAdapter("imageUrl")
@@ -127,6 +200,38 @@ public class BuildingActivity extends AppCompatActivity {
         this.progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
         this.progress = new Progress(UUID.randomUUID(), this.building.getTimeToBuild() + (System.currentTimeMillis() / 1000), Progress.TYPE_BUILDING, this.building.getBuildingId());
         this.progressModelAdapter.insert(this.progress);
+        this.initCountdown();
+    }
+
+    private void initCountdown() {
+        if(this.handler == null){
+            this.handler = new Handler();
+        }
+
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed( new Runnable() {
+
+            @Override
+            public void run() {
+                if (!BuildingActivity.this.getWindow().getDecorView().getRootView().isShown()) {
+                    return;
+                }
+
+                if(BuildingActivity.this.button.getProgress() >= 100) {
+                    BuildingActivity.this.button.setEnabled(true);
+                    BuildingActivity.this.button.setProgress(0);
+                    BuildingActivity.this.progressModelAdapter.delete(BuildingActivity.this.progress);
+                    BuildingActivity.this.progress = null;
+                    BuildingActivity.this.building.setBuilding(false);
+                    BuildingActivity.this.building.setLevel(BuildingActivity.this.building.getLevel() + 1);
+                    BuildingActivity.this.binding.setBuildingActivityViewModel(BuildingActivity.this);
+                    return;
+                }
+
+                BuildingActivity.this.updateCountdown();
+                BuildingActivity.this.handler.postDelayed( this, (BuildingActivity.this.building.getTimeToBuild() / 100) * 1000 );
+            }
+        }, 0 );
     }
 
 }
