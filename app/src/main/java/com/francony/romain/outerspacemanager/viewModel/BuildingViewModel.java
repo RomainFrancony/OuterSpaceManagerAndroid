@@ -7,6 +7,7 @@ import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +37,7 @@ public class BuildingViewModel extends BaseObservable{
     private Progress progress;
     private Handler handler;
     private int progressPercent;
+    private boolean isViewVisible = true;
 
 
     public BuildingViewModel(Building building, View view, BuildingsFragment fragment) {
@@ -105,7 +107,7 @@ public class BuildingViewModel extends BaseObservable{
 
             @Override
             public void run() {
-                if (!BuildingViewModel.this.view.isAttachedToWindow()) {
+                if (!BuildingViewModel.this.isViewVisible || BuildingViewModel.this.progress == null) {
                     return;
                 }
 
@@ -125,6 +127,7 @@ public class BuildingViewModel extends BaseObservable{
     }
 
     private void updateCountdown() {
+
         long startTime = this.progress.getEndTime() - this.getBuilding().getTimeToBuild();
         int progress = (int)(((System.currentTimeMillis()/1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
         this.setProgressPercent(progress);
@@ -168,5 +171,14 @@ public class BuildingViewModel extends BaseObservable{
     public void setProgressPercent(int progressPercent) {
         this.progressPercent = progressPercent;
         notifyPropertyChanged(BR.progressPercent);
+    }
+
+    public void setViewVisible(boolean viewVisible) {
+        isViewVisible = viewVisible;
+
+        // Reinit the countdown because it may be stopped
+        if(viewVisible){
+            this.initCountdown();
+        }
     }
 }

@@ -41,6 +41,7 @@ public class SearchViewModel extends BaseObservable {
     private ModelAdapter<Progress> progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
     private SubmitProcessButton button;
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
+    private boolean isViewVisible = true;
 
     public SearchViewModel(Search search, View view, Context context) {
         this.search = search;
@@ -162,7 +163,7 @@ public class SearchViewModel extends BaseObservable {
 
             @Override
             public void run() {
-                if (!SearchViewModel.this.view.isAttachedToWindow()) {
+                if (!SearchViewModel.this.isViewVisible || SearchViewModel.this.progress == null) {
                     return;
                 }
 
@@ -188,5 +189,14 @@ public class SearchViewModel extends BaseObservable {
 
     public void setSearch(Search search) {
         this.search = search;
+    }
+
+    public void setViewVisible(boolean viewVisible) {
+        isViewVisible = viewVisible;
+
+        // Reinit the countdown because it may be stopped
+        if(viewVisible){
+            this.initCountdown();
+        }
     }
 }
