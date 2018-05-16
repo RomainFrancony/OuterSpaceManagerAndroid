@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.BR;
 import com.francony.romain.outerspacemanager.R;
-import com.francony.romain.outerspacemanager.adapter.ShipSelectorAdapter;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Ship;
@@ -17,8 +16,6 @@ import com.francony.romain.outerspacemanager.response.ShipBuildingResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.warkiz.widget.IndicatorSeekBar;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -89,6 +86,9 @@ public class ShipViewModel extends BaseObservable {
     }
 
 
+    /**
+     * API call
+     */
     public void startConstruction() {
         this.indicatorSeekBar.setEnabled(false);
         this.setShipBuildLoading(true);
@@ -125,6 +125,23 @@ public class ShipViewModel extends BaseObservable {
             }
         });
     }
+
+    /**
+     * Attach custom event listener
+     *
+     * @param removeShipListener
+     */
+    public void setRemoveShipListener(ShipViewModel.RemoveShipListener removeShipListener) {
+        this.removeShipListener = removeShipListener;
+    }
+
+    /**
+     * Custom event interface
+     */
+    public interface RemoveShipListener {
+        void onRemoveShip(Ship ship);
+    }
+
 
     @Bindable
     public Boolean getShipBuildLoading() {
@@ -163,18 +180,9 @@ public class ShipViewModel extends BaseObservable {
         this.cardType = cardType;
     }
 
-    public void removeShip(){
+    public void removeShip() {
         // Reset to the actual ship amount
         this.ship.setAmount(Math.round(this.indicatorSeekBar.getMax()));
         if (removeShipListener != null) removeShipListener.onRemoveShip(this.ship);
-    }
-
-    public void setRemoveShipListener(ShipViewModel.RemoveShipListener removeShipListener) {
-        this.removeShipListener = removeShipListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface RemoveShipListener {
-        void onRemoveShip(Ship ship);
     }
 }

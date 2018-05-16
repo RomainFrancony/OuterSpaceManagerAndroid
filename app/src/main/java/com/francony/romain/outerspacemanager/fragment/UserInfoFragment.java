@@ -1,7 +1,6 @@
 package com.francony.romain.outerspacemanager.fragment;
 
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,14 +14,7 @@ import com.francony.romain.outerspacemanager.UserInfoManager;
 import com.francony.romain.outerspacemanager.databinding.FragmentUserInfoBinding;
 import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class UserInfoFragment extends Fragment implements HasUserInfo{
+public class UserInfoFragment extends Fragment implements HasUserInfo {
     private FragmentUserInfoBinding binding;
 
     public UserInfoFragment() {
@@ -36,11 +28,11 @@ public class UserInfoFragment extends Fragment implements HasUserInfo{
         return binding.getRoot();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
+    /**
+     * Update current user info in layout
+     *
+     * @param info
+     */
     @Override
     public void OnUserInfoUpdate(UserInfoResponse info) {
         this.binding.setLoadingState(false);

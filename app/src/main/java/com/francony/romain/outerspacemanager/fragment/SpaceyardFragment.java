@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SpaceyardFragment extends Fragment {
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
@@ -61,10 +57,13 @@ public class SpaceyardFragment extends Fragment {
         this.shipAdapter = new ShipAdapter(this.ships,this.getContext(), ShipViewModel.BUILD);
         this.rvShips.setAdapter(this.shipAdapter);
         this.getShips();
+
         return v;
     }
 
-
+    /**
+     * API call
+     */
     public void getShips() {
         Call<SpaceyardResponse> request = this.service.spaceyardList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
 

@@ -1,15 +1,10 @@
 package com.francony.romain.outerspacemanager.fragment;
 
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +48,9 @@ public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_galaxy, container, false);
 
-
         this.laLoader = v.findViewById(R.id.layout_loader);
+
+        // Recycler view
         this.rvUsers = v.findViewById(R.id.users_rv);
         this.rvUsers.setHasFixedSize(true);
         this.rvLayoutManager = new LinearLayoutManager(getContext());
@@ -62,12 +58,14 @@ public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreLi
         this.userAdapter = new UserAdapter(this.userScores, getContext());
         this.rvUsers.setAdapter(this.userAdapter);
         this.userAdapter.setOnLoadMoreListener(this);
-
-
         this.getScoreboard();
+
         return v;
     }
 
+    /**
+     * API Call
+     */
     private void getScoreboard() {
         this.loading = true;
         Call<ScoreboardResponse> request = this.service.userList(SharedPreferencesHelper.getToken(getContext()), this.page * 20, 20);
@@ -96,6 +94,7 @@ public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreLi
                     return;
                 }
 
+                // Add items to data set and hide loader
                 int initialSize =  GalaxyFragment.this.userScores.size();
                 GalaxyFragment.this.userScores.addAll(response.body().getUsers());
                 GalaxyFragment.this.userScores.add(null);
@@ -113,6 +112,9 @@ public class GalaxyFragment extends Fragment implements UserAdapter.OnLoadMoreLi
         });
     }
 
+    /**
+     * Load next page
+     */
     @Override
     public void onLoadMore() {
         if (this.loading) {

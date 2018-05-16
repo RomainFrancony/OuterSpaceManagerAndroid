@@ -3,36 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="report"
             type="com.francony.romain.outerspacemanager.model.Report" />
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.francony.romain.outerspacemanager.activity.ReportActivity">
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@{report.from}"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@{report.from}" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@{report.to}"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@{report.to}" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@{String.valueOf(report.gasWon)}"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(report.gasWon)}" />
 
         <TextView
             android:layout_width="match_parent"
-            android:text="@{String.valueOf(report.mineralsWon)}"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(report.mineralsWon)}" />
 
     </LinearLayout>
 </layout>

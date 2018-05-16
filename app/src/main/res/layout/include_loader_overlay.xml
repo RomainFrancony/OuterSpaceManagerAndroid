@@ -3,14 +3,15 @@
     android:id="@+id/layout_loader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
+    android:animateLayoutChanges="true"
     android:background="#0f000000"
+    android:clickable="true"
     android:focusable="true"
     android:gravity="center">
 
     <ProgressBar
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:indeterminateTint="@color/colorAccent"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorAccent" />
 </RelativeLayout>

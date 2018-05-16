@@ -1,7 +1,6 @@
 package com.francony.romain.outerspacemanager.fragment;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
@@ -59,7 +57,7 @@ public class FleetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity activity = (MainActivity) getActivity();
-                if(activity == null){
+                if (activity == null) {
                     return;
                 }
                 activity.navigationView.getMenu().performIdentifierAction(R.id.nav_spaceyard, 0);
@@ -79,6 +77,9 @@ public class FleetFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Get ships from API
+     */
     public void getShips() {
         Call<SpaceyardResponse> request = this.service.fleetList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
 
@@ -92,6 +93,7 @@ public class FleetFragment extends Fragment {
                     return;
                 }
 
+                // Display ships with positive amount in recycler view
                 FleetFragment.this.ships.addAll(response.body().getShips());
                 FleetFragment.this.ships.removeIf(new Predicate<Ship>() {
                     @Override
@@ -115,6 +117,5 @@ public class FleetFragment extends Fragment {
             }
         });
     }
-
 
 }

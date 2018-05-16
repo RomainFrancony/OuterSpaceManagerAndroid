@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -20,12 +19,15 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
-import java.time.LocalTime;
 
 import retrofit2.Response;
 
 public abstract class Helpers {
 
+    /**
+     * Fix bug on some device where an accessibility setting is enabled and remove Snackbar default animation
+     * @param snackbar
+     */
     public static void showSnackbarWithAnimation(Snackbar snackbar) {
         try {
             Field mAccessibilityManagerField = BaseTransientBottomBar.class.getDeclaredField("mAccessibilityManager");
@@ -41,6 +43,11 @@ public abstract class Helpers {
         }
     }
 
+    /**
+     * Transform second to a more readable text (ex: 2h 25m 30s)
+     * @param second
+     * @return
+     */
     public static String secondToHumanReadableTime(int second) {
         int h = second/ 3600;
         int m = (second % 3600) / 60;
@@ -51,6 +58,11 @@ public abstract class Helpers {
         return sh + (h > 0 ? " " : "") + sm + (m > 0 ? " " : "") + ss;
     }
 
+    /**
+     * Load image with Glide
+     * @param view
+     * @param url
+     */
     public static void loadExternalImageWithAnimation(ImageView view, String url){
         Context context = view.getContext();
         Glide.with(context).load(url)
@@ -61,6 +73,11 @@ public abstract class Helpers {
     }
 
 
+    /**
+     * Get error message from JSON string response
+     * @param response
+     * @return
+     */
     public static String getResponseErrorMessage(Response response){
         try {
             JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -70,6 +87,11 @@ public abstract class Helpers {
         }
     }
 
+    /**
+     * Transform number to a more readable text (ex: 1 520 320,50)
+     * @param number
+     * @return
+     */
     public static String numberToHumanReadableNumber(float number) {
         return new DecimalFormat("##,###.##").format(number);
     }

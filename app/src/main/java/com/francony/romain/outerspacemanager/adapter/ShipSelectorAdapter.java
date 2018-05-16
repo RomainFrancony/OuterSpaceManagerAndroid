@@ -1,18 +1,14 @@
 package com.francony.romain.outerspacemanager.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.francony.romain.outerspacemanager.R;
-import com.francony.romain.outerspacemanager.databinding.AdapterShipBinding;
 import com.francony.romain.outerspacemanager.model.Ship;
-import com.francony.romain.outerspacemanager.viewModel.ShipViewModel;
 
 import java.util.ArrayList;
 
@@ -28,28 +24,35 @@ public class ShipSelectorAdapter extends RecyclerView.Adapter<ShipSelectorAdapte
         this.ships = ships;
     }
 
-    // inflates the row layout from xml when needed
+    /**
+     * Create view holder
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ShipSelectorAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.adapter_ship_selector, parent, false);
         return new ShipSelectorAdapterViewHolder(view);
     }
 
-    // binds the data to the TextView in each row
+    /**
+     * Bind ship to view holder
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ShipSelectorAdapterViewHolder holder, int position) {
         Ship ship = ships.get(position);
         holder.myTextView.setText(ship.getName());
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return ships.size();
     }
 
 
-    // stores and recycles views as they are scrolled off screen
     public class ShipSelectorAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
 
@@ -65,17 +68,17 @@ public class ShipSelectorAdapter extends RecyclerView.Adapter<ShipSelectorAdapte
         }
     }
 
-    // convenience method for getting data at click position
-    Ship getItem(int id) {
-        return ships.get(id);
-    }
-
-    // allows clicks events to be caught
+    /**
+     * Click listener
+     * @param itemClickListener
+     */
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
+    /**
+     * Click interface
+     */
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

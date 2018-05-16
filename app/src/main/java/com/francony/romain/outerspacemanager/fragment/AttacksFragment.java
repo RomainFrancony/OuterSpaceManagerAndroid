@@ -38,6 +38,10 @@ public class AttacksFragment extends Fragment {
     private AttackProgressFragment attackProgressFragment;
     private ReportsFragment reportsFragment;
 
+    /**
+     * Create view pager
+     * @param viewPager
+     */
     private void setViewPager(ViewPager viewPager) {
         attackProgressFragment = new AttackProgressFragment();
         reportsFragment = new ReportsFragment();

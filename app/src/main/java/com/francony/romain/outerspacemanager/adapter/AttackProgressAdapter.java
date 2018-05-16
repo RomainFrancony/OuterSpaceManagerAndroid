@@ -35,6 +35,9 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
 
     }
 
+    /**
+     * Update visible countdown
+     */
     private void updateCountdown(){
         ArrayList<Progress> finished = new ArrayList<>();
         for (Progress progress : progressDataset) {
@@ -44,6 +47,7 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
             }
         }
 
+        // Call custom event listener
         if(AttackProgressAdapter.this.onTimerEndListener != null){
             for (Progress progress : finished) {
                 AttackProgressAdapter.this.onTimerEndListener.onTimerEnd(progress);
@@ -52,6 +56,12 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
     }
 
 
+    /**
+     * Create view holder with data binding
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public AttackProgressAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -60,6 +70,11 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
     }
 
 
+    /**
+     * Bind progress to UI
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(AttackProgressAdapterViewHolder holder, int position) {
         Progress progress = this.progressDataset.get(position);
@@ -87,10 +102,17 @@ public class AttackProgressAdapter extends RecyclerView.Adapter<AttackProgressAd
     }
 
 
+    /**
+     * Set custom listener
+     * @param onTimerEndListener
+     */
     public void setOnTimerEndListener(OnTimerEndListener onTimerEndListener) {
         this.onTimerEndListener = onTimerEndListener;
     }
 
+    /**
+     * Custom listener interface
+     */
     public interface OnTimerEndListener {
         void onTimerEnd(Progress progress);
     }

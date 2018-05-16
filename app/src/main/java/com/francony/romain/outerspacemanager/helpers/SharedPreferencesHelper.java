@@ -4,15 +4,15 @@ package com.francony.romain.outerspacemanager.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.francony.romain.outerspacemanager.response.UserInfoResponse;
-import com.google.gson.Gson;
 
-
+/**
+ * Shared preference helpers
+ * will be removed in future and using DB Flow storage instead
+ */
 public abstract class SharedPreferencesHelper {
     private static String SHARED_PREF_REF = "outerspacemanager";
     private static String TOKEN_REF = "userToken";
     private static String TOKENEXPIRATION_REF = "userTokenExpiration";
-    private static String USERINFOS_REF = "userInfos";
 
     public static String getToken(Context ctx){
         SharedPreferences prefs = ctx.getSharedPreferences(SHARED_PREF_REF, 0);

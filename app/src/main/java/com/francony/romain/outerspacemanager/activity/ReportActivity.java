@@ -3,7 +3,6 @@ package com.francony.romain.outerspacemanager.activity;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.databinding.ActivityReportBinding;

@@ -1,18 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/colorGrayLight"
+    android:orientation="vertical"
     tools:context="com.francony.romain.outerspacemanager.fragment.SpaceyardFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/ships_rv"
-        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:visibility="gone" />
 
-    <include layout="@layout/include_loader_overlay"/>
+    <include layout="@layout/include_loader_overlay" />
 
 </LinearLayout>

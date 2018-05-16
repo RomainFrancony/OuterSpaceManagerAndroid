@@ -96,6 +96,9 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
     }
 
 
+    /**
+     * API call
+     */
     public void getShips() {
         Call<SpaceyardResponse> request = this.service.fleetList(SharedPreferencesHelper.getToken(getApplicationContext()));
 
@@ -138,13 +141,20 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
         });
     }
 
+    /**
+     * Save progress with DB Flow
+     * @param attackTime
+     */
     private void saveAttackTime(long attackTime) {
         ModelAdapter<Progress> attackProgressAdapter = FlowManager.getModelAdapter(Progress.class);
         Progress attackProgress = new Progress(UUID.randomUUID(), attackTime, Progress.TYPE_ATTACK);
         attackProgressAdapter.insert(attackProgress);
     }
 
-
+    /**
+     * Add ship to selected ships and remove it from the bottom sheet
+     * @param ship
+     */
     public void selectShip(Ship ship) {
         this.fab.show();
         this.ships.remove(ship);
@@ -162,6 +172,10 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
     }
 
 
+    /**
+     * Remove ship from selected ships and add it back to the bottom sheet
+     * @param ship
+     */
     @Override
     public void onRemoveShip(Ship ship) {
         int index = selectedShips.indexOf(ship);
@@ -188,20 +202,27 @@ public class AttackActivity extends AppCompatActivity implements ShipViewModel.R
 
     }
 
+    /**
+     * Show bottom sheet
+     */
     @Override
     public void onClickAddShip() {
         this.bottomSheet.show(getSupportFragmentManager(), this.bottomSheet.getTag());
     }
 
+    /**
+     * API call for attack
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         this.laLoader.setVisibility(View.VISIBLE);
         this.fab.hide();
 
-        int lasIndex = this.selectedShips.size() -1;
-        if(this.selectedShips.get(lasIndex) == null){
-            this.selectedShips.remove(lasIndex);
-            this.selectedShipAdapter.notifyItemRemoved(lasIndex);
+        int lastIndex = this.selectedShips.size() -1;
+        if(this.selectedShips.get(lastIndex) == null){
+            this.selectedShips.remove(lastIndex);
+            this.selectedShipAdapter.notifyItemRemoved(lastIndex);
         }
 
 

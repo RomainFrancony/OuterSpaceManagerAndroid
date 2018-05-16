@@ -35,6 +35,13 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
         return this.reportsDataset.get(position) == null ? TYPE_LOADING : TYPE_REPORT;
     }
 
+    /**
+     * Create view holder for item type
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_REPORT) {
@@ -48,6 +55,12 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
     }
 
 
+    /**
+     * Bind the report if needed
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ReportAdapterViewHolder) {
@@ -61,6 +74,27 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
         return reportsDataset.size();
     }
 
+    /**
+     * Get attached recycler view and add listener
+     *
+     * @param recyclerView
+     */
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+        this.recyclerView.setOnScrollChangeListener(this);
+    }
+
+    /**
+     * Check if scroll at the end the recycler view
+     *
+     * @param v
+     * @param scrollX
+     * @param scrollY
+     * @param oldScrollX
+     * @param oldScrollY
+     */
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         if (((LinearLayoutManager) this.recyclerView.getLayoutManager()).findLastVisibleItemPosition() == this.getItemCount() - 1) {
@@ -70,13 +104,10 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
         }
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        this.recyclerView = recyclerView;
-        this.recyclerView.setOnScrollChangeListener(this);
-    }
 
+    /**
+     * View holder for report
+     */
     public class ReportAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final AdapterReportBinding binding;
 
@@ -86,12 +117,20 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
             binding.getRoot().setOnClickListener(this);
         }
 
+        /**
+         * Bind report to UI
+         * @param report
+         */
         public void bind(final Report report) {
             binding.setReport(report);
             binding.executePendingBindings();
         }
 
 
+        /**
+         * Start single report activity
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             Gson gson = new Gson();
@@ -102,6 +141,9 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
         }
     }
 
+    /**
+     * View holder for loader
+     */
     public class ReportAdapterLoadingViewHolder extends RecyclerView.ViewHolder {
 
         public ReportAdapterLoadingViewHolder(View v) {
@@ -109,10 +151,17 @@ public class ReportAdapter extends RecyclerView.Adapter implements View.OnScroll
         }
     }
 
+    /**
+     * Custom event listener
+     * @param onLoadMoreListener
+     */
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
     }
 
+    /**
+     * Custom event interface
+     */
     public interface OnLoadMoreListener {
         void onLoadMore();
     }

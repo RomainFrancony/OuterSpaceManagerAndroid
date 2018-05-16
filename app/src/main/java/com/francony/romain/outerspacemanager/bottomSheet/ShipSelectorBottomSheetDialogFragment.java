@@ -1,14 +1,12 @@
 package com.francony.romain.outerspacemanager.bottomSheet;
 
 import android.app.Dialog;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -41,14 +39,19 @@ public class ShipSelectorBottomSheetDialogFragment extends BottomSheetDialogFrag
         }
     };
 
+    /**
+     * Build bottom sheet
+     * @param dialog
+     * @param style
+     */
     @Override
     public void setupDialog(Dialog dialog, int style) {
         View contentView = View.inflate(getContext(), R.layout.bottom_sheet_ship_selector, null);
         dialog.setContentView(contentView);
         this.progressBar = contentView.findViewById(R.id.layout_loader);
+
+        // Recycler view
         this.rvShips = contentView.findViewById(R.id.rv_ships);
-
-
         this.rvShips.setLayoutManager(new LinearLayoutManager(getContext()));
         this.adapter = new ShipSelectorAdapter(getContext(), ships);
         this.adapter.setClickListener(this);
@@ -68,12 +71,22 @@ public class ShipSelectorBottomSheetDialogFragment extends BottomSheetDialogFrag
         }
     }
 
+    /**
+     * Call AttackActivity
+     * @param view
+     * @param position
+     */
     @Override
     public void onItemClick(View view, int position) {
         dismiss();
+        // TODO : use custom event instead
         ((AttackActivity) getActivity()).selectShip(this.ships.get(position));
     }
 
+    /**
+     * Update displayed ships
+     * @param ships
+     */
     public void updateShips(ArrayList<Ship> ships) {
         ships.sort(new Comparator<Ship>() {
             @Override

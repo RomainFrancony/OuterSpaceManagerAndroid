@@ -31,14 +31,27 @@ public class ShipAdapter extends RecyclerView.Adapter {
     }
 
 
+    /**
+     * Check if item is a ship or a "Add ship" card (used in AttackActivity)
+     *
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         return this.shipsDataset.get(position) == null ? TYPE_ADDSHIP : TYPE_SHIP;
     }
 
+    /**
+     * Create view holder with data binding depending on the card type
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == TYPE_SHIP){
+        if (viewType == TYPE_SHIP) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             AdapterShipBinding binding = DataBindingUtil.inflate(inflater, R.layout.adapter_ship, parent, false);
             return new ShipAdapterViewHolder(binding);
@@ -47,7 +60,12 @@ public class ShipAdapter extends RecyclerView.Adapter {
         return new ShipAdapterAddViewHolder(v);
     }
 
-
+    /**
+     * Bind ship to view holder
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ShipAdapterViewHolder) {
@@ -61,7 +79,9 @@ public class ShipAdapter extends RecyclerView.Adapter {
         return shipsDataset.size();
     }
 
-
+    /**
+     * View holder displaying a ship
+     */
     public class ShipAdapterViewHolder extends RecyclerView.ViewHolder {
         private final AdapterShipBinding binding;
 
@@ -70,9 +90,16 @@ public class ShipAdapter extends RecyclerView.Adapter {
             this.binding = binding;
         }
 
+        /**
+         * Bind ship to UI
+         *
+         * @param ship
+         * @param context
+         */
         public void bind(final Ship ship, Context context) {
             ShipViewModel shipViewModel = new ShipViewModel(ship, binding.getRoot(), context, cardType);
 
+            // Bind the event to the view model (it start in the view model and bubble up to the fragment)
             if (removeShipListener != null) {
                 shipViewModel.setRemoveShipListener(new ShipViewModel.RemoveShipListener() {
                     @Override
@@ -87,18 +114,27 @@ public class ShipAdapter extends RecyclerView.Adapter {
     }
 
 
+    /**
+     * Set custom event listener
+     *
+     * @param removeShipListener
+     */
     public void setRemoveShipListener(ShipViewModel.RemoveShipListener removeShipListener) {
         this.removeShipListener = removeShipListener;
     }
 
+    /**
+     * View holder for "Add ship" card
+     */
     public class ShipAdapterAddViewHolder extends RecyclerView.ViewHolder {
 
         public ShipAdapterAddViewHolder(View v) {
             super(v);
+            // Add click handler
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(onClickAddShipListener != null){
+                    if (onClickAddShipListener != null) {
                         onClickAddShipListener.onClickAddShip();
                     }
                 }

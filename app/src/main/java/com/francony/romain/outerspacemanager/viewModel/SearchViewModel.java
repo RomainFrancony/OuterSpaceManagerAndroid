@@ -1,11 +1,8 @@
 package com.francony.romain.outerspacemanager.viewModel;
 
-import android.app.Activity;
 import android.content.Context;
 import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,7 +12,6 @@ import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Progress;
 import com.francony.romain.outerspacemanager.model.Progress_Table;
 import com.francony.romain.outerspacemanager.model.Search;
-import com.francony.romain.outerspacemanager.BR;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
@@ -48,6 +44,7 @@ public class SearchViewModel extends BaseObservable {
         this.view = view;
         this.context = context;
 
+        // Get progress of search using DB Flow
         this.initButtonProgress();
         this.getProgress();
 
@@ -57,46 +54,50 @@ public class SearchViewModel extends BaseObservable {
             this.button.setEnabled(false);
             this.button.setProgress(1);
 
-            if(this.progress == null){
+            if (this.progress == null) {
                 return;
             }
 
             this.initCountdown();
-
         }
     }
 
+    /**
+     * Get progress from DB Flow
+     */
     private void getProgress() {
         ArrayList<Progress> progresses = (ArrayList<Progress>) SQLite.select().from(Progress.class)
                 .where(Progress_Table.type.eq(Progress.TYPE_SEARCH))
                 .and(Progress_Table.constructionObjectId.eq(this.getSearch().getSearchId()))
                 .queryList();
 
-
-
+        // Sort by end time
         progresses.sort(new Comparator<Progress>() {
             @Override
             public int compare(Progress o1, Progress o2) {
-                return (int)(o2.getEndTime() - o1.getEndTime());
+                return (int) (o2.getEndTime() - o1.getEndTime());
             }
         });
 
+        // Delete all except the latest
         ArrayList<Progress> toDelete = new ArrayList<>();
-
         for (Progress progress : progresses) {
-            if( progress.getEndTime() <= System.currentTimeMillis() / 1000){
+            if (progress.getEndTime() <= System.currentTimeMillis() / 1000) {
                 toDelete.add(progress);
             }
         }
         this.progressModelAdapter.deleteAll(toDelete);
 
-        if (progresses.isEmpty()){
+        if (progresses.isEmpty()) {
             return;
         }
 
         this.progress = progresses.get(0);
     }
 
+    /**
+     * Build custom button
+     */
     private void initButtonProgress() {
         this.button = view.findViewById(R.id.search_action_button);
         this.button.setOnClickNormalState(new View.OnClickListener() {
@@ -111,10 +112,48 @@ public class SearchViewModel extends BaseObservable {
 
     private void updateCountdown() {
         long startTime = this.progress.getEndTime() - this.getSearch().getTimeToBuild();
-        int progress = (int)(((System.currentTimeMillis()/1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
+        int progress = (int) (((System.currentTimeMillis() / 1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
         this.button.setProgress(progress <= 0 ? 1 : progress);
     }
 
+    /**
+     * Init handler for automatic update in UI
+     */
+    private void initCountdown() {
+        if (this.handler == null) {
+            this.handler = new Handler();
+        }
+
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // Check if the view is still visible
+                if (!SearchViewModel.this.isViewVisible || SearchViewModel.this.progress == null) {
+                    return;
+                }
+
+                // Stop handler, update search and clean things
+                if (SearchViewModel.this.button.getProgress() >= 100) {
+                    SearchViewModel.this.button.setEnabled(true);
+                    SearchViewModel.this.button.setProgress(0);
+                    SearchViewModel.this.progressModelAdapter.delete(SearchViewModel.this.progress);
+                    SearchViewModel.this.progress = null;
+                    SearchViewModel.this.getSearch().setBuilding(false);
+                    SearchViewModel.this.getSearch().setLevel(SearchViewModel.this.getSearch().getLevel() + 1);
+                    return;
+                }
+
+                SearchViewModel.this.updateCountdown();
+                SearchViewModel.this.handler.postDelayed(this, (SearchViewModel.this.getSearch().getTimeToBuild() / 100) * 1000);
+            }
+        }, 0);
+    }
+
+    /**
+     * API call
+     */
     private void startSearch() {
         this.button.setEnabled(false);
 
@@ -145,6 +184,9 @@ public class SearchViewModel extends BaseObservable {
         });
     }
 
+    /**
+     * Save progress using DB Flow
+     */
     private void saveSearchTime() {
         this.progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
         this.progress = new Progress(UUID.randomUUID(), this.getSearch().getTimeToBuild() + (System.currentTimeMillis() / 1000), Progress.TYPE_SEARCH, this.getSearch().getSearchId());
@@ -152,35 +194,13 @@ public class SearchViewModel extends BaseObservable {
         this.initCountdown();
     }
 
+    public void setViewVisible(boolean viewVisible) {
+        isViewVisible = viewVisible;
 
-    private void initCountdown() {
-        if(this.handler == null){
-            this.handler = new Handler();
+        // Reinit the countdown because it may be stopped
+        if (viewVisible) {
+            this.initCountdown();
         }
-
-        handler.removeCallbacksAndMessages(null);
-        handler.postDelayed( new Runnable() {
-
-            @Override
-            public void run() {
-                if (!SearchViewModel.this.isViewVisible || SearchViewModel.this.progress == null) {
-                    return;
-                }
-
-                if(SearchViewModel.this.button.getProgress() >= 100) {
-                    SearchViewModel.this.button.setEnabled(true);
-                    SearchViewModel.this.button.setProgress(0);
-                    SearchViewModel.this.progressModelAdapter.delete(SearchViewModel.this.progress);
-                    SearchViewModel.this.progress = null;
-                    SearchViewModel.this.getSearch().setBuilding(false);
-                    SearchViewModel.this.getSearch().setLevel(SearchViewModel.this.getSearch().getLevel() + 1);
-                    return;
-                }
-
-                SearchViewModel.this.updateCountdown();
-                SearchViewModel.this.handler.postDelayed( this, (SearchViewModel.this.getSearch().getTimeToBuild() / 100) * 1000 );
-            }
-        }, 0 );
     }
 
     public Search getSearch() {
@@ -189,14 +209,5 @@ public class SearchViewModel extends BaseObservable {
 
     public void setSearch(Search search) {
         this.search = search;
-    }
-
-    public void setViewVisible(boolean viewVisible) {
-        isViewVisible = viewVisible;
-
-        // Reinit the countdown because it may be stopped
-        if(viewVisible){
-            this.initCountdown();
-        }
     }
 }

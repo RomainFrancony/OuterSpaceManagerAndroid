@@ -26,19 +26,49 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
     }
 
 
+    /**
+     * Create view holder with data binding
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public SearchAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         AdapterSearchBinding binding = DataBindingUtil.inflate(inflater, R.layout.adapter_search, parent, false);
         return new SearchAdapterViewHolder(binding);
     }
+
+    /**
+     * Bind building to view holder
+     *
+     * @param holder
+     * @param position
+     */
+    @Override
+    public void onBindViewHolder(SearchAdapterViewHolder holder, int position) {
+        Search search = this.searchesDataset.get(position);
+        holder.bind(search, this.context);
+    }
+
+    /**
+     * Get the attached recycler view
+     *
+     * @param recyclerView
+     */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
+        this.initRecyclerViewListener();
+    }
 
-
-        // Prevent view model to continue update the ui when the view is detached from the recycler
+    /**
+     * Prevent view models to continue updating the UI when the view is detached from the recycler
+     * while scrolling (onBindViewHolder is not necessary called and therefore no view model is created)
+     */
+    private void initRecyclerViewListener() {
         this.recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
@@ -54,27 +84,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
         });
     }
 
+    /**
+     * Stop all view model from updating the UI when quiting the fragment
+     *
+     * @param recyclerView
+     */
     @Override
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         for (int childCount = recyclerView.getChildCount(), i = 0; i < childCount; ++i) {
-            final SearchAdapterViewHolder holder = (SearchAdapterViewHolder)recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            final SearchAdapterViewHolder holder = (SearchAdapterViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
             holder.searchViewModel.setViewVisible(false);
         }
-    }
-
-
-    @Override
-    public void onBindViewHolder(SearchAdapterViewHolder holder, int position) {
-        Search search = this.searchesDataset.get(position);
-        holder.bind(search, this.context);
     }
 
     @Override
     public int getItemCount() {
         return searchesDataset.size();
     }
-
 
 
     public class SearchAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -86,9 +113,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
             this.binding = binding;
         }
 
-        public void bind(final Search search , final Context context){
-
-            this.searchViewModel = new SearchViewModel(search,binding.getRoot(),context);
+        /**
+         * Bind building to UI
+         * @param search
+         * @param context
+         */
+        public void bind(final Search search, final Context context) {
+            this.searchViewModel = new SearchViewModel(search, binding.getRoot(), context);
             binding.setSearchViewModel(this.searchViewModel);
             binding.executePendingBindings();
         }

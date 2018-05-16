@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 
 import com.francony.romain.outerspacemanager.BR;
@@ -13,7 +11,6 @@ import com.francony.romain.outerspacemanager.HasUserInfo;
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.UserInfoManager;
 import com.francony.romain.outerspacemanager.activity.AttackActivity;
-import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 import com.google.gson.Gson;
@@ -32,6 +29,11 @@ public class UserViewModel extends BaseObservable implements HasUserInfo {
         UserInfoManager.getInstance().addOnUserInfoUpdateListener(this);
     }
 
+    /**
+     * Check if user is the one connected
+     *
+     * @return
+     */
     @Bindable
     public UserInfoResponse getCurrentUser() {
         if (currentUser == null) {
@@ -40,14 +42,9 @@ public class UserViewModel extends BaseObservable implements HasUserInfo {
         return currentUser;
     }
 
-    public UserScore getUserScore() {
-        return userScore;
-    }
-
-    public void setUserScore(UserScore userScore) {
-        this.userScore = userScore;
-    }
-
+    /**
+     * Start activity
+     */
     public void startAttackActivity() {
         Intent attackIntent = new Intent(context, AttackActivity.class);
         Gson gson = new Gson();
@@ -57,6 +54,11 @@ public class UserViewModel extends BaseObservable implements HasUserInfo {
     }
 
 
+    /**
+     * Change color if in top 3
+     *
+     * @return
+     */
     public int getUserColor() {
         if (this.userScore.getPosition() == 0) {
             return context.getResources().getColor(R.color.colorGold, context.getTheme());
@@ -73,9 +75,22 @@ public class UserViewModel extends BaseObservable implements HasUserInfo {
         return context.getResources().getColor(R.color.colorGray, context.getTheme());
     }
 
+    /**
+     * Listen to current user updates
+     *
+     * @param info
+     */
     @Override
     public void OnUserInfoUpdate(UserInfoResponse info) {
         this.currentUser = info;
         notifyPropertyChanged(BR.currentUser);
+    }
+
+    public UserScore getUserScore() {
+        return userScore;
+    }
+
+    public void setUserScore(UserScore userScore) {
+        this.userScore = userScore;
     }
 }

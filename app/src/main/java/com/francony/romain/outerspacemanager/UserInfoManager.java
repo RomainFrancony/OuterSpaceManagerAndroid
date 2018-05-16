@@ -19,6 +19,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Load and update current user info
+ */
 public class UserInfoManager {
     private Context context;
     private ArrayList<HasUserInfo> listeners;
@@ -28,10 +31,16 @@ public class UserInfoManager {
 
     private static UserInfoManager instance;
 
+    /**
+     * Singleton
+     *
+     * @return
+     */
     public static UserInfoManager getInstance() {
         if (instance == null) instance = getSync();
         return instance;
     }
+
 
     private static synchronized UserInfoManager getSync() {
         if (instance == null) instance = new UserInfoManager();
@@ -45,6 +54,9 @@ public class UserInfoManager {
     }
 
 
+    /**
+     * Init update every 5 seconds
+     */
     private void initHandler() {
         this.handler = new android.os.Handler();
         handler.postDelayed(new Runnable() {
@@ -57,6 +69,9 @@ public class UserInfoManager {
         }, 0);
     }
 
+    /**
+     * API call
+     */
     private void getUserInfos() {
         Call<UserInfoResponse> request = this.service.userInfo(SharedPreferencesHelper.getToken(context));
         request.enqueue(new Callback<UserInfoResponse>() {
@@ -88,6 +103,10 @@ public class UserInfoManager {
         });
     }
 
+    /**
+     * Launch login activity if token is expired
+     * Will be removed and instead relog the user with his credential when token will be stored using DB Flow
+     */
     private void askCrendentialsForRelog() {
         FlowManager.getDatabase(OuterSpaceManagerDatabase.class).reset();
         SharedPreferencesHelper.clearToken(this.context);
@@ -96,6 +115,11 @@ public class UserInfoManager {
         this.context.startActivity(loginIntent);
     }
 
+    /**
+     * Add new listener to updates
+     *
+     * @param listener
+     */
     public void addOnUserInfoUpdateListener(HasUserInfo listener) {
         // Trigger the listener directly if we have the information
         if (this.userInfo != null) {

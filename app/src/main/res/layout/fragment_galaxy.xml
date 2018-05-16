@@ -8,9 +8,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/users_rv"
-        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorWhite"
         android:scrollbars="none"
         android:visibility="gone" />
 

@@ -24,7 +24,6 @@ import com.francony.romain.outerspacemanager.model.Progress_Table;
 import com.francony.romain.outerspacemanager.response.ActionResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
-import com.francony.romain.outerspacemanager.viewModel.SearchViewModel;
 import com.google.gson.Gson;
 import com.hkm.ui.processbutton.iml.SubmitProcessButton;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -49,6 +48,11 @@ public class BuildingActivity extends AppCompatActivity {
     private Handler handler;
     private SubmitProcessButton button;
 
+    /**
+     * Finish after shared element transition and give result to fragment calling the activity
+     *
+     * @return
+     */
     @Override
     public boolean onSupportNavigateUp() {
         this.getReturnValue();
@@ -56,6 +60,9 @@ public class BuildingActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Set return value
+     */
     public void getReturnValue() {
         Intent data = new Intent();
         Gson gson = new Gson();
@@ -63,6 +70,11 @@ public class BuildingActivity extends AppCompatActivity {
         setResult(RESULT_OK, data);
     }
 
+    /**
+     * Give result to fragment calling the activity
+     *
+     * @return
+     */
     @Override
     public void onBackPressed() {
         this.getReturnValue();
@@ -73,6 +85,7 @@ public class BuildingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_building);
+
         // Toolbar conf
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,6 +96,7 @@ public class BuildingActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.TRANSPARENT);
 
+        // Get current building
         Gson gson = new Gson();
         this.building = gson.fromJson(getIntent().getStringExtra("building"), Building.class);
         this.binding.setBuildingActivityViewModel(this);
@@ -90,6 +104,7 @@ public class BuildingActivity extends AppCompatActivity {
         // Progress button
         this.initButtonProgress();
 
+        // Get progress of current building
         this.getProgress();
 
         // Already building
@@ -98,16 +113,18 @@ public class BuildingActivity extends AppCompatActivity {
             this.button.setEnabled(false);
             this.button.setProgress(1);
 
-            if(this.progress == null){
+            if (this.progress == null) {
                 return;
             }
 
             this.initCountdown();
-
         }
     }
 
 
+    /**
+     * Get progress of current building from DB Flow
+     */
     private void getProgress() {
         ArrayList<Progress> progresses = (ArrayList<Progress>) SQLite.select().from(Progress.class)
                 .where(Progress_Table.type.eq(Progress.TYPE_BUILDING))
@@ -115,30 +132,33 @@ public class BuildingActivity extends AppCompatActivity {
                 .queryList();
 
 
-
+        // Sort by end time
         progresses.sort(new Comparator<Progress>() {
             @Override
             public int compare(Progress o1, Progress o2) {
-                return (int)(o2.getEndTime() - o1.getEndTime());
+                return (int) (o2.getEndTime() - o1.getEndTime());
             }
         });
 
+        // Remove all except the latest to finish
         ArrayList<Progress> toDelete = new ArrayList<>();
-
         for (Progress progress : progresses) {
-            if( progress.getEndTime() <= System.currentTimeMillis() / 1000){
+            if (progress.getEndTime() <= System.currentTimeMillis() / 1000) {
                 toDelete.add(progress);
             }
         }
         this.progressModelAdapter.deleteAll(toDelete);
 
-        if (progresses.isEmpty()){
+        if (progresses.isEmpty()) {
             return;
         }
 
         this.progress = progresses.get(0);
     }
 
+    /**
+     * Build custom button
+     */
     private void initButtonProgress() {
         this.button = findViewById(R.id.build_action_button);
         this.button.setOnClickNormalState(new View.OnClickListener() {
@@ -150,18 +170,32 @@ public class BuildingActivity extends AppCompatActivity {
         this.button.build();
     }
 
+    /**
+     * Update the progress button progress
+     */
     private void updateCountdown() {
         long startTime = this.progress.getEndTime() - this.building.getTimeToBuild();
-        int progress = (int)(((System.currentTimeMillis()/1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
+        int progress = (int) (((System.currentTimeMillis() / 1000) - startTime) * 100 / (this.progress.getEndTime() - startTime));
         this.button.setProgress(progress <= 0 ? 1 : progress);
     }
 
+    /**
+     * Data binding load image with glide
+     *
+     * @param view
+     * @param url
+     */
     @BindingAdapter("imageUrl")
     public static void loadImage(ImageView view, String url) {
         Helpers.loadExternalImageWithAnimation(view, url);
     }
 
 
+    /**
+     * Get resource string for effect
+     *
+     * @return
+     */
     public String getEffectString() {
         String packageName = getPackageName();
         if (this.building.getEffect() == null) {
@@ -171,6 +205,9 @@ public class BuildingActivity extends AppCompatActivity {
         return getString(resId);
     }
 
+    /**
+     * API call for start building
+     */
     public void startBuild() {
         Call<ActionResponse> request = BuildingActivity.this.service.buildingBuild(SharedPreferencesHelper.getToken(getApplicationContext()), BuildingActivity.this.building.getBuildingId());
 
@@ -196,6 +233,9 @@ public class BuildingActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Save building progress with DB Flow
+     */
     private void saveBuildingTime() {
         this.progressModelAdapter = FlowManager.getModelAdapter(Progress.class);
         this.progress = new Progress(UUID.randomUUID(), this.building.getTimeToBuild() + (System.currentTimeMillis() / 1000), Progress.TYPE_BUILDING, this.building.getBuildingId());
@@ -203,13 +243,16 @@ public class BuildingActivity extends AppCompatActivity {
         this.initCountdown();
     }
 
+    /**
+     * Init handler for updating the UI every time the progress has changed
+     */
     private void initCountdown() {
-        if(this.handler == null){
+        if (this.handler == null) {
             this.handler = new Handler();
         }
 
         handler.removeCallbacksAndMessages(null);
-        handler.postDelayed( new Runnable() {
+        handler.postDelayed(new Runnable() {
 
             @Override
             public void run() {
@@ -217,7 +260,8 @@ public class BuildingActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(BuildingActivity.this.button.getProgress() >= 100) {
+                // Restore button to normal state, update building, clear thing
+                if (BuildingActivity.this.button.getProgress() >= 100) {
                     BuildingActivity.this.button.setEnabled(true);
                     BuildingActivity.this.button.setProgress(0);
                     BuildingActivity.this.progressModelAdapter.delete(BuildingActivity.this.progress);
@@ -229,9 +273,9 @@ public class BuildingActivity extends AppCompatActivity {
                 }
 
                 BuildingActivity.this.updateCountdown();
-                BuildingActivity.this.handler.postDelayed( this, (BuildingActivity.this.building.getTimeToBuild() / 100) * 1000 );
+                BuildingActivity.this.handler.postDelayed(this, (BuildingActivity.this.building.getTimeToBuild() / 100) * 1000);
             }
-        }, 0 );
+        }, 0);
     }
 
 }

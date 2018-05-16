@@ -2,15 +2,10 @@ package com.francony.romain.outerspacemanager.fragment;
 
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,28 +13,26 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
-import com.francony.romain.outerspacemanager.activity.LoginActivity;
 import com.francony.romain.outerspacemanager.adapter.BuildingAdapter;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Building;
 import com.francony.romain.outerspacemanager.response.BuildingsResponse;
-import com.francony.romain.outerspacemanager.response.UserResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class BuildingsFragment extends Fragment {
-    private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
     public static int BUILDING_ACTIVITY_REQUEST = 42;
+
+
+    private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
     private RelativeLayout laLoader;
     private RecyclerView rvBuildings;
@@ -52,15 +45,29 @@ public class BuildingsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Remove adapter so the view models stop their handler for refreshing the UI
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         rvBuildings.setAdapter(null);
     }
 
+    /**
+     * Update the dataset when coming from the single building activity because the model may have
+     * changed (start the construction) and we can't track it with data binding since it's passed
+     * via GSON
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // Check the request code is the one we want
         if (requestCode != BuildingsFragment.BUILDING_ACTIVITY_REQUEST) {
             return;
         }
@@ -96,11 +103,12 @@ public class BuildingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_buildings, container, false);
 
-
         this.laLoader = v.findViewById(R.id.layout_loader);
+
+        // Recycler view
         this.rvBuildings = v.findViewById(R.id.buildings_rv);
         this.rvBuildings.setHasFixedSize(true);
-        rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        rvLayoutManager = new LinearLayoutManager(getContext());
         rvBuildings.setLayoutManager(rvLayoutManager);
         this.buildingAdapter = new BuildingAdapter(this.buildings, this);
         rvBuildings.setAdapter(this.buildingAdapter);

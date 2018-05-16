@@ -16,19 +16,25 @@ import com.francony.romain.outerspacemanager.viewModel.UserViewModel;
 import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollChangeListener {
+    private static final int TYPE_USER = 0;
+    private static final int TYPE_LOADING = 1;
+
     private ArrayList<UserScore> usersDataset;
     private Context context;
     private OnLoadMoreListener onLoadMoreListener;
     private RecyclerView recyclerView;
 
-    private static final int TYPE_USER = 0;
-    private static final int TYPE_LOADING = 1;
 
     public UserAdapter(ArrayList<UserScore> userScores, Context context) {
         this.usersDataset = userScores;
         this.context = context;
     }
 
+    /**
+     * Get attached recycler view and add listener
+     *
+     * @param recyclerView
+     */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -41,6 +47,13 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
         return this.usersDataset.get(position) == null ? TYPE_LOADING : TYPE_USER;
     }
 
+    /**
+     * Create view holder for item type
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_USER) {
@@ -53,6 +66,12 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
     }
 
 
+    /**
+     * Bind the user if needed
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof UserAdapterViewHolder) {
@@ -67,6 +86,24 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
         return usersDataset.size();
     }
 
+    /**
+     * Set custom event
+     *
+     * @param onLoadMoreListener
+     */
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
+    }
+
+    /**
+     * Check if scroll at the end the recycler view
+     *
+     * @param v
+     * @param scrollX
+     * @param scrollY
+     * @param oldScrollX
+     * @param oldScrollY
+     */
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         if (((LinearLayoutManager) this.recyclerView.getLayoutManager()).findLastVisibleItemPosition() == this.getItemCount() - 1) {
@@ -77,6 +114,9 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
     }
 
 
+    /**
+     * View holder displaying an user
+     */
     public class UserAdapterViewHolder extends RecyclerView.ViewHolder {
         private final AdapterUserBinding binding;
 
@@ -85,6 +125,12 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
             this.binding = binding;
         }
 
+        /**
+         * Bind user to UI
+         *
+         * @param userScore
+         * @param context
+         */
         public void bind(final UserScore userScore, Context context) {
             UserViewModel userViewModel = new UserViewModel(userScore, binding.getRoot(), context);
             binding.setUserViewModel(userViewModel);
@@ -93,6 +139,9 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
     }
 
 
+    /**
+     * View holder for loader
+     */
     public class UserAdapterLoadingViewHolder extends RecyclerView.ViewHolder {
 
         public UserAdapterLoadingViewHolder(View v) {
@@ -100,11 +149,9 @@ public class UserAdapter extends RecyclerView.Adapter implements View.OnScrollCh
         }
     }
 
-
-    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        this.onLoadMoreListener = onLoadMoreListener;
-    }
-
+    /**
+     * Interface for custom event
+     */
     public interface OnLoadMoreListener {
         void onLoadMore();
     }

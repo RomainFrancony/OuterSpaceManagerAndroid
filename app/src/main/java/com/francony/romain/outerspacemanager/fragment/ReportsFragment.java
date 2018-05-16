@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,9 @@ import android.widget.Toast;
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.activity.MainActivity;
 import com.francony.romain.outerspacemanager.adapter.ReportAdapter;
-import com.francony.romain.outerspacemanager.adapter.SearchAdapter;
-import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Report;
-import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.response.ReportListResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
@@ -59,6 +55,7 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_reports, container, false);
 
+        // When no report we display a card to redirect to galaxy
         this.laLoader = v.findViewById(R.id.layout_loader);
         this.laEmptyReports = v.findViewById(R.id.reports_empty_layout);
         Button button = this.laEmptyReports.findViewById(R.id.reports_empty_galaxy_button);
@@ -92,7 +89,9 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         return v;
     }
 
-
+    /**
+     * API call
+     */
     private void getReports() {
         this.loading = true;
         Call<ReportListResponse> request = this.service.reportsList(SharedPreferencesHelper.getToken(getContext()), this.page * 20, 20);
@@ -138,6 +137,9 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     }
 
+    /**
+     * Check new reports when refreshing
+     */
     @Override
     public void onRefresh() {
         // We only check if the 20 first reports (max allowed by api) but is not really probable that some got 20+ reports in short time
@@ -186,6 +188,9 @@ public class ReportsFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
     }
 
+    /**
+     * Load next page
+     */
     @Override
     public void onLoadMore() {
         if (this.loading) {

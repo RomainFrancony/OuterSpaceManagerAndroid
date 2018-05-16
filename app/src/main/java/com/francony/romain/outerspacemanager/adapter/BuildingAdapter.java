@@ -1,10 +1,8 @@
 package com.francony.romain.outerspacemanager.adapter;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.francony.romain.outerspacemanager.model.Building;
 import com.francony.romain.outerspacemanager.viewModel.BuildingViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingAdapterViewHolder> {
     private ArrayList<Building> buildingsDataset;
@@ -29,6 +26,12 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     }
 
 
+    /**
+     * Create view holder with data binding
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public BuildingAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -37,19 +40,35 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     }
 
 
+    /**
+     * Bind building to view holder
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(BuildingAdapterViewHolder holder, int position) {
         Building building = this.buildingsDataset.get(position);
         holder.bind(building, fragment);
     }
 
+    /**
+     * Get the attached recycler view
+     *
+     * @param recyclerView
+     */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
+        this.initRecyclerViewListener();
+    }
 
+    /**
+     * Prevent view models to continue updating the UI when the view is detached from the recycler
+     * while scrolling (onBindViewHolder is not necessary called and therefore no view model is created)
+     */
+    private void initRecyclerViewListener() {
 
-        // Prevent view model to continue update the ui when the view is detached from the recycler
         this.recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
@@ -65,11 +84,15 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         });
     }
 
+    /**
+     * Stop all view model from updating the UI when quiting the fragment
+     * @param recyclerView
+     */
     @Override
     public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         for (int childCount = recyclerView.getChildCount(), i = 0; i < childCount; ++i) {
-            final BuildingAdapterViewHolder holder = (BuildingAdapterViewHolder)recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            final BuildingAdapterViewHolder holder = (BuildingAdapterViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
             holder.buildingViewModel.setViewVisible(false);
         }
     }
@@ -78,6 +101,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     public int getItemCount() {
         return buildingsDataset.size();
     }
+
 
 
     public class BuildingAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -90,6 +114,11 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
             this.binding = binding;
         }
 
+        /**
+         * Bind building to UI
+         * @param building
+         * @param fragment
+         */
         public void bind(Building building, BuildingsFragment fragment) {
             this.buildingViewModel = new BuildingViewModel(building, binding.getRoot(), fragment);
             binding.setBuildingViewModel(this.buildingViewModel);

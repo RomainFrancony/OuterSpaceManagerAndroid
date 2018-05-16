@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,10 @@ import android.widget.Toast;
 
 import com.francony.romain.outerspacemanager.R;
 import com.francony.romain.outerspacemanager.adapter.SearchAdapter;
-import com.francony.romain.outerspacemanager.adapter.ShipAdapter;
 import com.francony.romain.outerspacemanager.helpers.Helpers;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.Search;
-import com.francony.romain.outerspacemanager.model.Ship;
 import com.francony.romain.outerspacemanager.response.SearchesResponse;
-import com.francony.romain.outerspacemanager.response.SpaceyardResponse;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 
@@ -31,9 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SearchesFragment extends Fragment {
 
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
@@ -49,6 +42,9 @@ public class SearchesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Remove adapter so the view models stop their handler for refreshing the UI
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -62,6 +58,8 @@ public class SearchesFragment extends Fragment {
 
 
         this.laLoader = v.findViewById(R.id.layout_loader);
+
+        // Recycler view
         this.rvSearches = v.findViewById(R.id.searches_rv);
         this.rvSearches.setHasFixedSize(true);
         this.rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -72,9 +70,9 @@ public class SearchesFragment extends Fragment {
         return v;
     }
 
-
-
-
+    /**
+     * API call
+     */
     public void getSearches() {
         Call<SearchesResponse> request = this.service.searchList(SharedPreferencesHelper.getToken(getActivity().getApplicationContext()));
 

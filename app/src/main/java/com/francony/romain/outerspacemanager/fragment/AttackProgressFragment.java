@@ -48,6 +48,7 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
         View v = inflater.inflate(R.layout.fragment_attack_progress, container, false);
         this.laLoader = v.findViewById(R.id.layout_loader);
 
+        // Empty attack card for asking to go to galaxy
         this.laEmptyAttackProgress = v.findViewById(R.id.attack_progress_empty_layout);
         Button button = this.laEmptyAttackProgress.findViewById(R.id.reports_empty_galaxy_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -75,14 +76,17 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
         return v;
     }
 
-
+    /**
+     * Get attack in progress
+     */
     private void getAttacksProgress() {
         ArrayList<Progress> attacks = (ArrayList<Progress>) SQLite.select().from(Progress.class).where(Progress_Table.type.eq(Progress.TYPE_ATTACK)).queryList();
-        Timestamp current =  new Timestamp(System.currentTimeMillis());
+        Timestamp current = new Timestamp(System.currentTimeMillis());
         ArrayList<Progress> toDelete = new ArrayList<>();
 
+        // Remove the one that have happened since last time
         for (Progress attack : attacks) {
-            if( attack.getEndTime() <= current.getTime()){
+            if (attack.getEndTime() <= current.getTime()) {
                 toDelete.add(attack);
             }
         }
@@ -90,14 +94,14 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
         attacks.removeAll(toDelete);
 
         this.laLoader.setVisibility(View.GONE);
-        if(attacks.isEmpty()){
+        if (attacks.isEmpty()) {
             this.laEmptyAttackProgress.setVisibility(View.VISIBLE);
         }
 
         attacks.sort(new Comparator<Progress>() {
             @Override
             public int compare(Progress o1, Progress o2) {
-                return (int)(o1.getEndTime() - o2.getEndTime());
+                return (int) (o1.getEndTime() - o2.getEndTime());
             }
         });
 
@@ -105,19 +109,24 @@ public class AttackProgressFragment extends Fragment implements AttackProgressAd
         this.attackProgressAdapter.notifyItemRangeInserted(0, this.attacksProgress.size());
     }
 
+    /**
+     * Remove progress when it ends
+     *
+     * @param progress
+     */
     @Override
     public void onTimerEnd(Progress progress) {
         int index = this.attacksProgress.indexOf(progress);
         this.attacksProgress.remove(index);
         this.attackProgressAdapter.notifyItemRemoved(index);
 
-        if(this.attackProgressAdapter.getItemCount() == 0 && getActivity() != null){
+        if (this.attackProgressAdapter.getItemCount() == 0 && getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AttackProgressFragment.this.laEmptyAttackProgress.setVisibility(View.VISIBLE);
-            }
-        });
+                @Override
+                public void run() {
+                    AttackProgressFragment.this.laEmptyAttackProgress.setVisibility(View.VISIBLE);
+                }
+            });
         }
     }
 }
