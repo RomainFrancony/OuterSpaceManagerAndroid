@@ -32,19 +32,39 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:text="@{user.username}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_gas" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@{Helpers.numberToHumanReadableNumber(user.gas)}" />
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_mineral" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -3,6 +3,7 @@ package com.francony.romain.outerspacemanager.activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     public NavigationView navigationView;
     private NavHeaderMainBinding navHeaderBinding;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +81,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navHeaderBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, navigationView, false);
         navigationView.addHeaderView(navHeaderBinding.getRoot());
-        this.getUserInfos();
+        this.initRefreshInfo();
     }
 
+
+    private void initRefreshInfo() {
+        this.handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                if (MainActivity.this.isDestroyed()) {
+                    return;
+                }
+
+                MainActivity.this.getUserInfos();
+                MainActivity.this.handler.postDelayed(this, 5000);
+            }
+        }, 0);
+    }
 
 
 
