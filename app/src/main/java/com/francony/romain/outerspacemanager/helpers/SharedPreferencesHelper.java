@@ -52,22 +52,4 @@ public abstract class SharedPreferencesHelper {
         editor.commit();
     }
 
-    public static void setUserInfos(Context ctx, UserInfoResponse infos){
-        SharedPreferences prefs = ctx.getSharedPreferences(SHARED_PREF_REF, 0);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        Gson gson = new Gson();
-        editor.putString(USERINFOS_REF, gson.toJson(infos));
-        editor.commit();
-    }
-
-    public static UserInfoResponse getUserInfos(Context ctx){
-        SharedPreferences prefs = ctx.getSharedPreferences(SHARED_PREF_REF, 0);
-        String json = prefs.getString(USERINFOS_REF,"");
-        if(json.equals("")){
-            return null;
-        }
-        Gson gson = new Gson();
-        return gson.fromJson(json, UserInfoResponse.class);
-    }
 }

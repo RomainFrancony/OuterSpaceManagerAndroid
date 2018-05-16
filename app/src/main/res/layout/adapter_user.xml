@@ -19,13 +19,13 @@
 
         <View
             android:layout_width="4dp"
-            android:background="@{userViewModel.isCurrentUser() ? @color/colorAccent : @color/colorWhite}"
+            android:background="@{userViewModel.currentUser.username.equals(userViewModel.userScore.username) ? @color/colorAccent : @color/colorWhite}"
             android:layout_height="match_parent"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@{userViewModel.isCurrentUser() ? @drawable/user_self_gradient : null}"
+            android:background="@{userViewModel.currentUser.username.equals(userViewModel.userScore.username) ? @drawable/user_self_gradient : null}"
             android:orientation="vertical">
 
             <LinearLayout
@@ -93,7 +93,7 @@
                     android:padding="8dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_attack"
-                    android:visibility="@{userViewModel.isCurrentUser() ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{userViewModel.currentUser == null || userViewModel.currentUser.username.equals(userViewModel.userScore.username) ? View.GONE : View.VISIBLE}" />
             </LinearLayout>
 
             <!-- Divider (don't use ItemDecorator because we need the divider to be translated and start only on the text and it's complicated for nothing with it) -->
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="72dp"
                 android:src="@drawable/horizontal_divider"
-                android:visibility="@{userViewModel.isCurrentUser() ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{userViewModel.currentUser.username.equals(userViewModel.userScore.username) ? View.GONE : View.VISIBLE}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -2,32 +2,42 @@ package com.francony.romain.outerspacemanager.viewModel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 
+import com.francony.romain.outerspacemanager.BR;
+import com.francony.romain.outerspacemanager.HasUserInfo;
 import com.francony.romain.outerspacemanager.R;
+import com.francony.romain.outerspacemanager.UserInfoManager;
 import com.francony.romain.outerspacemanager.activity.AttackActivity;
 import com.francony.romain.outerspacemanager.helpers.SharedPreferencesHelper;
 import com.francony.romain.outerspacemanager.model.UserScore;
 import com.francony.romain.outerspacemanager.response.UserInfoResponse;
 import com.google.gson.Gson;
 
-public class UserViewModel {
+public class UserViewModel extends BaseObservable implements HasUserInfo {
     private UserScore userScore;
     private View view;
     private Context context;
+    private UserInfoResponse currentUser;
 
 
     public UserViewModel(UserScore userScore, View view, Context context) {
         this.userScore = userScore;
         this.view = view;
         this.context = context;
+        UserInfoManager.getInstance().addOnUserInfoUpdateListener(this);
     }
 
-    public Boolean isCurrentUser(){
-        UserInfoResponse current = SharedPreferencesHelper.getUserInfos(this.context);
-        return current.getUsername().equals(this.userScore.getUsername());
+    @Bindable
+    public UserInfoResponse getCurrentUser() {
+        if (currentUser == null) {
+            return null;
+        }
+        return currentUser;
     }
 
     public UserScore getUserScore() {
@@ -61,5 +71,11 @@ public class UserViewModel {
         }
 
         return context.getResources().getColor(R.color.colorGray, context.getTheme());
+    }
+
+    @Override
+    public void OnUserInfoUpdate(UserInfoResponse info) {
+        this.currentUser = info;
+        notifyPropertyChanged(BR.currentUser);
     }
 }

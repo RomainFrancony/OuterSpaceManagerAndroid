@@ -12,10 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.francony.romain.outerspacemanager.HasUserInfo;
 import com.francony.romain.outerspacemanager.OuterSpaceManagerDatabase;
+import com.francony.romain.outerspacemanager.UserInfoManager;
 import com.francony.romain.outerspacemanager.databinding.NavHeaderMainBinding;
 import com.francony.romain.outerspacemanager.fragment.GalaxyFragment;
 import com.francony.romain.outerspacemanager.fragment.AttacksFragment;
@@ -32,21 +35,20 @@ import com.francony.romain.outerspacemanager.services.OuterSpaceManagerService;
 import com.francony.romain.outerspacemanager.services.OuterSpaceManagerServiceFactory;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, HasUserInfo {
     public static final int SPACEYARD_DRAWER_INDEX = 2;
     public static final int GALAXY_DRAWER_INDEX = 5;
-    private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
     private DrawerLayout drawer;
     public NavigationView navigationView;
     private NavHeaderMainBinding navHeaderBinding;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        UserInfoManager.getInstance().addOnUserInfoUpdateListener(this);
 
         // Drawer
         this.drawer = findViewById(R.id.drawer_layout);
@@ -81,47 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navHeaderBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, navigationView, false);
         navigationView.addHeaderView(navHeaderBinding.getRoot());
-        this.initRefreshInfo();
-    }
-
-
-    private void initRefreshInfo() {
-        this.handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                if (MainActivity.this.isDestroyed()) {
-                    return;
-                }
-
-                MainActivity.this.getUserInfos();
-                MainActivity.this.handler.postDelayed(this, 5000);
-            }
-        }, 0);
-    }
-
-
-
-    private void getUserInfos() {
-        Call<UserInfoResponse> request = this.service.userInfo(SharedPreferencesHelper.getToken(getApplicationContext()));
-        request.enqueue(new Callback<UserInfoResponse>() {
-            @Override
-            public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                // Error
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), Helpers.getResponseErrorMessage(response), Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                navHeaderBinding.setUser(response.body());
-            }
-
-            // Network error
-            @Override
-            public void onFailure(Call<UserInfoResponse> call, Throwable t) {
-            }
-        });
     }
 
 
@@ -208,5 +170,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(loginIntent);
         this.finish();
+    }
+
+    @Override
+    public void OnUserInfoUpdate(UserInfoResponse info) {
+        this.navHeaderBinding.setUser(info);
     }
 }
