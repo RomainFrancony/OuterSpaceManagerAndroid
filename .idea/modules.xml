@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../../../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" filepath="$PROJECT_DIR$/../../../../../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" />
+      <module fileurl="file:///../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" filepath="/../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" />
       <module fileurl="file://C:/../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" filepath="C:/../rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" />
       <module fileurl="file:///rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" filepath="/rfrancony/AndroidStudioProjects/OuterSpaceManagerAndroid/OuterSpaceManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/OuterSpaceManagerAndroid.iml" filepath="$PROJECT_DIR$/OuterSpaceManagerAndroid.iml" />

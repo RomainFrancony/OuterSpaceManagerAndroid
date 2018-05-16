@@ -53,6 +53,12 @@ public class BuildingsFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        rvBuildings.setAdapter(null);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != BuildingsFragment.BUILDING_ACTIVITY_REQUEST) {

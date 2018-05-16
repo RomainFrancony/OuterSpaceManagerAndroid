@@ -66,6 +66,15 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     }
 
     @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        for (int childCount = recyclerView.getChildCount(), i = 0; i < childCount; ++i) {
+            final BuildingAdapterViewHolder holder = (BuildingAdapterViewHolder)recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            holder.buildingViewModel.setViewVisible(false);
+        }
+    }
+
+    @Override
     public int getItemCount() {
         return buildingsDataset.size();
     }

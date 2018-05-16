@@ -2,6 +2,7 @@ package com.francony.romain.outerspacemanager.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchAdap
                 holder.searchViewModel.setViewVisible(false);
             }
         });
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        for (int childCount = recyclerView.getChildCount(), i = 0; i < childCount; ++i) {
+            final SearchAdapterViewHolder holder = (SearchAdapterViewHolder)recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            holder.searchViewModel.setViewVisible(false);
+        }
     }
 
 

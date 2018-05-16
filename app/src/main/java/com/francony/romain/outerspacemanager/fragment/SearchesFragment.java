@@ -39,7 +39,7 @@ public class SearchesFragment extends Fragment {
     private OuterSpaceManagerService service = OuterSpaceManagerServiceFactory.create();
 
     private RelativeLayout laLoader;
-    private RecyclerView rvShips;
+    private RecyclerView rvSearches;
     private LinearLayoutManager rvLayoutManager;
     private ArrayList<Search> searches = new ArrayList<>();
     private SearchAdapter searchAdapter;
@@ -49,6 +49,12 @@ public class SearchesFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        rvSearches.setAdapter(null);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,12 +62,12 @@ public class SearchesFragment extends Fragment {
 
 
         this.laLoader = v.findViewById(R.id.layout_loader);
-        this.rvShips = v.findViewById(R.id.searches_rv);
-        this.rvShips.setHasFixedSize(true);
+        this.rvSearches = v.findViewById(R.id.searches_rv);
+        this.rvSearches.setHasFixedSize(true);
         this.rvLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        this.rvShips.setLayoutManager(rvLayoutManager);
+        this.rvSearches.setLayoutManager(rvLayoutManager);
         this.searchAdapter = new SearchAdapter(this.searches, getContext());
-        this.rvShips.setAdapter(this.searchAdapter);
+        this.rvSearches.setAdapter(this.searchAdapter);
         this.getSearches();
         return v;
     }
@@ -84,7 +90,7 @@ public class SearchesFragment extends Fragment {
 
                 SearchesFragment.this.searches.addAll(response.body().getSearches());
                 SearchesFragment.this.laLoader.setVisibility(View.GONE);
-                SearchesFragment.this.rvShips.setVisibility(View.VISIBLE);
+                SearchesFragment.this.rvSearches.setVisibility(View.VISIBLE);
                 SearchesFragment.this.searchAdapter.notifyDataSetChanged();
             }
 
